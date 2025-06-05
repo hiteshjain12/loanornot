@@ -5,7 +5,49 @@ class LoanCalculator {
         this.purchaseAmountInput = document.getElementById('purchaseAmount');
         this.availableCashInput = document.getElementById('availableCash');
         this.cashWarning = document.getElementById('cashWarning');
+        this.loadSavedValues(); // Load saved values first
         this.initEventListeners();
+    }
+
+    // Add method to save form values
+    saveFormValues() {
+        const formData = {
+            purchaseAmount: this.purchaseAmountInput.value,
+            availableCash: this.availableCashInput.value,
+            matchPurchaseAmount: this.matchCheckbox.checked,
+            loanRate: document.getElementById('loanRate').value,
+            investmentReturn: document.getElementById('investmentReturn').value,
+            taxRate: document.getElementById('taxRate').value,
+            compoundingFrequency: document.getElementById('compoundingFrequency').value,
+            timePeriod: document.getElementById('timePeriod').value,
+            timeUnit: document.getElementById('timeUnit').value
+        };
+        localStorage.setItem('loanCalculatorData', JSON.stringify(formData));
+    }
+
+    // Add method to load saved values
+    loadSavedValues() {
+        const savedData = localStorage.getItem('loanCalculatorData');
+        if (savedData) {
+            const formData = JSON.parse(savedData);
+            
+            // Restore values to form elements
+            this.purchaseAmountInput.value = formData.purchaseAmount || '';
+            this.availableCashInput.value = formData.availableCash || '';
+            this.matchCheckbox.checked = formData.matchPurchaseAmount;
+            document.getElementById('loanRate').value = formData.loanRate || '';
+            document.getElementById('investmentReturn').value = formData.investmentReturn || '';
+            document.getElementById('taxRate').value = formData.taxRate || '';
+            document.getElementById('compoundingFrequency').value = formData.compoundingFrequency || '1';
+            document.getElementById('timePeriod').value = formData.timePeriod || '';
+            document.getElementById('timeUnit').value = formData.timeUnit || 'years';
+
+            // Handle the available cash input state based on checkbox
+            this.availableCashInput.disabled = this.matchCheckbox.checked;
+            if (this.matchCheckbox.checked) {
+                this.availableCashInput.value = this.purchaseAmountInput.value;
+            }
+        }
     }
 
     initEventListeners() {
@@ -19,12 +61,14 @@ class LoanCalculator {
                 if (this.form.checkValidity()) {
                     this.calculate();
                 }
+                this.saveFormValues(); // Save values when input changes
             });
         });
 
         // Handle checkbox change
         this.matchCheckbox.addEventListener('change', () => {
             this.handleCheckboxChange();
+            this.saveFormValues(); // Save values when checkbox changes
         });
 
         // Initial setup
