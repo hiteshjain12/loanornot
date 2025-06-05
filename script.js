@@ -236,21 +236,30 @@ class LoanCalculator {
             recommendationText.innerHTML = `<span class="text-emerald-400">💡 Take a full loan and invest your cash!</span>`;
         } else {
             recommendationDiv.className = 'mb-6 p-4 rounded-lg backdrop-blur-sm bg-blue-900/30 border border-blue-500/50';
-            recommendationText.innerHTML = `<span class="text-blue-400">💡 Use available cash${loanAmountNeeded > 0 ? ' and take a smaller loan' : ''}!</span>`;
+            recommendationText.innerHTML = `<span class="text-blue-400">💡 Use available cash${loanAmountNeeded > 0 ? ' with a smaller loan' : ''}!</span>`;
         }
 
-        // Update cash option details
-        const cashPaymentText = availableCash >= purchaseAmount 
-            ? this.formatCurrency(purchaseAmount)
-            : `${this.formatCurrency(availableCash)} + ${this.formatCurrency(loanAmountNeeded)} loan`;
-        document.getElementById('cashPayment').textContent = cashPaymentText;
+        // Update cash + partial loan option details
+        document.getElementById('cashPayment').textContent = this.formatCurrency(Math.min(availableCash, purchaseAmount));
+        
+        // Show/hide and update partial loan details
+        const partialLoanDetails = document.getElementById('partialLoanDetails');
+        if (loanAmountNeeded > 0) {
+            partialLoanDetails.classList.remove('hidden');
+            document.getElementById('partialLoanAmount').textContent = this.formatCurrency(loanAmountNeeded);
+            document.getElementById('partialLoanInterest').textContent = this.formatCurrency(totalInterestForRemainder);
+        } else {
+            partialLoanDetails.classList.add('hidden');
+        }
+
         document.getElementById('remainingCash').textContent = this.formatCurrency(remainingCashAfterPurchase);
         document.getElementById('cashInvestmentReturns').textContent = this.formatCurrency(cashInvestmentReturns);
         document.getElementById('cashNetPosition').textContent = this.formatCurrency(cashNetPosition);
 
-        // Update loan option details
+        // Update full loan option details
         document.getElementById('loanAmount').textContent = this.formatCurrency(loanAmount);
         document.getElementById('totalInterest').textContent = this.formatCurrency(totalInterest);
+        document.getElementById('fullLoanCashToInvest').textContent = this.formatCurrency(availableCash);
         document.getElementById('loanInvestmentReturns').textContent = this.formatCurrency(loanInvestmentReturns);
         document.getElementById('loanNetPosition').textContent = this.formatCurrency(loanNetPosition);
 
@@ -261,11 +270,14 @@ class LoanCalculator {
         if (netBenefit > 0) {
             netBenefitElement.textContent = `+${this.formatCurrency(netBenefit)}`;
             netBenefitElement.className = 'font-bold text-xl text-emerald-400';
-            benefitExplanationElement.textContent = `Taking a full loan and investing provides ${this.formatCurrency(netBenefit)} more after ${inputs.timePeriod} ${inputs.timeUnit}.`;
+            benefitExplanationElement.textContent = `Taking a full loan and investing your ${this.formatCurrency(availableCash)} cash provides ${this.formatCurrency(netBenefit)} more after ${inputs.timePeriod} ${inputs.timeUnit}.`;
         } else {
             netBenefitElement.textContent = this.formatCurrency(netBenefit);
             netBenefitElement.className = 'font-bold text-xl text-blue-400';
-            benefitExplanationElement.textContent = `Using available cash${loanAmountNeeded > 0 ? ' with a smaller loan' : ''} saves you ${this.formatCurrency(Math.abs(netBenefit))} after ${inputs.timePeriod} ${inputs.timeUnit}.`;
+            const explanation = loanAmountNeeded > 0 
+                ? `Using ${this.formatCurrency(availableCash)} cash with a ${this.formatCurrency(loanAmountNeeded)} loan saves you ${this.formatCurrency(Math.abs(netBenefit))}`
+                : `Using only cash saves you ${this.formatCurrency(Math.abs(netBenefit))}`;
+            benefitExplanationElement.textContent = `${explanation} after ${inputs.timePeriod} ${inputs.timeUnit}.`;
         }
 
         // Update net benefit section border

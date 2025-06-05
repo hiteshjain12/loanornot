@@ -168,16 +168,26 @@
                                 <p id="recommendationText" class="text-lg"></p>
                             </div>
 
-                            <!-- Option 1: Pay Cash -->
+                            <!-- Option 1: Pay Cash + Partial Loan -->
                             <div class="mb-6 p-4 bg-gray-900/50 rounded-lg border border-gray-800">
-                                <h4 class="font-semibold text-white mb-3">💵 Option 1: Pay Cash</h4>
+                                <h4 class="font-semibold text-white mb-3">💵 Option 1: Use Available Cash</h4>
                                 <div class="space-y-2 text-sm">
                                     <div class="flex justify-between text-gray-300">
-                                        <span>Initial Payment:</span>
+                                        <span>Cash Payment:</span>
                                         <span id="cashPayment" class="font-medium"></span>
                                     </div>
+                                    <div id="partialLoanDetails" class="space-y-2 border-t border-gray-700 pt-2 mt-2 hidden">
+                                        <div class="flex justify-between text-gray-300">
+                                            <span>Loan Required:</span>
+                                            <span id="partialLoanAmount" class="font-medium"></span>
+                                        </div>
+                                        <div class="flex justify-between">
+                                            <span class="text-gray-300">Interest on Partial Loan:</span>
+                                            <span id="partialLoanInterest" class="font-medium text-red-400"></span>
+                                        </div>
+                                    </div>
                                     <div class="flex justify-between text-gray-300">
-                                        <span>Remaining Cash:</span>
+                                        <span>Remaining Cash to Invest:</span>
                                         <span id="remainingCash" class="font-medium"></span>
                                     </div>
                                     <div class="flex justify-between">
@@ -191,17 +201,21 @@
                                 </div>
                             </div>
 
-                            <!-- Option 2: Take Loan -->
+                            <!-- Option 2: Take Full Loan -->
                             <div class="mb-6 p-4 bg-gray-900/50 rounded-lg border border-gray-800">
-                                <h4 class="font-semibold text-white mb-3">🏦 Option 2: Take Loan & Invest</h4>
+                                <h4 class="font-semibold text-white mb-3">🏦 Option 2: Take Full Loan & Invest</h4>
                                 <div class="space-y-2 text-sm">
                                     <div class="flex justify-between text-gray-300">
-                                        <span>Loan Amount:</span>
+                                        <span>Full Loan Amount:</span>
                                         <span id="loanAmount" class="font-medium"></span>
                                     </div>
                                     <div class="flex justify-between">
-                                        <span class="text-gray-300">Total Interest Paid:</span>
+                                        <span class="text-gray-300">Total Interest:</span>
                                         <span id="totalInterest" class="font-medium text-red-400"></span>
+                                    </div>
+                                    <div class="flex justify-between text-gray-300">
+                                        <span>Cash Available to Invest:</span>
+                                        <span id="fullLoanCashToInvest" class="font-medium"></span>
                                     </div>
                                     <div class="flex justify-between">
                                         <span class="text-gray-300">Investment Returns (after tax):</span>
