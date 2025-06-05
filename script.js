@@ -1,6 +1,10 @@
 class LoanCalculator {
     constructor() {
         this.form = document.getElementById('calculatorForm');
+        this.matchCheckbox = document.getElementById('matchPurchaseAmount');
+        this.purchaseAmountInput = document.getElementById('purchaseAmount');
+        this.availableCashInput = document.getElementById('availableCash');
+        this.cashWarning = document.getElementById('cashWarning');
         this.initEventListeners();
     }
 
@@ -9,15 +13,56 @@ class LoanCalculator {
         const inputs = this.form.querySelectorAll('input, select');
         inputs.forEach(input => {
             input.addEventListener('input', () => {
+                if (input.id === 'purchaseAmount') {
+                    this.handlePurchaseAmountChange();
+                }
                 if (this.form.checkValidity()) {
                     this.calculate();
                 }
             });
         });
 
-        // Initial calculation if form has default values
+        // Handle checkbox change
+        this.matchCheckbox.addEventListener('change', () => {
+            this.handleCheckboxChange();
+        });
+
+        // Initial setup
+        this.handleCheckboxChange();
         if (this.form.checkValidity()) {
             this.calculate();
+        }
+    }
+
+    handleCheckboxChange() {
+        if (this.matchCheckbox.checked) {
+            this.availableCashInput.value = this.purchaseAmountInput.value;
+            this.availableCashInput.disabled = true;
+            this.cashWarning.classList.add('hidden');
+        } else {
+            this.availableCashInput.disabled = false;
+            this.checkCashWarning();
+        }
+        if (this.form.checkValidity()) {
+            this.calculate();
+        }
+    }
+
+    handlePurchaseAmountChange() {
+        if (this.matchCheckbox.checked) {
+            this.availableCashInput.value = this.purchaseAmountInput.value;
+        }
+        this.checkCashWarning();
+    }
+
+    checkCashWarning() {
+        const purchaseAmount = parseFloat(this.purchaseAmountInput.value) || 0;
+        const availableCash = parseFloat(this.availableCashInput.value) || 0;
+        
+        if (availableCash < purchaseAmount) {
+            this.cashWarning.classList.remove('hidden');
+        } else {
+            this.cashWarning.classList.add('hidden');
         }
     }
 
