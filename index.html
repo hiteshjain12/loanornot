@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LoanOrNot - Smart Financial Decision Tool</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/engine@3.0.3/tsparticles.engine.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -12,162 +14,223 @@
                     colors: {
                         primary: '#3B82F6',
                         secondary: '#10B981'
-                    }
+                    },
+                    animation: {
+                        'meteor': 'meteor 5s linear infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
+                    },
+                    keyframes: {
+                        meteor: {
+                            '0%': { transform: 'rotate(215deg) translateX(0)', opacity: '1' },
+                            '70%': { opacity: '1' },
+                            '100%': { transform: 'rotate(215deg) translateX(-500px)', opacity: '0' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '100% 100%' },
+                            '100%': { backgroundPosition: '0% 0%' },
+                        },
+                    },
                 }
             }
         }
     </script>
+    <style>
+        .meteors-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .meteor {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: linear-gradient(90deg, #ffffff, transparent);
+            border-radius: 50%;
+            transform: rotate(215deg);
+            animation: meteor 5s linear infinite;
+        }
+        .meteor::before {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, #ffffff, transparent);
+        }
+        .bg-grid {
+            background-size: 30px 30px;
+            background-image: linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px),
+                            linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
-    <div class="container mx-auto px-4 py-8">
-        <!-- Header -->
-        <div class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-gray-800 mb-4">💰 LoanOrNot</h1>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                Make smart financial decisions: Should you take a loan and invest your cash, or pay upfront?
-            </p>
-        </div>
+<body class="bg-black text-white">
+    <!-- Background Effects -->
+    <div class="fixed inset-0 bg-grid opacity-20"></div>
+    <div class="meteors-container">
+        <div class="meteor" style="top: 10%; left: 55%; animation-delay: 0s;"></div>
+        <div class="meteor" style="top: 20%; left: 45%; animation-delay: 1s;"></div>
+        <div class="meteor" style="top: 30%; left: 65%; animation-delay: 2s;"></div>
+        <div class="meteor" style="top: 40%; left: 35%; animation-delay: 3s;"></div>
+        <div class="meteor" style="top: 50%; left: 75%; animation-delay: 4s;"></div>
+    </div>
 
-        <div class="max-w-4xl mx-auto">
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- Input Form -->
-                <div class="bg-white rounded-xl shadow-lg p-6">
-                    <h2 class="text-2xl font-semibold text-gray-800 mb-6">📊 Enter Your Details</h2>
-                    
-                    <form id="calculatorForm" class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Purchase Amount ($)</label>
-                            <input type="number" id="purchaseAmount" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="50000" required>
-                        </div>
+    <div class="relative min-h-screen w-full overflow-y-auto">
+        <div class="container mx-auto px-4 py-8 relative z-20">
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <div class="inline-block">
+                    <h1 class="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400 mb-4">
+                        💰 LoanOrNot
+                    </h1>
+                </div>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    Make smart financial decisions: Should you take a loan and invest your cash, or pay upfront?
+                </p>
+            </div>
 
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Available Cash ($)</label>
-                            <input type="number" id="availableCash" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="50000" required>
-                        </div>
+            <div class="max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Input Form -->
+                    <div class="backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500">
+                        <h2 class="text-2xl font-semibold text-white mb-6">📊 Enter Your Details</h2>
+                        
+                        <form id="calculatorForm" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Purchase Amount ($)</label>
+                                <input type="number" id="purchaseAmount" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="50000" required>
+                            </div>
 
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Loan Interest Rate (% annually)</label>
-                            <input type="number" id="loanRate" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="5.5" required>
-                        </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Available Cash ($)</label>
+                                <input type="number" id="availableCash" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="50000" required>
+                            </div>
 
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Expected Investment Return (% annually)</label>
-                            <input type="number" id="investmentReturn" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="8.0" required>
-                        </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Loan Interest Rate (% annually)</label>
+                                <input type="number" id="loanRate" step="0.01" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="5.5" required>
+                            </div>
 
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Tax Rate on Investment Gains (% annually)</label>
-                            <input type="number" id="taxRate" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="20.0" min="0" max="100">
-                            <p class="text-xs text-gray-500 mt-1">Capital gains tax rate (leave 0 for tax-deferred accounts)</p>
-                        </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Expected Investment Return (% annually)</label>
+                                <input type="number" id="investmentReturn" step="0.01" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="8.0" required>
+                            </div>
 
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Investment Compounding Frequency</label>
-                            <select id="compoundingFrequency" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                                <option value="12">Monthly</option>
-                                <option value="4">Quarterly</option>
-                                <option value="2">Semi-annually</option>
-                                <option value="1" selected>Annually</option>
-                            </select>
-                        </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Tax Rate on Investment Gains (% annually)</label>
+                                <input type="number" id="taxRate" step="0.01" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="20.0" min="0" max="100">
+                                <p class="text-xs text-gray-500 mt-1">Capital gains tax rate (leave 0 for tax-deferred accounts)</p>
+                            </div>
 
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Time Period</label>
-                            <div class="flex gap-2">
-                                <input type="number" id="timePeriod" class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="5" required>
-                                <select id="timeUnit" class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                                    <option value="years">Years</option>
-                                    <option value="months">Months</option>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Investment Compounding Frequency</label>
+                                <select id="compoundingFrequency" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white">
+                                    <option value="12">Monthly</option>
+                                    <option value="4">Quarterly</option>
+                                    <option value="2">Semi-annually</option>
+                                    <option value="1" selected>Annually</option>
                                 </select>
                             </div>
-                        </div>
 
-                        <button type="submit" class="w-full bg-primary text-white py-3 px-4 rounded-md hover:bg-blue-600 transition duration-200 font-medium">
-                            Calculate Best Option 🧮
-                        </button>
-                    </form>
-                </div>
-
-                <!-- Results -->
-                <div class="bg-white rounded-xl shadow-lg p-6">
-                    <h2 class="text-2xl font-semibold text-gray-800 mb-6">📈 Financial Analysis</h2>
-                    
-                    <div id="results" class="hidden">
-                        <!-- Recommendation -->
-                        <div id="recommendation" class="mb-6 p-4 rounded-lg">
-                            <h3 class="text-lg font-semibold mb-2">🎯 Recommendation</h3>
-                            <p id="recommendationText" class="text-lg"></p>
-                        </div>
-
-                        <!-- Option 1: Pay Cash -->
-                        <div class="mb-6 p-4 bg-gray-50 rounded-lg">
-                            <h4 class="font-semibold text-gray-800 mb-3">💵 Option 1: Pay Cash</h4>
-                            <div class="space-y-2 text-sm">
-                                <div class="flex justify-between">
-                                    <span>Initial Payment:</span>
-                                    <span id="cashPayment" class="font-medium"></span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span>Remaining Cash:</span>
-                                    <span id="remainingCash" class="font-medium"></span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span>Investment Returns (after tax):</span>
-                                    <span id="cashInvestmentReturns" class="font-medium text-green-600"></span>
-                                </div>
-                                <div class="flex justify-between border-t pt-2">
-                                    <span class="font-semibold">Total Net Position:</span>
-                                    <span id="cashNetPosition" class="font-semibold"></span>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Time Period</label>
+                                <div class="flex gap-2">
+                                    <input type="number" id="timePeriod" class="flex-1 px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="5" required>
+                                    <select id="timeUnit" class="px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white">
+                                        <option value="years">Years</option>
+                                        <option value="months">Months</option>
+                                    </select>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- Option 2: Take Loan -->
-                        <div class="mb-6 p-4 bg-gray-50 rounded-lg">
-                            <h4 class="font-semibold text-gray-800 mb-3">🏦 Option 2: Take Loan & Invest</h4>
-                            <div class="space-y-2 text-sm">
-                                <div class="flex justify-between">
-                                    <span>Loan Amount:</span>
-                                    <span id="loanAmount" class="font-medium"></span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span>Total Interest Paid:</span>
-                                    <span id="totalInterest" class="font-medium text-red-600"></span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span>Investment Returns (after tax):</span>
-                                    <span id="loanInvestmentReturns" class="font-medium text-green-600"></span>
-                                </div>
-                                <div class="flex justify-between border-t pt-2">
-                                    <span class="font-semibold">Total Net Position:</span>
-                                    <span id="loanNetPosition" class="font-semibold"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Net Benefit -->
-                        <div class="p-4 rounded-lg border-2">
-                            <div class="flex justify-between items-center">
-                                <span class="font-semibold text-lg">💰 Net Benefit:</span>
-                                <span id="netBenefit" class="font-bold text-xl"></span>
-                            </div>
-                            <p id="benefitExplanation" class="text-sm text-gray-600 mt-2"></p>
-                        </div>
+                        </form>
                     </div>
 
-                    <div id="noResults" class="text-center text-gray-500 py-8">
-                        <div class="text-6xl mb-4">📊</div>
-                        <p>Enter your details to see the financial analysis</p>
+                    <!-- Results -->
+                    <div class="backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500">
+                        <h2 class="text-2xl font-semibold text-white mb-6">📈 Financial Analysis</h2>
+                        
+                        <div id="results" class="hidden">
+                            <!-- Recommendation -->
+                            <div id="recommendation" class="mb-6 p-4 rounded-lg backdrop-blur-sm">
+                                <h3 class="text-lg font-semibold mb-2 text-white">🎯 Recommendation</h3>
+                                <p id="recommendationText" class="text-lg"></p>
+                            </div>
+
+                            <!-- Option 1: Pay Cash -->
+                            <div class="mb-6 p-4 bg-gray-900/50 rounded-lg border border-gray-800">
+                                <h4 class="font-semibold text-white mb-3">💵 Option 1: Pay Cash</h4>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex justify-between text-gray-300">
+                                        <span>Initial Payment:</span>
+                                        <span id="cashPayment" class="font-medium"></span>
+                                    </div>
+                                    <div class="flex justify-between text-gray-300">
+                                        <span>Remaining Cash:</span>
+                                        <span id="remainingCash" class="font-medium"></span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-300">Investment Returns (after tax):</span>
+                                        <span id="cashInvestmentReturns" class="font-medium text-emerald-400"></span>
+                                    </div>
+                                    <div class="flex justify-between border-t border-gray-700 pt-2">
+                                        <span class="font-semibold text-white">Total Net Position:</span>
+                                        <span id="cashNetPosition" class="font-semibold text-white"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Option 2: Take Loan -->
+                            <div class="mb-6 p-4 bg-gray-900/50 rounded-lg border border-gray-800">
+                                <h4 class="font-semibold text-white mb-3">🏦 Option 2: Take Loan & Invest</h4>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex justify-between text-gray-300">
+                                        <span>Loan Amount:</span>
+                                        <span id="loanAmount" class="font-medium"></span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-300">Total Interest Paid:</span>
+                                        <span id="totalInterest" class="font-medium text-red-400"></span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-300">Investment Returns (after tax):</span>
+                                        <span id="loanInvestmentReturns" class="font-medium text-emerald-400"></span>
+                                    </div>
+                                    <div class="flex justify-between border-t border-gray-700 pt-2">
+                                        <span class="font-semibold text-white">Total Net Position:</span>
+                                        <span id="loanNetPosition" class="font-semibold text-white"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Net Benefit -->
+                            <div class="p-4 rounded-lg border border-gray-800 bg-gray-900/50">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-semibold text-lg text-white">💰 Net Benefit:</span>
+                                    <span id="netBenefit" class="font-bold text-xl"></span>
+                                </div>
+                                <p id="benefitExplanation" class="text-sm text-gray-400 mt-2"></p>
+                            </div>
+                        </div>
+
+                        <div id="noResults" class="text-center text-gray-400 py-8">
+                            <div class="text-6xl mb-4">📊</div>
+                            <p>Enter your details to see the financial analysis</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Footer -->
-        <div class="text-center mt-12 text-gray-600">
-            <p class="text-sm">
-                ⚠️ This tool provides estimates for educational purposes. Consult a financial advisor for personalized advice.
-            </p>
+            <!-- Footer -->
+            <div class="text-center mt-12 text-gray-400 pb-8">
+                <p class="text-sm">
+                    ⚠️ This tool provides estimates for educational purposes. Consult a financial advisor for personalized advice.
+                </p>
+            </div>
         </div>
     </div>
 

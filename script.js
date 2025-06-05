@@ -5,11 +5,6 @@ class LoanCalculator {
     }
 
     initEventListeners() {
-        this.form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.calculate();
-        });
-
         // Real-time calculation on input change
         const inputs = this.form.querySelectorAll('input, select');
         inputs.forEach(input => {
@@ -19,6 +14,11 @@ class LoanCalculator {
                 }
             });
         });
+
+        // Initial calculation if form has default values
+        if (this.form.checkValidity()) {
+            this.calculate();
+        }
     }
 
     getInputValues() {
@@ -181,11 +181,11 @@ class LoanCalculator {
         const recommendationText = document.getElementById('recommendationText');
         
         if (netBenefit > 0) {
-            recommendationDiv.className = 'mb-6 p-4 rounded-lg bg-green-100 border border-green-300';
-            recommendationText.innerHTML = `<span class=\"text-green-800\">💡 Take a loan and invest your cash!</span>`;
+            recommendationDiv.className = 'mb-6 p-4 rounded-lg backdrop-blur-sm bg-emerald-900/30 border border-emerald-500/50';
+            recommendationText.innerHTML = `<span class="text-emerald-400">💡 Take a loan and invest your cash!</span>`;
         } else {
-            recommendationDiv.className = 'mb-6 p-4 rounded-lg bg-blue-100 border border-blue-300';
-            recommendationText.innerHTML = `<span class=\"text-blue-800\">💡 Pay with cash!</span>`;
+            recommendationDiv.className = 'mb-6 p-4 rounded-lg backdrop-blur-sm bg-blue-900/30 border border-blue-500/50';
+            recommendationText.innerHTML = `<span class="text-blue-400">💡 Pay with cash!</span>`;
         }
 
         // Update cash option details
@@ -206,20 +206,20 @@ class LoanCalculator {
         
         if (netBenefit > 0) {
             netBenefitElement.textContent = `+${this.formatCurrency(netBenefit)}`;
-            netBenefitElement.className = 'font-bold text-xl text-green-600';
+            netBenefitElement.className = 'font-bold text-xl text-emerald-400';
             benefitExplanationElement.textContent = `Taking a loan and investing provides ${this.formatCurrency(netBenefit)} more after ${inputs.timePeriod} ${inputs.timeUnit}.`;
         } else {
             netBenefitElement.textContent = this.formatCurrency(netBenefit);
-            netBenefitElement.className = 'font-bold text-xl text-red-600';
+            netBenefitElement.className = 'font-bold text-xl text-blue-400';
             benefitExplanationElement.textContent = `Paying cash saves you ${this.formatCurrency(Math.abs(netBenefit))} compared to taking a loan after ${inputs.timePeriod} ${inputs.timeUnit}.`;
         }
 
         // Update net benefit section border
         const netBenefitSection = netBenefitElement.closest('.p-4');
         if (netBenefit > 0) {
-            netBenefitSection.className = 'p-4 rounded-lg border-2 border-green-300 bg-green-50';
+            netBenefitSection.className = 'p-4 rounded-lg border border-emerald-500/50 bg-emerald-900/30 backdrop-blur-sm';
         } else {
-            netBenefitSection.className = 'p-4 rounded-lg border-2 border-blue-300 bg-blue-50';
+            netBenefitSection.className = 'p-4 rounded-lg border border-blue-500/50 bg-blue-900/30 backdrop-blur-sm';
         }
     }
 
@@ -227,10 +227,10 @@ class LoanCalculator {
         // Hide results and show error
         document.getElementById('results').classList.add('hidden');
         document.getElementById('noResults').innerHTML = `
-            <div class=\"text-center text-red-500 py-8\">
-                <div class=\"text-6xl mb-4\">⚠️</div>
-                <p class=\"font-medium\">${message}</p>
-                <p class=\"text-sm mt-2\">Please check your inputs and try again.</p>
+            <div class="text-center text-red-400 py-8">
+                <div class="text-6xl mb-4">⚠️</div>
+                <p class="font-medium">${message}</p>
+                <p class="text-sm mt-2 text-gray-500">Please check your inputs and try again.</p>
             </div>
         `;
         document.getElementById('noResults').classList.remove('hidden');
