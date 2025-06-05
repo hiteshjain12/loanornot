@@ -244,16 +244,32 @@ class LoanCalculator {
         
         // Show/hide and update partial loan details
         const partialLoanDetails = document.getElementById('partialLoanDetails');
+        const remainingCashSection = document.getElementById('remainingCashSection');
+
         if (loanAmountNeeded > 0) {
+            // Show partial loan details
             partialLoanDetails.classList.remove('hidden');
             document.getElementById('partialLoanAmount').textContent = this.formatCurrency(loanAmountNeeded);
             document.getElementById('partialLoanInterest').textContent = this.formatCurrency(totalInterestForRemainder);
+            
+            // Hide remaining cash section if no cash left to invest
+            if (remainingCashAfterPurchase <= 0) {
+                remainingCashSection.classList.add('hidden');
+            } else {
+                remainingCashSection.classList.remove('hidden');
+            }
         } else {
+            // Hide partial loan details and show remaining cash section
             partialLoanDetails.classList.add('hidden');
+            remainingCashSection.classList.remove('hidden');
         }
 
-        document.getElementById('remainingCash').textContent = this.formatCurrency(remainingCashAfterPurchase);
-        document.getElementById('cashInvestmentReturns').textContent = this.formatCurrency(cashInvestmentReturns);
+        // Update remaining cash details if visible
+        if (remainingCashAfterPurchase > 0) {
+            document.getElementById('remainingCash').textContent = this.formatCurrency(remainingCashAfterPurchase);
+            document.getElementById('cashInvestmentReturns').textContent = this.formatCurrency(cashInvestmentReturns);
+        }
+        
         document.getElementById('cashNetPosition').textContent = this.formatCurrency(cashNetPosition);
 
         // Update full loan option details
