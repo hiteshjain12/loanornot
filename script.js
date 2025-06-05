@@ -11,64 +11,85 @@ class LoanCalculator {
 
     // Add method to save form values
     saveFormValues() {
-        const formData = {
-            purchaseAmount: this.purchaseAmountInput.value,
-            availableCash: this.availableCashInput.value,
-            matchPurchaseAmount: this.matchCheckbox.checked,
-            loanRate: document.getElementById('loanRate').value,
-            investmentReturn: document.getElementById('investmentReturn').value,
-            taxRate: document.getElementById('taxRate').value,
-            compoundingFrequency: document.getElementById('compoundingFrequency').value,
-            timePeriod: document.getElementById('timePeriod').value,
-            timeUnit: document.getElementById('timeUnit').value
-        };
-        localStorage.setItem('loanCalculatorData', JSON.stringify(formData));
+        try {
+            const formData = {
+                purchaseAmount: this.purchaseAmountInput.value,
+                availableCash: this.availableCashInput.value,
+                matchPurchaseAmount: this.matchCheckbox.checked,
+                loanRate: document.getElementById('loanRate').value,
+                investmentReturn: document.getElementById('investmentReturn').value,
+                taxRate: document.getElementById('taxRate').value,
+                compoundingFrequency: document.getElementById('compoundingFrequency').value,
+                timePeriod: document.getElementById('timePeriod').value,
+                timeUnit: document.getElementById('timeUnit').value
+            };
+            localStorage.setItem('loanCalculatorData', JSON.stringify(formData));
+        } catch (error) {
+            console.warn('Error saving form values:', error);
+        }
     }
 
     // Add method to load saved values
     loadSavedValues() {
         const savedData = localStorage.getItem('loanCalculatorData');
         if (savedData) {
-            const formData = JSON.parse(savedData);
-            
-            // Restore values to form elements
-            this.purchaseAmountInput.value = formData.purchaseAmount || '';
-            this.availableCashInput.value = formData.availableCash || '';
-            this.matchCheckbox.checked = formData.matchPurchaseAmount;
-            document.getElementById('loanRate').value = formData.loanRate || '';
-            document.getElementById('investmentReturn').value = formData.investmentReturn || '';
-            document.getElementById('taxRate').value = formData.taxRate || '';
-            document.getElementById('compoundingFrequency').value = formData.compoundingFrequency || '1';
-            document.getElementById('timePeriod').value = formData.timePeriod || '';
-            document.getElementById('timeUnit').value = formData.timeUnit || 'years';
+            try {
+                const formData = JSON.parse(savedData);
+                
+                // Restore values to form elements
+                this.purchaseAmountInput.value = formData.purchaseAmount || '';
+                this.availableCashInput.value = formData.availableCash || '';
+                this.matchCheckbox.checked = formData.matchPurchaseAmount;
+                document.getElementById('loanRate').value = formData.loanRate || '';
+                document.getElementById('investmentReturn').value = formData.investmentReturn || '';
+                document.getElementById('taxRate').value = formData.taxRate || '';
+                document.getElementById('compoundingFrequency').value = formData.compoundingFrequency || '1';
+                document.getElementById('timePeriod').value = formData.timePeriod || '';
+                document.getElementById('timeUnit').value = formData.timeUnit || 'years';
 
-            // Handle the available cash input state based on checkbox
-            this.availableCashInput.disabled = this.matchCheckbox.checked;
-            if (this.matchCheckbox.checked) {
-                this.availableCashInput.value = this.purchaseAmountInput.value;
+                // Handle the available cash input state based on checkbox
+                this.availableCashInput.disabled = this.matchCheckbox.checked;
+                if (this.matchCheckbox.checked) {
+                    this.availableCashInput.value = this.purchaseAmountInput.value;
+                }
+
+                // Trigger calculation if we have valid values
+                if (this.form.checkValidity()) {
+                    this.calculate();
+                }
+            } catch (error) {
+                console.warn('Error loading saved values:', error);
+                localStorage.removeItem('loanCalculatorData');
             }
         }
     }
 
     initEventListeners() {
-        // Real-time calculation on input change
+        // Real-time calculation and save on input change
         const inputs = this.form.querySelectorAll('input, select');
         inputs.forEach(input => {
             input.addEventListener('input', () => {
                 if (input.id === 'purchaseAmount') {
                     this.handlePurchaseAmountChange();
                 }
+                // Always save values on change
+                this.saveFormValues();
+                // Calculate if form is valid
                 if (this.form.checkValidity()) {
                     this.calculate();
                 }
-                this.saveFormValues(); // Save values when input changes
+            });
+
+            // Also save on blur (when input loses focus)
+            input.addEventListener('blur', () => {
+                this.saveFormValues();
             });
         });
 
         // Handle checkbox change
         this.matchCheckbox.addEventListener('change', () => {
             this.handleCheckboxChange();
-            this.saveFormValues(); // Save values when checkbox changes
+            this.saveFormValues();
         });
 
         // Initial setup
