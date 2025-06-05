@@ -95,12 +95,12 @@ class LoanCalculator {
     validateInputs(inputs) {
         const { purchaseAmount, availableCash } = inputs;
         
-        if (purchaseAmount <= 0 || availableCash <= 0) {
-            throw new Error('Purchase amount and available cash must be positive');
+        if (purchaseAmount <= 0) {
+            throw new Error('Purchase amount must be positive');
         }
         
-        if (availableCash < purchaseAmount) {
-            throw new Error('Available cash must be at least equal to purchase amount');
+        if (availableCash < 0) {
+            throw new Error('Available cash cannot be negative');
         }
     }
 
@@ -142,8 +142,9 @@ class LoanCalculator {
 
             const { purchaseAmount, availableCash, loanRate, investmentReturn, taxRate, compoundingFrequency, timeInYears } = inputs;
 
-            // Option 1: Pay Cash
-            const remainingCashAfterPurchase = availableCash - purchaseAmount;
+            // Option 1: Pay with Available Cash + Take Loan for Remainder
+            const loanAmountNeeded = Math.max(0, purchaseAmount - availableCash);
+            const remainingCashAfterPurchase = Math.max(0, availableCash - purchaseAmount);
             const cashInvestmentValueAfterTax = this.calculateInvestmentWithTax(
                 remainingCashAfterPurchase, 
                 investmentReturn, 
@@ -152,12 +153,13 @@ class LoanCalculator {
                 taxRate
             );
             const cashInvestmentReturns = cashInvestmentValueAfterTax - remainingCashAfterPurchase;
-            // Net position = remaining cash after tax and growth
-            const cashNetPosition = cashInvestmentValueAfterTax;
+            const totalInterestForRemainder = loanAmountNeeded > 0 ? this.calculateLoanInterest(loanAmountNeeded, loanRate, timeInYears) : 0;
+            // Net position = remaining cash after tax and growth - loan costs
+            const cashNetPosition = cashInvestmentValueAfterTax - (loanAmountNeeded + totalInterestForRemainder);
 
-            // Option 2: Take Loan and Invest All Cash
-            const loanAmount = purchaseAmount;
-            const totalInterest = this.calculateLoanInterest(loanAmount, loanRate, timeInYears);
+            // Option 2: Take Full Loan and Invest All Cash
+            const fullLoanAmount = purchaseAmount;
+            const totalInterest = this.calculateLoanInterest(fullLoanAmount, loanRate, timeInYears);
             const loanInvestmentValueAfterTax = this.calculateInvestmentWithTax(
                 availableCash, 
                 investmentReturn, 
@@ -167,7 +169,7 @@ class LoanCalculator {
             );
             const loanInvestmentReturns = loanInvestmentValueAfterTax - availableCash;
             // Net position = investment value after tax - loan total cost
-            const totalLoanCost = loanAmount + totalInterest;
+            const totalLoanCost = fullLoanAmount + totalInterest;
             const loanNetPosition = loanInvestmentValueAfterTax - totalLoanCost;
 
             // Net benefit calculation - difference between the two net positions
@@ -178,13 +180,15 @@ class LoanCalculator {
                 remainingCashAfterPurchase,
                 cashInvestmentReturns,
                 cashNetPosition,
-                loanAmount,
+                loanAmount: fullLoanAmount,
                 totalInterest,
                 loanInvestmentReturns,
                 loanNetPosition,
                 netBenefit,
                 timeInYears,
-                inputs
+                inputs,
+                loanAmountNeeded,
+                totalInterestForRemainder
             });
 
         } catch (error) {
@@ -214,7 +218,9 @@ class LoanCalculator {
             loanNetPosition,
             netBenefit,
             timeInYears,
-            inputs
+            inputs,
+            loanAmountNeeded,
+            totalInterestForRemainder
         } = data;
 
         // Show results section
@@ -227,14 +233,17 @@ class LoanCalculator {
         
         if (netBenefit > 0) {
             recommendationDiv.className = 'mb-6 p-4 rounded-lg backdrop-blur-sm bg-emerald-900/30 border border-emerald-500/50';
-            recommendationText.innerHTML = `<span class="text-emerald-400">💡 Take a loan and invest your cash!</span>`;
+            recommendationText.innerHTML = `<span class="text-emerald-400">💡 Take a full loan and invest your cash!</span>`;
         } else {
             recommendationDiv.className = 'mb-6 p-4 rounded-lg backdrop-blur-sm bg-blue-900/30 border border-blue-500/50';
-            recommendationText.innerHTML = `<span class="text-blue-400">💡 Pay with cash!</span>`;
+            recommendationText.innerHTML = `<span class="text-blue-400">💡 Use available cash${loanAmountNeeded > 0 ? ' and take a smaller loan' : ''}!</span>`;
         }
 
         // Update cash option details
-        document.getElementById('cashPayment').textContent = this.formatCurrency(purchaseAmount);
+        const cashPaymentText = availableCash >= purchaseAmount 
+            ? this.formatCurrency(purchaseAmount)
+            : `${this.formatCurrency(availableCash)} + ${this.formatCurrency(loanAmountNeeded)} loan`;
+        document.getElementById('cashPayment').textContent = cashPaymentText;
         document.getElementById('remainingCash').textContent = this.formatCurrency(remainingCashAfterPurchase);
         document.getElementById('cashInvestmentReturns').textContent = this.formatCurrency(cashInvestmentReturns);
         document.getElementById('cashNetPosition').textContent = this.formatCurrency(cashNetPosition);
@@ -252,11 +261,11 @@ class LoanCalculator {
         if (netBenefit > 0) {
             netBenefitElement.textContent = `+${this.formatCurrency(netBenefit)}`;
             netBenefitElement.className = 'font-bold text-xl text-emerald-400';
-            benefitExplanationElement.textContent = `Taking a loan and investing provides ${this.formatCurrency(netBenefit)} more after ${inputs.timePeriod} ${inputs.timeUnit}.`;
+            benefitExplanationElement.textContent = `Taking a full loan and investing provides ${this.formatCurrency(netBenefit)} more after ${inputs.timePeriod} ${inputs.timeUnit}.`;
         } else {
             netBenefitElement.textContent = this.formatCurrency(netBenefit);
             netBenefitElement.className = 'font-bold text-xl text-blue-400';
-            benefitExplanationElement.textContent = `Paying cash saves you ${this.formatCurrency(Math.abs(netBenefit))} compared to taking a loan after ${inputs.timePeriod} ${inputs.timeUnit}.`;
+            benefitExplanationElement.textContent = `Using available cash${loanAmountNeeded > 0 ? ' with a smaller loan' : ''} saves you ${this.formatCurrency(Math.abs(netBenefit))} after ${inputs.timePeriod} ${inputs.timeUnit}.`;
         }
 
         // Update net benefit section border
