@@ -387,13 +387,158 @@ class LoanCalculator {
     }
 }
 
-// Initialize the calculator when the page loads
+class GoalCalculator {
+    constructor() {
+        this.form = document.getElementById('goalCalculatorForm');
+        this.goalNameInput = document.getElementById('goalName');
+        this.currentCostInput = document.getElementById('currentCost');
+        this.existingInvestmentInput = document.getElementById('existingInvestment');
+        this.yearsToAchieveInput = document.getElementById('yearsToAchieve');
+        this.goalInvestmentReturnInput = document.getElementById('goalInvestmentReturn');
+        this.inflationRateInput = document.getElementById('inflationRate');
+        
+        this.loadSavedValues();
+        this.initEventListeners();
+    }
+
+    saveFormValues() {
+        try {
+            const formData = {
+                goalName: this.goalNameInput.value,
+                currentCost: this.currentCostInput.value,
+                existingInvestment: this.existingInvestmentInput.value,
+                yearsToAchieve: this.yearsToAchieveInput.value,
+                goalInvestmentReturn: this.goalInvestmentReturnInput.value,
+                inflationRate: this.inflationRateInput.value
+            };
+            localStorage.setItem('goalCalculatorData', JSON.stringify(formData));
+        } catch (error) {
+            console.warn('Error saving goal form values:', error);
+        }
+    }
+
+    loadSavedValues() {
+        const savedData = localStorage.getItem('goalCalculatorData');
+        if (savedData) {
+            try {
+                const formData = JSON.parse(savedData);
+                this.goalNameInput.value = formData.goalName || '';
+                this.currentCostInput.value = formData.currentCost || '';
+                this.existingInvestmentInput.value = formData.existingInvestment || '';
+                this.yearsToAchieveInput.value = formData.yearsToAchieve || '';
+                this.goalInvestmentReturnInput.value = formData.goalInvestmentReturn || '';
+                this.inflationRateInput.value = formData.inflationRate || '6.0';
+
+                if (this.form.checkValidity()) {
+                    this.calculate();
+                }
+            } catch (error) {
+                console.warn('Error loading goal form values:', error);
+                localStorage.removeItem('goalCalculatorData');
+            }
+        }
+    }
+
+    initEventListeners() {
+        const inputs = this.form.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                this.saveFormValues();
+                if (this.form.checkValidity()) {
+                    this.calculate();
+                }
+            });
+        });
+    }
+
+    calculate() {
+        const currentCost = parseFloat(this.currentCostInput.value);
+        const existingInvestment = parseFloat(this.existingInvestmentInput.value) || 0;
+        const yearsToAchieve = parseFloat(this.yearsToAchieveInput.value);
+        const investmentReturn = parseFloat(this.goalInvestmentReturnInput.value) / 100;
+        const inflationRate = parseFloat(this.inflationRateInput.value) / 100;
+
+        if (isNaN(currentCost) || isNaN(yearsToAchieve) || isNaN(investmentReturn) || isNaN(inflationRate)) {
+            return;
+        }
+
+        const futureCost = currentCost * Math.pow(1 + inflationRate, yearsToAchieve);
+        const futureValueOfExisting = existingInvestment * Math.pow(1 + investmentReturn, yearsToAchieve);
+        const remainingAmountNeeded = futureCost - futureValueOfExisting;
+
+        let monthlyInvestment = 0;
+        if (remainingAmountNeeded > 0) {
+            const monthlyInvestmentRate = investmentReturn / 12;
+            const numberOfMonths = yearsToAchieve * 12;
+            monthlyInvestment = (remainingAmountNeeded * monthlyInvestmentRate) / (Math.pow(1 + monthlyInvestmentRate, numberOfMonths) - 1);
+        }
+
+        this.displayResults(futureCost, futureValueOfExisting, monthlyInvestment, remainingAmountNeeded);
+    }
+
+    displayResults(futureCost, futureValueOfExisting, monthlyInvestment, remainingAmountNeeded) {
+        document.getElementById('goalResults').classList.remove('hidden');
+        document.getElementById('noGoalResults').classList.add('hidden');
+        
+        document.getElementById('futureCost').textContent = this.formatCurrency(futureCost);
+        document.getElementById('futureExistingInvestment').textContent = this.formatCurrency(futureValueOfExisting);
+        
+        const monthlyInvestmentElement = document.getElementById('monthlyInvestment');
+        const monthlyInvestmentTitle = monthlyInvestmentElement.parentElement.querySelector('h3');
+        
+        if (remainingAmountNeeded > 0) {
+            monthlyInvestmentTitle.textContent = 'Required Monthly Investment';
+            monthlyInvestmentElement.textContent = this.formatCurrency(monthlyInvestment);
+        } else {
+            monthlyInvestmentTitle.textContent = 'Congratulations!';
+            monthlyInvestmentElement.textContent = "You've already met your goal!";
+        }
+    }
+
+    formatCurrency(amount) {
+        if (typeof amount !== 'number') {
+            return '₹0.00';
+        }
+        return new Intl.NumberFormat('en-IN', {
+            style: 'currency',
+            currency: 'INR',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(amount);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     new LoanCalculator();
-});
+    new GoalCalculator();
 
-// Add some helpful tooltips and explanations
-document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.tab-btn');
+    const calculators = document.querySelectorAll('.calculator-content');
+
+    const switchTab = (tab) => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const tabId = tab.dataset.tab;
+        localStorage.setItem('lastActiveTab', tabId); // Save active tab
+        calculators.forEach(calc => {
+            if (calc.id === tabId) {
+                calc.classList.remove('hidden');
+            } else {
+                calc.classList.add('hidden');
+            }
+        });
+    };
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => switchTab(tab));
+    });
+
+    // Set initial tab
+    const lastTab = localStorage.getItem('lastActiveTab');
+    const tabToActivate = document.querySelector(`.tab-btn[data-tab="${lastTab}"]`) || tabs[0];
+    switchTab(tabToActivate);
+
     // Add some example scenarios as placeholders or help text
     const scenarios = {
         conservative: {
