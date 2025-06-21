@@ -262,11 +262,14 @@ class LoanCalculator {
     }
 
     formatCurrency(amount) {
-        return new Intl.NumberFormat('en-US', {
+        if (typeof amount !== 'number') {
+            return '₹0.00';
+        }
+        return new Intl.NumberFormat('en-IN', {
             style: 'currency',
-            currency: 'USD',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0
+            currency: 'INR',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
         }).format(amount);
     }
 
