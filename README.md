@@ -1,27 +1,22 @@
-# LoanOrNot 💰
+# Financial Calculators 💰
 
-A smart financial decision tool that helps you determine whether you should take a loan and invest your cash, or pay upfront for a purchase.
+A smart suite of financial decision tools to help you make better money choices. Includes:
+- **LoanOrNot**: Decide whether to take a loan and invest your cash, or pay upfront for a purchase.
+- **Goal Calculator**: Find out how much you need to save each month to reach a future financial goal, accounting for inflation and your existing investments.
 
 ## 🎯 Purpose
 
-When you have enough cash for a major purchase, you face a financial dilemma:
-- **Option 1**: Pay cash and invest the remaining money
-- **Option 2**: Take a loan for the purchase and invest all your cash
-
-This tool calculates which option gives you better financial outcomes based on:
-- Purchase amount
-- Available cash
-- Loan interest rate
-- Expected investment returns
-- Tax rate on investment gains
-- Investment compounding frequency (monthly, quarterly, semi-annually, annually)
-- Time period
+This app helps you answer two key questions:
+- Should you take a loan and invest your cash, or pay upfront?
+- How much should you save each month to reach a goal in X years, given inflation and your current savings?
 
 ## 🚀 Features
 
+- **Multi-tab UI**: Switch between different calculators (LoanOrNot, Goal Calculator, more coming soon)
 - **Real-time calculations** as you type
+- **Remembers your data**: All form values and last visited tab are saved and restored on page refresh
 - **Visual recommendations** with color-coded results
-- **Detailed breakdown** of both scenarios
+- **Detailed breakdown** of all scenarios
 - **Net benefit analysis** showing the financial difference
 - **Responsive design** works on desktop and mobile
 - **Input validation** with helpful error messages
@@ -35,7 +30,7 @@ This tool calculates which option gives you better financial outcomes based on:
 
 ## 📊 How It Works
 
-### Financial Calculations
+### LoanOrNot Calculator
 
 **Option 1: Pay Cash**
 - Remaining cash after purchase gets invested
@@ -52,25 +47,40 @@ This tool calculates which option gives you better financial outcomes based on:
 - Shows which option provides better financial outcome
 - Displays the monetary difference over the specified time period
 
-### Key Formulas
+### Goal Calculator
 
-- **Compound Interest with Frequency**: `A = P(1 + r/n)^(nt)`
-  - A = final amount, P = principal, r = annual rate, n = compounding frequency, t = time in years
-- **Investment After Tax**: `After-tax Value = Total Value - (Gains × Tax Rate)`
-- **Loan Payment**: `PMT = P[r(1+r)^n]/[(1+r)^n-1]`
-- **Total Interest**: `Total Paid - Principal`
+**Purpose:**
+- Find out how much you need to save each month to reach a future goal, given the cost today, years to achieve, expected investment return, inflation, and your existing investment for the goal.
+
+**Inputs:**
+- Goal name (optional)
+- Cost today (₹)
+- Existing investment for this goal (₹)
+- Years to achieve
+- Expected investment return (% annually)
+- Inflation rate (% annually, default 6%)
+
+**Outputs:**
+- Future cost of your goal (adjusted for inflation)
+- Future value of your existing investment
+- Required monthly investment (if needed)
+- If your existing investment is already enough, you'll be congratulated!
+
+**Key Formulas:**
+- **Future Cost:** `Future Cost = Cost Today × (1 + Inflation Rate)^Years`
+- **Future Value of Existing Investment:** `FV = Existing Investment × (1 + Investment Return)^Years`
+- **Monthly Investment Needed:**
+  - If more is needed: `PMT = (Future Cost - FV) × r / ((1 + r)^n - 1)`
+    - where r = monthly investment return, n = total months
 
 ## 🏃‍♂️ Getting Started
 
 1. **Clone or download** the project files
 2. **Open `index.html`** in any modern web browser
-3. **Enter your financial details**:
-   - Purchase amount (e.g., $50,000 for a car)
-   - Available cash (e.g., $60,000)
-   - Loan interest rate (e.g., 5.5% annually)
-   - Expected investment return (e.g., 8.0% annually)
-   - Time period (e.g., 5 years)
-4. **View results** instantly with recommendation
+3. **Choose a calculator tab** (LoanOrNot or Goal Calculator)
+4. **Enter your details**
+5. **View results instantly**
+6. **Your data and last visited tab are saved automatically**
 
 ## 📁 Project Structure
 
@@ -83,21 +93,30 @@ loanornot/
 
 ## 💡 Example Scenarios
 
-### Scenario 1: Conservative Investment
-- Purchase: $50,000
-- Available Cash: $60,000
+### LoanOrNot: Conservative Investment
+- Purchase: ₹50,000
+- Available Cash: ₹60,000
 - Loan Rate: 6.5%
 - Investment Return: 7.0%
 - Period: 5 years
 - **Result**: Small benefit to taking loan due to higher investment returns
 
-### Scenario 2: Aggressive Investment
-- Purchase: $100,000
-- Available Cash: $120,000
+### LoanOrNot: Aggressive Investment
+- Purchase: ₹100,000
+- Available Cash: ₹120,000
 - Loan Rate: 4.5%
 - Investment Return: 10.0%
 - Period: 10 years
 - **Result**: Significant benefit to taking loan due to much higher investment returns
+
+### Goal Calculator: Dream Vacation
+- Goal: Dream Vacation
+- Cost Today: ₹2,00,000
+- Existing Investment: ₹50,000
+- Years to Achieve: 5
+- Expected Investment Return: 8%
+- Inflation Rate: 6%
+- **Result**: Future cost is ₹2,67,646. You need to invest ₹2,500/month (example) to reach your goal.
 
 ## ⚠️ Important Considerations
 
@@ -135,6 +154,7 @@ The app uses Tailwind CSS and is easily customizable:
 - **Sensitivity analysis** - Show how results change with different assumptions
 - **Historical data** - Use real market data for projections
 - **Export functionality** - Save results as PDF or share via email
+- **More calculators** - Add SIP, retirement, and other financial tools
 
 ## 📄 License
 
