@@ -103,6 +103,7 @@
                 <div class="flex space-x-4">
                     <button class="tab-btn px-4 py-2 rounded-md text-lg font-medium transition-colors duration-300" data-tab="loanOrNot">Loan or Not</button>
                     <button class="tab-btn px-4 py-2 rounded-md text-lg font-medium transition-colors duration-300" data-tab="goalCalculator">Goal Calculator</button>
+                    <button class="tab-btn px-4 py-2 rounded-md text-lg font-medium transition-colors duration-300" data-tab="evVsIceCalculator">EV vs ICE Calculator</button>
                 </div>
             </div>
 
@@ -264,7 +265,239 @@
                     </div>
                 </div>
 
-                <!-- Goal Calculator -->
+            <!-- EV vs ICE Calculator -->
+            <div id="evVsIceCalculator" class="calculator-content hidden">
+                <div class="max-w-4xl mx-auto">
+                    <div class="space-y-8">
+                        <!-- Input Form -->
+                        <div class="backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500">
+                            <h2 class="text-2xl font-semibold text-white mb-6">🚗 Enter Vehicle Details</h2>
+                            <form id="evVsIceCalculatorForm" class="space-y-4">
+
+                                <!-- EV Details -->
+                                <h3 class="text-xl font-semibold text-white">EV Details</h3>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-300 mb-2">Purchase Price (₹)</label>
+                                        <input type="number" id="evPurchasePrice" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="1500000" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-300 mb-2">Expected Resale Value (% of purchase price)</label>
+                                        <input type="number" id="evResaleValue" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="40">
+                                        <p class="text-xs text-gray-500 mt-1">Leave blank if you are not going to sell or not sure about it</p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-300 mb-2">Efficiency (km/kWh)</label>
+                                        <input type="number" step="0.01" id="evEfficiency" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" value="5" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-300 mb-2">Electricity Cost (₹/kWh)</label>
+                                        <input type="number" step="0.01" id="electricityCost" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" value="8" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-300 mb-2">Annual Maintenance (₹)</label>
+                                        <input type="number" id="evMaintenanceCost" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="15000" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-300 mb-2">Insurance per Year (₹)</label>
+                                        <input type="number" id="evInsuranceCost" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="35000" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-300 mb-2">Govt Incentives (₹)</label>
+                                        <input type="number" id="evIncentives" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="50000">
+                                    </div>
+                                </div>
+
+                                <!-- ICE Details -->
+                                <h3 class="text-xl font-semibold text-white mt-6">ICE Details</h3>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-300 mb-2">Purchase Price (₹)</label>
+                                        <input type="number" id="icePurchasePrice" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="1200000" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-300 mb-2">Expected Resale Value (% of purchase price)</label>
+                                        <input type="number" id="iceResaleValue" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="45">
+                                        <p class="text-xs text-gray-500 mt-1">Leave blank if you are not going to sell or not sure about it</p>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-300 mb-2">Fuel Efficiency (km/l)</label>
+                                        <input type="number" step="0.01" id="fuelEfficiency" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" value="15" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-300 mb-2">Fuel Cost (₹/l)</label>
+                                        <input type="number" step="0.01" id="fuelCost" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" value="100" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-300 mb-2">Annual Maintenance (₹)</label>
+                                        <input type="number" id="iceMaintenanceCost" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="25000" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-300 mb-2">Insurance per Year (₹)</label>
+                                        <input type="number" id="iceInsuranceCost" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="30000" required>
+                                    </div>
+                                </div>
+
+                                <!-- Ownership Details -->
+                                <h3 class="text-xl font-semibold text-white mt-6">Usage</h3>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-300 mb-2">Average Distance per Year (km)</label>
+                                        <input type="number" id="averageDistance" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="12000" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-300 mb-2">Ownership Period (years)</label>
+                                        <input type="number" id="ownershipPeriod" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="8" required>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Results -->
+                        <div class="backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500">
+                            <h2 class="text-2xl font-semibold text-white mb-6">📈 Total Cost of Ownership (TCO)</h2>
+                            <div id="evIceResults" class="hidden">
+                                <!-- Recommendation -->
+                                <div id="evIceRecommendation" class="mb-6 p-4 rounded-lg backdrop-blur-sm">
+                                    <h3 class="text-lg font-semibold mb-2 text-white">🎯 Recommendation</h3>
+                                    <p id="evIceRecommendationText" class="text-lg"></p>
+                                </div>
+
+                                <!-- EV Breakdown -->
+                                <div class="mb-6 p-4 bg-gray-900/50 rounded-lg border border-gray-800">
+                                    <h4 class="font-semibold text-white mb-3">⚡ EV Breakdown</h4>
+                                    <div class="space-y-2 text-sm">
+                                        <div class="flex justify-between text-gray-300">
+                                            <span>Purchase Price:</span>
+                                            <span id="evPurchasePriceDisplay" class="font-medium"></span>
+                                        </div>
+                                        <div class="flex justify-between text-gray-300">
+                                            <span>Govt Incentives:</span>
+                                            <span id="evIncentivesDisplay" class="font-medium text-green-400"></span>
+                                        </div>
+                                        <div class="flex justify-between text-gray-300">
+                                            <span>Total Fuel/Energy Cost:</span>
+                                            <span id="evFuelCostDisplay" class="font-medium"></span>
+                                        </div>
+                                        <div class="flex justify-between text-gray-300">
+                                            <span>Total Maintenance:</span>
+                                            <span id="evMaintenanceDisplay" class="font-medium"></span>
+                                        </div>
+                                        <div class="flex justify-between text-gray-300">
+                                            <span>Total Insurance:</span>
+                                            <span id="evInsuranceDisplay" class="font-medium"></span>
+                                        </div>
+                                        <div class="flex justify-between text-gray-300">
+                                            <span>Resale Value:</span>
+                                            <span id="evResaleDisplay" class="font-medium text-green-400"></span>
+                                        </div>
+                                        <div class="flex justify-between border-t border-gray-700 pt-2">
+                                            <span class="font-semibold text-white">Total EV TCO:</span>
+                                            <span id="evTotalCost" class="font-semibold text-white"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ICE Breakdown -->
+                                <div class="mb-6 p-4 bg-gray-900/50 rounded-lg border border-gray-800">
+                                    <h4 class="font-semibold text-white mb-3">⛽ ICE Breakdown</h4>
+                                    <div class="space-y-2 text-sm">
+                                        <div class="flex justify-between text-gray-300">
+                                            <span>Purchase Price:</span>
+                                            <span id="icePurchasePriceDisplay" class="font-medium"></span>
+                                        </div>
+                                        <div class="flex justify-between text-gray-300">
+                                            <span>Total Fuel Cost:</span>
+                                            <span id="iceFuelCostDisplay" class="font-medium"></span>
+                                        </div>
+                                        <div class="flex justify-between text-gray-300">
+                                            <span>Total Maintenance:</span>
+                                            <span id="iceMaintenanceDisplay" class="font-medium"></span>
+                                        </div>
+                                        <div class="flex justify-between text-gray-300">
+                                            <span>Total Insurance:</span>
+                                            <span id="iceInsuranceDisplay" class="font-medium"></span>
+                                        </div>
+                                        <div class="flex justify-between text-gray-300">
+                                            <span>Resale Value:</span>
+                                            <span id="iceResaleDisplay" class="font-medium text-green-400"></span>
+                                        </div>
+                                        <div class="flex justify-between border-t border-gray-700 pt-2">
+                                            <span class="font-semibold text-white">Total ICE TCO:</span>
+                                            <span id="iceTotalCost" class="font-semibold text-white"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Breakeven Point -->
+                                <div class="mb-6 p-4 bg-gray-900/50 rounded-lg border border-gray-800">
+                                    <h4 class="font-semibold text-white mb-3">⚖️ Breakeven Analysis</h4>
+                                    <div id="breakevenInfo" class="text-center p-4">
+                                        <!-- Dynamic breakeven content -->
+                                    </div>
+                                </div>
+
+                                <!-- Year-by-year comparison table -->
+                                <div class="mb-6 p-4 bg-gray-900/50 rounded-lg border border-gray-800">
+                                    <h4 class="font-semibold text-white mb-3">📊 Year-by-Year Comparison</h4>
+                                    <div class="overflow-x-auto">
+                                        <table class="w-full text-sm">
+                                            <thead>
+                                                <tr class="border-b border-gray-700">
+                                                    <th class="text-left py-2 text-gray-300">Year</th>
+                                                    <th class="text-right py-2 text-gray-300">EV Cost</th>
+                                                    <th class="text-right py-2 text-gray-300">ICE Cost</th>
+                                                    <th class="text-right py-2 text-gray-300">Break-even?</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="yearlyComparisonTable">
+                                                <!-- Dynamic content -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- Visual Chart -->
+                                <div class="mb-6 p-4 bg-gray-900/50 rounded-lg border border-gray-800">
+                                    <h4 class="font-semibold text-white mb-3">📈 Cost Comparison Chart</h4>
+                                    <div id="costChart" class="relative h-80 bg-gray-800/50 rounded-lg overflow-hidden">
+                                        <!-- Chart will be drawn here -->
+                                    </div>
+                                    <div class="flex justify-center mt-4 space-x-6">
+                                        <div class="flex items-center space-x-2">
+                                            <div class="w-4 h-4 bg-blue-500 rounded"></div>
+                                            <span class="text-sm text-gray-300">EV Cost</span>
+                                        </div>
+                                        <div class="flex items-center space-x-2">
+                                            <div class="w-4 h-4 bg-red-500 rounded"></div>
+                                            <span class="text-sm text-gray-300">ICE Cost</span>
+                                        </div>
+                                        <div class="flex items-center space-x-2">
+                                            <div class="w-4 h-4 bg-green-500 rounded"></div>
+                                            <span class="text-sm text-gray-300">Breakeven Point</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Net Savings -->
+                                <div class="p-4 rounded-lg border border-gray-800 bg-gray-900/50">
+                                    <div class="flex justify-between items-center">
+                                        <span class="font-semibold text-lg text-white">💰 Total Savings:</span>
+                                        <span id="evIceSavings" class="font-bold text-xl"></span>
+                                    </div>
+                                    <p id="savingsExplanation" class="text-sm text-gray-400 mt-2"></p>
+                                </div>
+                            </div>
+                            <div id="noEvIceResults" class="text-center text-gray-400 py-8">
+                                <div class="text-6xl mb-4">🚗</div>
+                                <p>Enter your vehicle details to see the cost comparison.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Goal Calculator -->
                 <div id="goalCalculator" class="calculator-content hidden">
                     <div class="max-w-4xl mx-auto">
                         <div class="grid md:grid-cols-2 gap-8">

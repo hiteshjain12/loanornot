@@ -508,9 +508,478 @@ class GoalCalculator {
     }
 }
 
+class EVVsICECalculator {
+    constructor() {
+        this.form = document.getElementById('evVsIceCalculatorForm');
+        this.loadSavedValues();
+        this.initEventListeners();
+    }
+
+    saveFormValues() {
+        try {
+            const formData = {
+                evPurchasePrice: document.getElementById('evPurchasePrice').value,
+                evResaleValue: document.getElementById('evResaleValue').value,
+                evEfficiency: document.getElementById('evEfficiency').value,
+                electricityCost: document.getElementById('electricityCost').value,
+                evMaintenanceCost: document.getElementById('evMaintenanceCost').value,
+                evInsuranceCost: document.getElementById('evInsuranceCost').value,
+                evIncentives: document.getElementById('evIncentives').value,
+                icePurchasePrice: document.getElementById('icePurchasePrice').value,
+                iceResaleValue: document.getElementById('iceResaleValue').value,
+                fuelEfficiency: document.getElementById('fuelEfficiency').value,
+                fuelCost: document.getElementById('fuelCost').value,
+                iceMaintenanceCost: document.getElementById('iceMaintenanceCost').value,
+                iceInsuranceCost: document.getElementById('iceInsuranceCost').value,
+                averageDistance: document.getElementById('averageDistance').value,
+                ownershipPeriod: document.getElementById('ownershipPeriod').value
+            };
+            localStorage.setItem('evVsIceCalculatorData', JSON.stringify(formData));
+        } catch (error) {
+            console.warn('Error saving EV vs ICE form values:', error);
+        }
+    }
+
+    loadSavedValues() {
+        const savedData = localStorage.getItem('evVsIceCalculatorData');
+        if (savedData) {
+            try {
+                const formData = JSON.parse(savedData);
+                document.getElementById('evPurchasePrice').value = formData.evPurchasePrice || '';
+                document.getElementById('evResaleValue').value = formData.evResaleValue || '';
+                document.getElementById('evEfficiency').value = formData.evEfficiency || '';
+                document.getElementById('electricityCost').value = formData.electricityCost || '';
+                document.getElementById('evMaintenanceCost').value = formData.evMaintenanceCost || '';
+                document.getElementById('evInsuranceCost').value = formData.evInsuranceCost || '';
+                document.getElementById('evIncentives').value = formData.evIncentives || '';
+                document.getElementById('icePurchasePrice').value = formData.icePurchasePrice || '';
+                document.getElementById('iceResaleValue').value = formData.iceResaleValue || '';
+                document.getElementById('fuelEfficiency').value = formData.fuelEfficiency || '';
+                document.getElementById('fuelCost').value = formData.fuelCost || '';
+                document.getElementById('iceMaintenanceCost').value = formData.iceMaintenanceCost || '';
+                document.getElementById('iceInsuranceCost').value = formData.iceInsuranceCost || '';
+                document.getElementById('averageDistance').value = formData.averageDistance || '';
+                document.getElementById('ownershipPeriod').value = formData.ownershipPeriod || '';
+
+                if (this.form.checkValidity()) {
+                    this.calculate();
+                }
+            } catch (error) {
+                console.warn('Error loading EV vs ICE saved values:', error);
+                localStorage.removeItem('evVsIceCalculatorData');
+            }
+        }
+    }
+
+    initEventListeners() {
+        const inputs = this.form.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                this.saveFormValues();
+                if (this.form.checkValidity()) {
+                    this.calculate();
+                }
+            });
+        });
+    }
+
+    calculate() {
+        try {
+            const inputs = this.getInputValues();
+            this.validateInputs(inputs);
+            
+            const evTCO = this.calculateEVTCO(inputs);
+            const iceTCO = this.calculateICETCO(inputs);
+            const yearlyComparison = this.calculateYearlyComparison(inputs);
+            
+            this.displayResults(evTCO, iceTCO, yearlyComparison, inputs);
+        } catch (error) {
+            this.showError(error.message);
+        }
+    }
+
+    getInputValues() {
+        return {
+            evPurchasePrice: parseFloat(document.getElementById('evPurchasePrice').value),
+            evResaleValue: (parseFloat(document.getElementById('evResaleValue').value) || 0) / 100,
+            evEfficiency: parseFloat(document.getElementById('evEfficiency').value),
+            electricityCost: parseFloat(document.getElementById('electricityCost').value),
+            evMaintenanceCost: parseFloat(document.getElementById('evMaintenanceCost').value),
+            evInsuranceCost: parseFloat(document.getElementById('evInsuranceCost').value),
+            evIncentives: parseFloat(document.getElementById('evIncentives').value) || 0,
+            icePurchasePrice: parseFloat(document.getElementById('icePurchasePrice').value),
+            iceResaleValue: (parseFloat(document.getElementById('iceResaleValue').value) || 0) / 100,
+            fuelEfficiency: parseFloat(document.getElementById('fuelEfficiency').value),
+            fuelCost: parseFloat(document.getElementById('fuelCost').value),
+            iceMaintenanceCost: parseFloat(document.getElementById('iceMaintenanceCost').value),
+            iceInsuranceCost: parseFloat(document.getElementById('iceInsuranceCost').value),
+            averageDistance: parseFloat(document.getElementById('averageDistance').value),
+            ownershipPeriod: parseFloat(document.getElementById('ownershipPeriod').value)
+        };
+    }
+
+    validateInputs(inputs) {
+        if (inputs.evPurchasePrice <= 0 || inputs.icePurchasePrice <= 0) {
+            throw new Error('Purchase prices must be positive');
+        }
+        if (inputs.averageDistance <= 0 || inputs.ownershipPeriod <= 0) {
+            throw new Error('Distance and ownership period must be positive');
+        }
+        if (inputs.evEfficiency <= 0 || inputs.fuelEfficiency <= 0) {
+            throw new Error('Efficiency values must be positive');
+        }
+    }
+
+    calculateEVTCO(inputs) {
+        const totalDistance = inputs.averageDistance * inputs.ownershipPeriod;
+        const totalEnergyNeeded = totalDistance / inputs.evEfficiency; // kWh
+        const totalFuelCost = totalEnergyNeeded * inputs.electricityCost;
+        const totalMaintenance = inputs.evMaintenanceCost * inputs.ownershipPeriod;
+        const totalInsurance = inputs.evInsuranceCost * inputs.ownershipPeriod;
+        const resaleValue = inputs.evPurchasePrice * inputs.evResaleValue;
+        
+        const totalCost = inputs.evPurchasePrice - inputs.evIncentives + totalFuelCost + totalMaintenance + totalInsurance - resaleValue;
+        
+        return {
+            purchasePrice: inputs.evPurchasePrice,
+            incentives: inputs.evIncentives,
+            totalFuelCost,
+            totalMaintenance,
+            totalInsurance,
+            resaleValue,
+            totalCost
+        };
+    }
+
+    calculateICETCO(inputs) {
+        const totalDistance = inputs.averageDistance * inputs.ownershipPeriod;
+        const totalFuelNeeded = totalDistance / inputs.fuelEfficiency; // liters
+        const totalFuelCost = totalFuelNeeded * inputs.fuelCost;
+        const totalMaintenance = inputs.iceMaintenanceCost * inputs.ownershipPeriod;
+        const totalInsurance = inputs.iceInsuranceCost * inputs.ownershipPeriod;
+        const resaleValue = inputs.icePurchasePrice * inputs.iceResaleValue;
+        
+        const totalCost = inputs.icePurchasePrice + totalFuelCost + totalMaintenance + totalInsurance - resaleValue;
+        
+        return {
+            purchasePrice: inputs.icePurchasePrice,
+            totalFuelCost,
+            totalMaintenance,
+            totalInsurance,
+            resaleValue,
+            totalCost
+        };
+    }
+
+    calculateYearlyComparison(inputs) {
+        const yearlyData = [];
+        let evCumulativeCost = inputs.evPurchasePrice - inputs.evIncentives;
+        let iceCumulativeCost = inputs.icePurchasePrice;
+        
+        const evYearlyFuelCost = (inputs.averageDistance / inputs.evEfficiency) * inputs.electricityCost;
+        const iceYearlyFuelCost = (inputs.averageDistance / inputs.fuelEfficiency) * inputs.fuelCost;
+        
+        for (let year = 1; year <= inputs.ownershipPeriod; year++) {
+            evCumulativeCost += evYearlyFuelCost + inputs.evMaintenanceCost + inputs.evInsuranceCost;
+            iceCumulativeCost += iceYearlyFuelCost + inputs.iceMaintenanceCost + inputs.iceInsuranceCost;
+            
+            // Subtract resale value in the final year
+            const evCostWithResale = year === inputs.ownershipPeriod ? 
+                evCumulativeCost - (inputs.evPurchasePrice * inputs.evResaleValue) : evCumulativeCost;
+            const iceCostWithResale = year === inputs.ownershipPeriod ? 
+                iceCumulativeCost - (inputs.icePurchasePrice * inputs.iceResaleValue) : iceCumulativeCost;
+            
+            const breakEven = evCostWithResale <= iceCostWithResale;
+            
+            yearlyData.push({
+                year,
+                evCost: evCostWithResale,
+                iceCost: iceCostWithResale,
+                breakEven
+            });
+        }
+        
+        return yearlyData;
+    }
+
+    calculateBreakevenPoint(inputs) {
+        const evYearlyFuelCost = (inputs.averageDistance / inputs.evEfficiency) * inputs.electricityCost;
+        const iceYearlyFuelCost = (inputs.averageDistance / inputs.fuelEfficiency) * inputs.fuelCost;
+        const evYearlyOperatingCost = evYearlyFuelCost + inputs.evMaintenanceCost + inputs.evInsuranceCost;
+        const iceYearlyOperatingCost = iceYearlyFuelCost + inputs.iceMaintenanceCost + inputs.iceInsuranceCost;
+        
+        const evInitialCost = inputs.evPurchasePrice - inputs.evIncentives;
+        const iceInitialCost = inputs.icePurchasePrice;
+        
+        // Calculate when cumulative costs become equal
+        // evInitialCost + evYearlyOperatingCost * year = iceInitialCost + iceYearlyOperatingCost * year
+        // Solving for year: (evInitialCost - iceInitialCost) = (iceYearlyOperatingCost - evYearlyOperatingCost) * year
+        
+        const initialCostDiff = evInitialCost - iceInitialCost;
+        const yearlyOperatingDiff = iceYearlyOperatingCost - evYearlyOperatingCost;
+        
+        if (yearlyOperatingDiff <= 0) {
+            // EV never breaks even (ICE is always cheaper in operating costs too)
+            return null;
+        }
+        
+        const breakevenYear = initialCostDiff / yearlyOperatingDiff;
+        return breakevenYear > 0 ? breakevenYear : null;
+    }
+
+    drawChart(yearlyComparison, breakevenYear) {
+        const chartContainer = document.getElementById('costChart');
+        chartContainer.innerHTML = ''; // Clear existing chart
+        
+        const width = chartContainer.offsetWidth;
+        const height = 320;
+        const padding = { top: 20, right: 20, bottom: 40, left: 80 };
+        const chartWidth = width - padding.left - padding.right;
+        const chartHeight = height - padding.top - padding.bottom;
+        
+        // Create SVG
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('width', width);
+        svg.setAttribute('height', height);
+        svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+        
+        // Find max cost for scaling
+        const maxCost = Math.max(
+            ...yearlyComparison.map(d => Math.max(d.evCost, d.iceCost))
+        );
+        
+        // Create scales
+        const xScale = (year) => padding.left + (year - 1) * (chartWidth / (yearlyComparison.length - 1));
+        const yScale = (cost) => padding.top + chartHeight - (cost / maxCost) * chartHeight;
+        
+        // Draw grid lines
+        const gridGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        for (let i = 0; i <= 5; i++) {
+            const y = padding.top + (i * chartHeight / 5);
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', padding.left);
+            line.setAttribute('y1', y);
+            line.setAttribute('x2', padding.left + chartWidth);
+            line.setAttribute('y2', y);
+            line.setAttribute('stroke', '#374151');
+            line.setAttribute('stroke-width', '1');
+            line.setAttribute('opacity', '0.3');
+            gridGroup.appendChild(line);
+        }
+        svg.appendChild(gridGroup);
+        
+        // Draw EV line
+        const evPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        let evPathData = `M ${xScale(1)} ${yScale(yearlyComparison[0].evCost)}`;
+        for (let i = 1; i < yearlyComparison.length; i++) {
+            evPathData += ` L ${xScale(i + 1)} ${yScale(yearlyComparison[i].evCost)}`;
+        }
+        evPath.setAttribute('d', evPathData);
+        evPath.setAttribute('stroke', '#3b82f6');
+        evPath.setAttribute('stroke-width', '3');
+        evPath.setAttribute('fill', 'none');
+        svg.appendChild(evPath);
+        
+        // Draw ICE line
+        const icePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        let icePathData = `M ${xScale(1)} ${yScale(yearlyComparison[0].iceCost)}`;
+        for (let i = 1; i < yearlyComparison.length; i++) {
+            icePathData += ` L ${xScale(i + 1)} ${yScale(yearlyComparison[i].iceCost)}`;
+        }
+        icePath.setAttribute('d', icePathData);
+        icePath.setAttribute('stroke', '#ef4444');
+        icePath.setAttribute('stroke-width', '3');
+        icePath.setAttribute('fill', 'none');
+        svg.appendChild(icePath);
+        
+        // Draw breakeven point if it exists and is within the ownership period
+        if (breakevenYear && breakevenYear <= yearlyComparison.length) {
+            const x = padding.left + (breakevenYear - 1) * (chartWidth / (yearlyComparison.length - 1));
+            
+            // Vertical line
+            const breakevenLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            breakevenLine.setAttribute('x1', x);
+            breakevenLine.setAttribute('y1', padding.top);
+            breakevenLine.setAttribute('x2', x);
+            breakevenLine.setAttribute('y2', padding.top + chartHeight);
+            breakevenLine.setAttribute('stroke', '#10b981');
+            breakevenLine.setAttribute('stroke-width', '2');
+            breakevenLine.setAttribute('stroke-dasharray', '5,5');
+            svg.appendChild(breakevenLine);
+            
+            // Breakeven point marker
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            circle.setAttribute('cx', x);
+            circle.setAttribute('cy', yScale(yearlyComparison[Math.floor(breakevenYear) - 1].evCost));
+            circle.setAttribute('r', '6');
+            circle.setAttribute('fill', '#10b981');
+            svg.appendChild(circle);
+        }
+        
+        // Draw axes
+        const xAxis = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        xAxis.setAttribute('x1', padding.left);
+        xAxis.setAttribute('y1', padding.top + chartHeight);
+        xAxis.setAttribute('x2', padding.left + chartWidth);
+        xAxis.setAttribute('y2', padding.top + chartHeight);
+        xAxis.setAttribute('stroke', '#9ca3af');
+        xAxis.setAttribute('stroke-width', '2');
+        svg.appendChild(xAxis);
+        
+        const yAxis = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        yAxis.setAttribute('x1', padding.left);
+        yAxis.setAttribute('y1', padding.top);
+        yAxis.setAttribute('x2', padding.left);
+        yAxis.setAttribute('y2', padding.top + chartHeight);
+        yAxis.setAttribute('stroke', '#9ca3af');
+        yAxis.setAttribute('stroke-width', '2');
+        svg.appendChild(yAxis);
+        
+        // Add year labels
+        for (let i = 0; i < yearlyComparison.length; i++) {
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('x', xScale(i + 1));
+            text.setAttribute('y', padding.top + chartHeight + 20);
+            text.setAttribute('text-anchor', 'middle');
+            text.setAttribute('fill', '#9ca3af');
+            text.setAttribute('font-size', '12');
+            text.textContent = `Y${i + 1}`;
+            svg.appendChild(text);
+        }
+        
+        // Add cost labels
+        for (let i = 0; i <= 5; i++) {
+            const cost = (maxCost / 5) * (5 - i);
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('x', padding.left - 10);
+            text.setAttribute('y', padding.top + (i * chartHeight / 5) + 5);
+            text.setAttribute('text-anchor', 'end');
+            text.setAttribute('fill', '#9ca3af');
+            text.setAttribute('font-size', '10');
+            text.textContent = this.formatCurrency(cost).replace('₹', '₹');
+            svg.appendChild(text);
+        }
+        
+        chartContainer.appendChild(svg);
+    }
+
+    displayResults(evTCO, iceTCO, yearlyComparison, inputs) {
+        document.getElementById('evIceResults').classList.remove('hidden');
+        document.getElementById('noEvIceResults').classList.add('hidden');
+
+        // Calculate breakeven point
+        const breakevenYear = this.calculateBreakevenPoint(inputs);
+
+        // Update breakeven analysis
+        const breakevenInfo = document.getElementById('breakevenInfo');
+        if (breakevenYear && breakevenYear <= inputs.ownershipPeriod) {
+            breakevenInfo.innerHTML = `
+                <div class="text-green-400 text-xl font-semibold mb-2">🎯 Breakeven Point Reached!</div>
+                <p class="text-white">EV becomes cost-effective after <strong>${breakevenYear.toFixed(1)} years</strong></p>
+                <p class="text-gray-300 text-sm mt-2">Operating costs savings will compensate for the higher upfront cost</p>
+            `;
+        } else if (breakevenYear && breakevenYear > inputs.ownershipPeriod) {
+            breakevenInfo.innerHTML = `
+                <div class="text-yellow-400 text-xl font-semibold mb-2">⏳ Breakeven Beyond Ownership</div>
+                <p class="text-white">EV would become cost-effective after <strong>${breakevenYear.toFixed(1)} years</strong></p>
+                <p class="text-gray-300 text-sm mt-2">Consider extending ownership period or current conditions favor ICE</p>
+            `;
+        } else {
+            breakevenInfo.innerHTML = `
+                <div class="text-red-400 text-xl font-semibold mb-2">❌ No Breakeven Point</div>
+                <p class="text-white">ICE remains more cost-effective throughout the ownership period</p>
+                <p class="text-gray-300 text-sm mt-2">Current fuel/energy costs and efficiency favor ICE vehicles</p>
+            `;
+        }
+
+        // Update EV breakdown
+        document.getElementById('evPurchasePriceDisplay').textContent = this.formatCurrency(evTCO.purchasePrice);
+        document.getElementById('evIncentivesDisplay').textContent = `-${this.formatCurrency(evTCO.incentives)}`;
+        document.getElementById('evFuelCostDisplay').textContent = this.formatCurrency(evTCO.totalFuelCost);
+        document.getElementById('evMaintenanceDisplay').textContent = this.formatCurrency(evTCO.totalMaintenance);
+        document.getElementById('evInsuranceDisplay').textContent = this.formatCurrency(evTCO.totalInsurance);
+        document.getElementById('evResaleDisplay').textContent = `-${this.formatCurrency(evTCO.resaleValue)}`;
+        document.getElementById('evTotalCost').textContent = this.formatCurrency(evTCO.totalCost);
+
+        // Update ICE breakdown
+        document.getElementById('icePurchasePriceDisplay').textContent = this.formatCurrency(iceTCO.purchasePrice);
+        document.getElementById('iceFuelCostDisplay').textContent = this.formatCurrency(iceTCO.totalFuelCost);
+        document.getElementById('iceMaintenanceDisplay').textContent = this.formatCurrency(iceTCO.totalMaintenance);
+        document.getElementById('iceInsuranceDisplay').textContent = this.formatCurrency(iceTCO.totalInsurance);
+        document.getElementById('iceResaleDisplay').textContent = `-${this.formatCurrency(iceTCO.resaleValue)}`;
+        document.getElementById('iceTotalCost').textContent = this.formatCurrency(iceTCO.totalCost);
+
+        // Update yearly comparison table
+        const tableBody = document.getElementById('yearlyComparisonTable');
+        tableBody.innerHTML = '';
+        yearlyComparison.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.className = 'border-b border-gray-800';
+            tr.innerHTML = `
+                <td class="py-2 text-gray-300">${row.year}</td>
+                <td class="py-2 text-right text-gray-300">${this.formatCurrency(row.evCost)}</td>
+                <td class="py-2 text-right text-gray-300">${this.formatCurrency(row.iceCost)}</td>
+                <td class="py-2 text-right ${row.breakEven ? 'text-green-400' : 'text-red-400'}">
+                    ${row.breakEven ? '✅ Yes' : '❌ No'}
+                </td>
+            `;
+            tableBody.appendChild(tr);
+        });
+
+        // Draw the chart
+        this.drawChart(yearlyComparison, breakevenYear);
+
+        // Update recommendation and savings
+        const savings = iceTCO.totalCost - evTCO.totalCost;
+        const recommendationDiv = document.getElementById('evIceRecommendation');
+        const recommendationText = document.getElementById('evIceRecommendationText');
+        const savingsElement = document.getElementById('evIceSavings');
+        const savingsExplanation = document.getElementById('savingsExplanation');
+        
+        if (savings > 0) {
+            recommendationDiv.className = 'mb-6 p-4 rounded-lg backdrop-blur-sm bg-emerald-900/30 border border-emerald-500/50';
+            recommendationText.innerHTML = `<span class="text-emerald-400">⚡ Choose EV! It's more cost-effective.</span>`;
+            savingsElement.textContent = `+${this.formatCurrency(savings)}`;
+            savingsElement.className = 'font-bold text-xl text-emerald-400';
+            savingsExplanation.textContent = `EV saves you ${this.formatCurrency(savings)} over ${inputs.ownershipPeriod} years compared to ICE.`;
+        } else {
+            recommendationDiv.className = 'mb-6 p-4 rounded-lg backdrop-blur-sm bg-blue-900/30 border border-blue-500/50';
+            recommendationText.innerHTML = `<span class="text-blue-400">⛽ ICE is more cost-effective for your usage.</span>`;
+            savingsElement.textContent = this.formatCurrency(savings);
+            savingsElement.className = 'font-bold text-xl text-blue-400';
+            savingsExplanation.textContent = `ICE costs ${this.formatCurrency(Math.abs(savings))} less than EV over ${inputs.ownershipPeriod} years.`;
+        }
+    }
+
+    formatCurrency(amount) {
+        if (typeof amount !== 'number') {
+            return '₹0.00';
+        }
+        return new Intl.NumberFormat('en-IN', {
+            style: 'currency',
+            currency: 'INR',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        }).format(amount);
+    }
+
+    showError(message) {
+        document.getElementById('evIceResults').classList.add('hidden');
+        document.getElementById('noEvIceResults').innerHTML = `
+            <div class="text-center text-red-400 py-8">
+                <div class="text-6xl mb-4">⚠️</div>
+                <p class="font-medium">${message}</p>
+                <p class="text-sm mt-2 text-gray-500">Please check your inputs and try again.</p>
+            </div>
+        `;
+        document.getElementById('noEvIceResults').classList.remove('hidden');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     new LoanCalculator();
     new GoalCalculator();
+    new EVVsICECalculator();
 
     const tabs = document.querySelectorAll('.tab-btn');
     const calculators = document.querySelectorAll('.calculator-content');
