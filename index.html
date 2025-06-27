@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Financial Calculators</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/engine@3.0.3/tsparticles.engine.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -102,8 +100,8 @@
             <div class="mb-8 flex justify-center">
                 <div class="flex space-x-4">
                     <button class="tab-btn px-4 py-2 rounded-md text-lg font-medium transition-colors duration-300" data-tab="loanOrNot">Loan or Not</button>
-                    <button class="tab-btn px-4 py-2 rounded-md text-lg font-medium transition-colors duration-300" data-tab="goalCalculator">Goal Calculator</button>
                     <button class="tab-btn px-4 py-2 rounded-md text-lg font-medium transition-colors duration-300" data-tab="evVsIceCalculator">EV vs ICE Calculator</button>
+                    <button class="tab-btn px-4 py-2 rounded-md text-lg font-medium transition-colors duration-300" data-tab="goalCalculator">Goal Calculator</button>
                 </div>
             </div>
 
@@ -264,6 +262,103 @@
                         </div>
                     </div>
                 </div>
+
+            <!-- Goal Calculator -->
+            <div id="goalCalculator" class="calculator-content hidden">
+                <div class="max-w-4xl mx-auto">
+                    <!-- Input Form -->
+                    <div class="backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500">
+                        <h2 class="text-2xl font-semibold text-white mb-6">🎯 Goal Calculator</h2>
+                        <form id="goalCalculatorForm" class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Goal Name</label>
+                                <input type="text" id="goalName" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="e.g., Dream House, Child's Education, Retirement" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Existing Investment for this Goal (₹)</label>
+                                <input type="number" id="existingInvestment" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="0" min="0" required>
+                                <p class="text-xs text-gray-500 mt-1">Amount already invested towards this goal</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Cost Today (₹)</label>
+                                <input type="number" id="costToday" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="1000000" min="1" required>
+                                <p class="text-xs text-gray-500 mt-1">Current cost of your goal</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Years to Achieve</label>
+                                <input type="number" id="yearsToAchieve" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="10" min="1" max="50" required>
+                                <p class="text-xs text-gray-500 mt-1">Time horizon for achieving your goal</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Expected Investment Return (% annually)</label>
+                                <input type="number" id="expectedReturn" step="0.01" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="12.0" min="0" max="50" required>
+                                <p class="text-xs text-gray-500 mt-1">Expected annual return from your investments</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Inflation Rate (% annually)</label>
+                                <input type="number" id="inflationRate" step="0.01" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" value="6.0" min="0" max="20" required>
+                                <p class="text-xs text-gray-500 mt-1">Expected annual inflation rate</p>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Results Section -->
+                    <div id="goalResults" class="mt-8 backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500 hidden">
+                        <h2 class="text-2xl font-semibold text-white mb-6">📈 Goal Analysis</h2>
+                        
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <!-- Future Cost -->
+                            <div class="p-4 bg-yellow-900/30 rounded-lg border border-yellow-500/50">
+                                <h3 class="text-lg font-semibold mb-2 text-white">💰 Future Cost of Your Goal</h3>
+                                <div id="futureCost" class="text-lg"></div>
+                            </div>
+
+                            <!-- Monthly Investment Required -->
+                            <div class="p-4 bg-emerald-900/30 rounded-lg border border-emerald-500/50">
+                                <h3 class="text-lg font-semibold mb-2 text-white">📅 Required Monthly Investment</h3>
+                                <div id="monthlyInvestment" class="text-lg"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="noGoalResults" class="mt-8 text-center text-gray-400 py-8">
+                        <div class="text-6xl mb-4">🎯</div>
+                        <p>Enter your goal details to see the analysis</p>
+                    </div>
+
+                    <!-- Year-by-Year Breakdown Table -->
+                    <div id="goalResults2" class="mt-8 backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500 hidden">
+                        <h3 class="text-xl font-semibold mb-4 text-white">📊 Year-by-Year Investment Breakdown</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr class="border-b border-gray-700">
+                                        <th class="text-left py-3 text-gray-300 font-medium">Year</th>
+                                        <th class="text-right py-3 text-gray-300 font-medium">Amount Invested</th>
+                                        <th class="text-right py-3 text-gray-300 font-medium">Returns Earned</th>
+                                        <th class="text-right py-3 text-gray-300 font-medium">Total Investment Value</th>
+                                        <th class="text-right py-3 text-gray-300 font-medium">Goal Progress</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="goalYearlyBreakdown">
+                                    <!-- Dynamic content -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Progress Chart -->
+                    <div id="goalResults3" class="mt-8 backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500 hidden">
+                        <h3 class="text-xl font-semibold mb-4 text-white">📈 Investment Progress Chart</h3>
+                        <div id="progressChart" class="relative h-80 bg-gray-800/50 rounded-lg overflow-hidden">
+                            <!-- Chart will be drawn here -->
+                        </div>
+                        <p class="text-sm text-gray-400 mt-4 text-center">
+                            Track your investment growth towards your goal over time
+                        </p>
+                    </div>
+                </div>
+            </div>
 
             <!-- EV vs ICE Calculator -->
             <div id="evVsIceCalculator" class="calculator-content hidden">
@@ -496,70 +591,8 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Goal Calculator -->
-                <div id="goalCalculator" class="calculator-content hidden">
-                    <div class="max-w-4xl mx-auto">
-                        <div class="grid md:grid-cols-2 gap-8">
-                            <!-- Input Form -->
-                            <div class="backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500">
-                                <h2 class="text-2xl font-semibold text-white mb-6">🎯 Set Your Financial Goal</h2>
-                                <form id="goalCalculatorForm" class="space-y-4">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-300 mb-2">Goal Name</label>
-                                        <input type="text" id="goalName" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="e.g., Dream Vacation, Education, Wedding">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-300 mb-2">Existing Investment for this Goal (₹)</label>
-                                        <input type="number" id="existingInvestment" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="0">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-300 mb-2">Cost Today (₹)</label>
-                                        <input type="number" id="currentCost" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="100000" required>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-300 mb-2">Years to Achieve</label>
-                                        <input type="number" id="yearsToAchieve" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="5" required>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-300 mb-2">Expected Investment Return (% annually)</label>
-                                        <input type="number" id="goalInvestmentReturn" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="8.0" required>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-300 mb-2">Inflation Rate (% annually)</label>
-                                        <input type="number" id="inflationRate" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" value="6.0" required>
-                                    </div>
-                                </form>
-                            </div>
-                            <!-- Results -->
-                            <div class="backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500">
-                                <h2 class="text-2xl font-semibold text-white mb-6">💰 Your Savings Plan</h2>
-                                <div id="goalResults" class="hidden">
-                                    <div class="mb-6 p-4 rounded-lg backdrop-blur-sm bg-blue-900/30 border border-blue-500/50">
-                                        <h3 class="text-lg font-semibold mb-2 text-white">Future Cost of Your Goal</h3>
-                                        <p id="futureCost" class="text-2xl font-bold"></p>
-                                    </div>
-                                    <div class="mb-4 p-4 rounded-lg backdrop-blur-sm bg-gray-700/30 border border-gray-600/50">
-                                        <h3 class="text-lg font-semibold mb-2 text-white">Future Value of Existing Savings</h3>
-                                        <p id="futureExistingInvestment" class="text-xl font-bold"></p>
-                                    </div>
-                                    <div class="mb-6 p-4 rounded-lg backdrop-blur-sm bg-emerald-900/30 border border-emerald-500/50">
-                                        <h3 class="text-lg font-semibold mb-2 text-white">Required Monthly Investment</h3>
-                                        <p id="monthlyInvestment" class="text-2xl font-bold"></p>
-                                    </div>
-                                </div>
-                                <div id="noGoalResults" class="text-center text-gray-400 py-8">
-                                    <div class="text-6xl mb-4">🎯</div>
-                                    <p>Enter your goal details to see your savings plan.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <script src="script.js"></script>
 </body>
 </html>
-

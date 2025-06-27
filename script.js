@@ -54,8 +54,11 @@ class LoanCalculator {
                 }
 
                 // Trigger calculation if we have valid values
-                if (this.form.checkValidity()) {
-                    this.calculate();
+                if (this.isFormValid()) {
+                    // Add a small delay to ensure DOM is fully rendered
+                    setTimeout(() => {
+                        this.calculate();
+                    }, 100);
                 }
             } catch (error) {
                 console.warn('Error loading saved values:', error);
@@ -75,7 +78,7 @@ class LoanCalculator {
                 // Always save values on change
                 this.saveFormValues();
                 // Calculate if form is valid
-                if (this.form.checkValidity()) {
+                if (this.isFormValid()) {
                     this.calculate();
                 }
             });
@@ -94,7 +97,7 @@ class LoanCalculator {
 
         // Initial setup
         this.handleCheckboxChange();
-        if (this.form.checkValidity()) {
+        if (this.isFormValid()) {
             this.calculate();
         }
     }
@@ -108,7 +111,7 @@ class LoanCalculator {
             this.availableCashInput.disabled = false;
             this.checkCashWarning();
         }
-        if (this.form.checkValidity()) {
+        if (this.isFormValid()) {
             this.calculate();
         }
     }
@@ -129,6 +132,28 @@ class LoanCalculator {
         } else {
             this.cashWarning.classList.add('hidden');
         }
+    }
+
+    isFormValid() {
+        // Get all required inputs that are not disabled
+        const requiredInputs = this.form.querySelectorAll('input[required], select[required]');
+        
+        for (let input of requiredInputs) {
+            // Skip validation for disabled inputs
+            if (input.disabled) continue;
+            
+            // Check if the input has a value
+            if (!input.value || input.value.trim() === '') {
+                return false;
+            }
+            
+            // For number inputs, check if the value is a valid number
+            if (input.type === 'number' && isNaN(parseFloat(input.value))) {
+                return false;
+            }
+        }
+        
+        return true;
     }
 
     getInputValues() {
@@ -387,127 +412,6 @@ class LoanCalculator {
     }
 }
 
-class GoalCalculator {
-    constructor() {
-        this.form = document.getElementById('goalCalculatorForm');
-        this.goalNameInput = document.getElementById('goalName');
-        this.currentCostInput = document.getElementById('currentCost');
-        this.existingInvestmentInput = document.getElementById('existingInvestment');
-        this.yearsToAchieveInput = document.getElementById('yearsToAchieve');
-        this.goalInvestmentReturnInput = document.getElementById('goalInvestmentReturn');
-        this.inflationRateInput = document.getElementById('inflationRate');
-        
-        this.loadSavedValues();
-        this.initEventListeners();
-    }
-
-    saveFormValues() {
-        try {
-            const formData = {
-                goalName: this.goalNameInput.value,
-                currentCost: this.currentCostInput.value,
-                existingInvestment: this.existingInvestmentInput.value,
-                yearsToAchieve: this.yearsToAchieveInput.value,
-                goalInvestmentReturn: this.goalInvestmentReturnInput.value,
-                inflationRate: this.inflationRateInput.value
-            };
-            localStorage.setItem('goalCalculatorData', JSON.stringify(formData));
-        } catch (error) {
-            console.warn('Error saving goal form values:', error);
-        }
-    }
-
-    loadSavedValues() {
-        const savedData = localStorage.getItem('goalCalculatorData');
-        if (savedData) {
-            try {
-                const formData = JSON.parse(savedData);
-                this.goalNameInput.value = formData.goalName || '';
-                this.currentCostInput.value = formData.currentCost || '';
-                this.existingInvestmentInput.value = formData.existingInvestment || '';
-                this.yearsToAchieveInput.value = formData.yearsToAchieve || '';
-                this.goalInvestmentReturnInput.value = formData.goalInvestmentReturn || '';
-                this.inflationRateInput.value = formData.inflationRate || '6.0';
-
-                if (this.form.checkValidity()) {
-                    this.calculate();
-                }
-            } catch (error) {
-                console.warn('Error loading goal form values:', error);
-                localStorage.removeItem('goalCalculatorData');
-            }
-        }
-    }
-
-    initEventListeners() {
-        const inputs = this.form.querySelectorAll('input');
-        inputs.forEach(input => {
-            input.addEventListener('input', () => {
-                this.saveFormValues();
-                if (this.form.checkValidity()) {
-                    this.calculate();
-                }
-            });
-        });
-    }
-
-    calculate() {
-        const currentCost = parseFloat(this.currentCostInput.value);
-        const existingInvestment = parseFloat(this.existingInvestmentInput.value) || 0;
-        const yearsToAchieve = parseFloat(this.yearsToAchieveInput.value);
-        const investmentReturn = parseFloat(this.goalInvestmentReturnInput.value) / 100;
-        const inflationRate = parseFloat(this.inflationRateInput.value) / 100;
-
-        if (isNaN(currentCost) || isNaN(yearsToAchieve) || isNaN(investmentReturn) || isNaN(inflationRate)) {
-            return;
-        }
-
-        const futureCost = currentCost * Math.pow(1 + inflationRate, yearsToAchieve);
-        const futureValueOfExisting = existingInvestment * Math.pow(1 + investmentReturn, yearsToAchieve);
-        const remainingAmountNeeded = futureCost - futureValueOfExisting;
-
-        let monthlyInvestment = 0;
-        if (remainingAmountNeeded > 0) {
-            const monthlyInvestmentRate = investmentReturn / 12;
-            const numberOfMonths = yearsToAchieve * 12;
-            monthlyInvestment = (remainingAmountNeeded * monthlyInvestmentRate) / (Math.pow(1 + monthlyInvestmentRate, numberOfMonths) - 1);
-        }
-
-        this.displayResults(futureCost, futureValueOfExisting, monthlyInvestment, remainingAmountNeeded);
-    }
-
-    displayResults(futureCost, futureValueOfExisting, monthlyInvestment, remainingAmountNeeded) {
-        document.getElementById('goalResults').classList.remove('hidden');
-        document.getElementById('noGoalResults').classList.add('hidden');
-        
-        document.getElementById('futureCost').textContent = this.formatCurrency(futureCost);
-        document.getElementById('futureExistingInvestment').textContent = this.formatCurrency(futureValueOfExisting);
-        
-        const monthlyInvestmentElement = document.getElementById('monthlyInvestment');
-        const monthlyInvestmentTitle = monthlyInvestmentElement.parentElement.querySelector('h3');
-        
-        if (remainingAmountNeeded > 0) {
-            monthlyInvestmentTitle.textContent = 'Required Monthly Investment';
-            monthlyInvestmentElement.textContent = this.formatCurrency(monthlyInvestment);
-        } else {
-            monthlyInvestmentTitle.textContent = 'Congratulations!';
-            monthlyInvestmentElement.textContent = "You've already met your goal!";
-        }
-    }
-
-    formatCurrency(amount) {
-        if (typeof amount !== 'number') {
-            return '₹0.00';
-        }
-        return new Intl.NumberFormat('en-IN', {
-            style: 'currency',
-            currency: 'INR',
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        }).format(amount);
-    }
-}
-
 class EVVsICECalculator {
     constructor() {
         this.form = document.getElementById('evVsIceCalculatorForm');
@@ -562,7 +466,10 @@ class EVVsICECalculator {
                 document.getElementById('ownershipPeriod').value = formData.ownershipPeriod || '';
 
                 if (this.form.checkValidity()) {
-                    this.calculate();
+                    // Add a small delay to ensure DOM is fully rendered
+                    setTimeout(() => {
+                        this.calculate();
+                    }, 100);
                 }
             } catch (error) {
                 console.warn('Error loading EV vs ICE saved values:', error);
@@ -577,7 +484,10 @@ class EVVsICECalculator {
             input.addEventListener('input', () => {
                 this.saveFormValues();
                 if (this.form.checkValidity()) {
-                    this.calculate();
+                    // Add a small delay to ensure DOM is fully rendered
+                    setTimeout(() => {
+                        this.calculate();
+                    }, 100);
                 }
             });
         });
@@ -976,10 +886,448 @@ class EVVsICECalculator {
     }
 }
 
+class GoalCalculator {
+    constructor() {
+        this.form = document.getElementById('goalCalculatorForm');
+        this.loadSavedValues();
+        this.initEventListeners();
+    }
+
+    saveFormValues() {
+        try {
+            const formData = {
+                goalName: document.getElementById('goalName').value,
+                existingInvestment: document.getElementById('existingInvestment').value,
+                costToday: document.getElementById('costToday').value,
+                yearsToAchieve: document.getElementById('yearsToAchieve').value,
+                expectedReturn: document.getElementById('expectedReturn').value,
+                inflationRate: document.getElementById('inflationRate').value
+            };
+            localStorage.setItem('goalCalculatorData', JSON.stringify(formData));
+        } catch (error) {
+            console.warn('Error saving Goal Calculator form values:', error);
+        }
+    }
+
+    loadSavedValues() {
+        const savedData = localStorage.getItem('goalCalculatorData');
+        if (savedData) {
+            try {
+                const formData = JSON.parse(savedData);
+                document.getElementById('goalName').value = formData.goalName || '';
+                document.getElementById('existingInvestment').value = formData.existingInvestment || '';
+                document.getElementById('costToday').value = formData.costToday || '';
+                document.getElementById('yearsToAchieve').value = formData.yearsToAchieve || '';
+                document.getElementById('expectedReturn').value = formData.expectedReturn || '';
+                document.getElementById('inflationRate').value = formData.inflationRate || '';
+
+                if (this.form.checkValidity()) {
+                    this.calculate();
+                }
+            } catch (error) {
+                console.warn('Error loading Goal Calculator saved values:', error);
+                localStorage.removeItem('goalCalculatorData');
+            }
+        }
+    }
+
+    initEventListeners() {
+        const inputs = this.form.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                this.saveFormValues();
+                if (this.form.checkValidity()) {
+                    this.calculate();
+                }
+            });
+        });
+    }
+
+    getInputValues() {
+        return {
+            goalName: document.getElementById('goalName').value.trim(),
+            existingInvestment: parseFloat(document.getElementById('existingInvestment').value) || 0,
+            costToday: parseFloat(document.getElementById('costToday').value),
+            yearsToAchieve: parseFloat(document.getElementById('yearsToAchieve').value),
+            expectedReturn: parseFloat(document.getElementById('expectedReturn').value) / 100,
+            inflationRate: parseFloat(document.getElementById('inflationRate').value) / 100
+        };
+    }
+
+    validateInputs(inputs) {
+        if (!inputs.goalName) {
+            throw new Error('Goal name is required');
+        }
+        if (inputs.costToday <= 0) {
+            throw new Error('Cost today must be positive');
+        }
+        if (inputs.yearsToAchieve <= 0) {
+            throw new Error('Years to achieve must be positive');
+        }
+        if (inputs.expectedReturn < 0) {
+            throw new Error('Expected return cannot be negative');
+        }
+        if (inputs.inflationRate < 0) {
+            throw new Error('Inflation rate cannot be negative');
+        }
+    }
+
+    calculateFutureCost(costToday, inflationRate, years) {
+        return costToday * Math.pow(1 + inflationRate, years);
+    }
+
+    calculateFutureValueOfExisting(existingInvestment, returnRate, years) {
+        return existingInvestment * Math.pow(1 + returnRate, years);
+    }
+
+    calculateMonthlyInvestment(futureValue, returnRate, years) {
+        if (returnRate === 0) {
+            return futureValue / (years * 12);
+        }
+        
+        const monthlyRate = returnRate / 12;
+        const totalMonths = years * 12;
+        
+        // PMT formula: FV = PMT * [((1 + r)^n - 1) / r]
+        // Solving for PMT: PMT = FV * r / ((1 + r)^n - 1)
+        return futureValue * monthlyRate / (Math.pow(1 + monthlyRate, totalMonths) - 1);
+    }
+
+    calculateYearlyBreakdown(inputs, futureCost, monthlyInvestment) {
+        const breakdown = [];
+        let cumulativeInvestment = inputs.existingInvestment;
+        let totalInvested = inputs.existingInvestment;
+        
+        for (let year = 1; year <= inputs.yearsToAchieve; year++) {
+            // Add monthly investments for this year
+            const yearlyInvestment = monthlyInvestment * 12;
+            totalInvested += yearlyInvestment;
+            
+            // Calculate investment value at end of year
+            cumulativeInvestment = (cumulativeInvestment + yearlyInvestment) * (1 + inputs.expectedReturn);
+            
+            // Calculate investment returns earned this year
+            const investmentReturn = cumulativeInvestment - totalInvested;
+            
+            // Calculate percentage of goal achieved
+            const percentageAchieved = (cumulativeInvestment / futureCost) * 100;
+            
+            breakdown.push({
+                year,
+                totalInvested: totalInvested,
+                investmentValue: cumulativeInvestment,
+                investmentReturn: investmentReturn,
+                percentageAchieved: Math.min(percentageAchieved, 100)
+            });
+        }
+        
+        return breakdown;
+    }
+
+    drawProgressChart(yearlyBreakdown, futureCost, goalName) {
+        const chartContainer = document.getElementById('progressChart');
+        chartContainer.innerHTML = '';
+        
+        const width = chartContainer.offsetWidth;
+        const height = 320;
+        const padding = { top: 40, right: 20, bottom: 60, left: 80 };
+        const chartWidth = width - padding.left - padding.right;
+        const chartHeight = height - padding.top - padding.bottom;
+        
+        // Create SVG
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('width', width);
+        svg.setAttribute('height', height);
+        svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+        
+        // Find max value for scaling
+        const maxValue = Math.max(futureCost, ...yearlyBreakdown.map(d => d.investmentValue));
+        
+        // Create scales
+        const xScale = (year) => padding.left + (year / yearlyBreakdown.length) * chartWidth;
+        const yScale = (value) => padding.top + chartHeight - (value / maxValue) * chartHeight;
+        
+        // Draw grid lines
+        const gridGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        for (let i = 0; i <= 5; i++) {
+            const y = padding.top + (i * chartHeight / 5);
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', padding.left);
+            line.setAttribute('y1', y);
+            line.setAttribute('x2', padding.left + chartWidth);
+            line.setAttribute('y2', y);
+            line.setAttribute('stroke', '#374151');
+            line.setAttribute('stroke-width', '1');
+            line.setAttribute('opacity', '0.3');
+            gridGroup.appendChild(line);
+        }
+        svg.appendChild(gridGroup);
+        
+        // Draw goal target line
+        const goalY = yScale(futureCost);
+        const goalLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        goalLine.setAttribute('x1', padding.left);
+        goalLine.setAttribute('y1', goalY);
+        goalLine.setAttribute('x2', padding.left + chartWidth);
+        goalLine.setAttribute('y2', goalY);
+        goalLine.setAttribute('stroke', '#f59e0b');
+        goalLine.setAttribute('stroke-width', '2');
+        goalLine.setAttribute('stroke-dasharray', '5,5');
+        svg.appendChild(goalLine);
+        
+        // Draw investment progress line
+        const progressPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        let pathData = `M ${xScale(0)} ${yScale(yearlyBreakdown[0] ? yearlyBreakdown[0].totalInvested - (yearlyBreakdown[0].totalInvested - (yearlyBreakdown[0].investmentValue - yearlyBreakdown[0].investmentReturn)) : 0)}`;
+        
+        yearlyBreakdown.forEach((data, index) => {
+            pathData += ` L ${xScale(index + 1)} ${yScale(data.investmentValue)}`;
+        });
+        
+        progressPath.setAttribute('d', pathData);
+        progressPath.setAttribute('stroke', '#10b981');
+        progressPath.setAttribute('stroke-width', '3');
+        progressPath.setAttribute('fill', 'none');
+        svg.appendChild(progressPath);
+        
+        // Add data points
+        yearlyBreakdown.forEach((data, index) => {
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            circle.setAttribute('cx', xScale(index + 1));
+            circle.setAttribute('cy', yScale(data.investmentValue));
+            circle.setAttribute('r', '4');
+            circle.setAttribute('fill', '#10b981');
+            circle.setAttribute('stroke', '#ffffff');
+            circle.setAttribute('stroke-width', '2');
+            svg.appendChild(circle);
+        });
+        
+        // Draw axes
+        const xAxis = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        xAxis.setAttribute('x1', padding.left);
+        xAxis.setAttribute('y1', padding.top + chartHeight);
+        xAxis.setAttribute('x2', padding.left + chartWidth);
+        xAxis.setAttribute('y2', padding.top + chartHeight);
+        xAxis.setAttribute('stroke', '#9ca3af');
+        xAxis.setAttribute('stroke-width', '2');
+        svg.appendChild(xAxis);
+        
+        const yAxis = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        yAxis.setAttribute('x1', padding.left);
+        yAxis.setAttribute('y1', padding.top);
+        yAxis.setAttribute('x2', padding.left);
+        yAxis.setAttribute('y2', padding.top + chartHeight);
+        yAxis.setAttribute('stroke', '#9ca3af');
+        yAxis.setAttribute('stroke-width', '2');
+        svg.appendChild(yAxis);
+        
+        // Add year labels
+        for (let i = 0; i <= yearlyBreakdown.length; i++) {
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('x', xScale(i));
+            text.setAttribute('y', padding.top + chartHeight + 20);
+            text.setAttribute('text-anchor', 'middle');
+            text.setAttribute('fill', '#9ca3af');
+            text.setAttribute('font-size', '12');
+            text.textContent = `Y${i}`;
+            svg.appendChild(text);
+        }
+        
+        // Add value labels
+        for (let i = 0; i <= 5; i++) {
+            const value = (maxValue / 5) * (5 - i);
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('x', padding.left - 10);
+            text.setAttribute('y', padding.top + (i * chartHeight / 5) + 5);
+            text.setAttribute('text-anchor', 'end');
+            text.setAttribute('fill', '#9ca3af');
+            text.setAttribute('font-size', '10');
+            text.textContent = this.formatCurrency(value).replace('₹', '₹');
+            svg.appendChild(text);
+        }
+        
+        // Add chart title
+        const title = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        title.setAttribute('x', width / 2);
+        title.setAttribute('y', 25);
+        title.setAttribute('text-anchor', 'middle');
+        title.setAttribute('fill', '#ffffff');
+        title.setAttribute('font-size', '14');
+        title.setAttribute('font-weight', 'bold');
+        title.textContent = `${goalName} - Investment Progress`;
+        svg.appendChild(title);
+        
+        // Add legend
+        const legendGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        
+        // Investment progress legend
+        const progressLegendLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        progressLegendLine.setAttribute('x1', padding.left);
+        progressLegendLine.setAttribute('y1', height - 35);
+        progressLegendLine.setAttribute('x2', padding.left + 20);
+        progressLegendLine.setAttribute('y2', height - 35);
+        progressLegendLine.setAttribute('stroke', '#10b981');
+        progressLegendLine.setAttribute('stroke-width', '3');
+        legendGroup.appendChild(progressLegendLine);
+        
+        const progressLegendText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        progressLegendText.setAttribute('x', padding.left + 25);
+        progressLegendText.setAttribute('y', height - 31);
+        progressLegendText.setAttribute('fill', '#9ca3af');
+        progressLegendText.setAttribute('font-size', '12');
+        progressLegendText.textContent = 'Investment Value';
+        legendGroup.appendChild(progressLegendText);
+        
+        // Goal target legend
+        const goalLegendLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        goalLegendLine.setAttribute('x1', padding.left + 150);
+        goalLegendLine.setAttribute('y1', height - 35);
+        goalLegendLine.setAttribute('x2', padding.left + 170);
+        goalLegendLine.setAttribute('y2', height - 35);
+        goalLegendLine.setAttribute('stroke', '#f59e0b');
+        goalLegendLine.setAttribute('stroke-width', '2');
+        goalLegendLine.setAttribute('stroke-dasharray', '5,5');
+        legendGroup.appendChild(goalLegendLine);
+        
+        const goalLegendText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        goalLegendText.setAttribute('x', padding.left + 175);
+        goalLegendText.setAttribute('y', height - 31);
+        goalLegendText.setAttribute('fill', '#9ca3af');
+        goalLegendText.setAttribute('font-size', '12');
+        goalLegendText.textContent = 'Goal Target';
+        legendGroup.appendChild(goalLegendText);
+        
+        svg.appendChild(legendGroup);
+        chartContainer.appendChild(svg);
+    }
+
+    calculate() {
+        try {
+            const inputs = this.getInputValues();
+            this.validateInputs(inputs);
+            
+            // Calculate future cost with inflation
+            const futureCost = this.calculateFutureCost(inputs.costToday, inputs.inflationRate, inputs.yearsToAchieve);
+            
+            // Calculate future value of existing investment
+            const futureValueOfExisting = this.calculateFutureValueOfExisting(
+                inputs.existingInvestment, 
+                inputs.expectedReturn, 
+                inputs.yearsToAchieve
+            );
+            
+            // Calculate remaining amount needed
+            const remainingAmountNeeded = Math.max(0, futureCost - futureValueOfExisting);
+            
+            // Calculate required monthly investment
+            const monthlyInvestment = remainingAmountNeeded > 0 ? 
+                this.calculateMonthlyInvestment(remainingAmountNeeded, inputs.expectedReturn, inputs.yearsToAchieve) : 0;
+            
+            // Calculate yearly breakdown
+            const yearlyBreakdown = this.calculateYearlyBreakdown(inputs, futureCost, monthlyInvestment);
+            
+            this.displayResults({
+                inputs,
+                futureCost,
+                monthlyInvestment,
+                yearlyBreakdown,
+                futureValueOfExisting,
+                remainingAmountNeeded
+            });
+            
+        } catch (error) {
+            this.showError(error.message);
+        }
+    }
+
+    displayResults(data) {
+        const { inputs, futureCost, monthlyInvestment, yearlyBreakdown, futureValueOfExisting, remainingAmountNeeded } = data;
+        
+        // Show all results sections
+        document.getElementById('goalResults').classList.remove('hidden');
+        document.getElementById('goalResults2').classList.remove('hidden');
+        document.getElementById('goalResults3').classList.remove('hidden');
+        document.getElementById('noGoalResults').classList.add('hidden');
+        
+        // Update future cost
+        document.getElementById('futureCost').innerHTML = `
+            <span class="text-2xl font-bold text-yellow-400">${this.formatCurrency(futureCost)}</span>
+            <p class="text-sm text-gray-400 mt-1">
+                Today's cost: ${this.formatCurrency(inputs.costToday)} | 
+                Inflation impact: ${this.formatCurrency(futureCost - inputs.costToday)}
+            </p>
+        `;
+        
+        // Update monthly investment
+        const monthlyInvestmentElement = document.getElementById('monthlyInvestment');
+        if (monthlyInvestment > 0) {
+            monthlyInvestmentElement.innerHTML = `
+                <span class="text-2xl font-bold text-emerald-400">${this.formatCurrency(monthlyInvestment)}</span>
+                <p class="text-sm text-gray-400 mt-1">
+                    Total monthly: ${this.formatCurrency(monthlyInvestment)} | 
+                    Existing investment will grow to: ${this.formatCurrency(futureValueOfExisting)}
+                </p>
+            `;
+        } else {
+            monthlyInvestmentElement.innerHTML = `
+                <span class="text-2xl font-bold text-emerald-400">₹0</span>
+                <p class="text-sm text-emerald-400 mt-1">
+                    🎉 Your existing investment of ${this.formatCurrency(inputs.existingInvestment)} 
+                    will grow to ${this.formatCurrency(futureValueOfExisting)}, which exceeds your goal!
+                </p>
+            `;
+        }
+        
+        // Update yearly breakdown table
+        const tableBody = document.getElementById('goalYearlyBreakdown');
+        tableBody.innerHTML = '';
+        
+        yearlyBreakdown.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.className = 'border-b border-gray-700 hover:bg-gray-800/30';
+            
+            const percentageClass = row.percentageAchieved >= 100 ? 'text-emerald-400' : 
+                                  row.percentageAchieved >= 75 ? 'text-yellow-400' : 'text-gray-300';
+            
+            tr.innerHTML = `
+                <td class="py-3 text-gray-300">${row.year}</td>
+                <td class="py-3 text-right text-gray-300">${this.formatCurrency(row.totalInvested)}</td>
+                <td class="py-3 text-right text-emerald-400">${this.formatCurrency(row.investmentReturn)}</td>
+                <td class="py-3 text-right text-blue-400 font-medium">${this.formatCurrency(row.investmentValue)}</td>
+                <td class="py-3 text-right ${percentageClass} font-medium">
+                    ${row.percentageAchieved.toFixed(1)}%
+                    ${row.percentageAchieved >= 100 ? ' 🎯' : ''}
+                </td>
+            `;
+            tableBody.appendChild(tr);
+        });
+        
+        // Draw progress chart
+        this.drawProgressChart(yearlyBreakdown, futureCost, inputs.goalName);
+    }
+
+    formatCurrency(amount) {
+        if (typeof amount !== 'number') {
+            return '₹0';
+        }
+        return new Intl.NumberFormat('en-IN', {
+            style: 'currency',
+            currency: 'INR',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        }).format(amount);
+    }
+
+    showError(message) {
+        document.getElementById('goalResults').classList.add('hidden');
+        // You could add error display logic here if needed
+        console.error('Goal Calculator Error:', message);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     new LoanCalculator();
-    new GoalCalculator();
     new EVVsICECalculator();
+    new GoalCalculator();
 
     const tabs = document.querySelectorAll('.tab-btn');
     const calculators = document.querySelectorAll('.calculator-content');
@@ -1029,4 +1377,3 @@ document.addEventListener('DOMContentLoaded', () => {
     // You could add buttons to load these scenarios if desired
     console.log('Example scenarios available:', scenarios);
 });
-
