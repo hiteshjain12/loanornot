@@ -466,7 +466,6 @@ class EVVsICECalculator {
                 document.getElementById('ownershipPeriod').value = formData.ownershipPeriod || '';
 
                 if (this.form.checkValidity()) {
-                    // Add a small delay to ensure DOM is fully rendered
                     setTimeout(() => {
                         this.calculate();
                     }, 100);
@@ -484,7 +483,6 @@ class EVVsICECalculator {
             input.addEventListener('input', () => {
                 this.saveFormValues();
                 if (this.form.checkValidity()) {
-                    // Add a small delay to ensure DOM is fully rendered
                     setTimeout(() => {
                         this.calculate();
                     }, 100);
@@ -950,7 +948,9 @@ class GoalCalculator {
                 document.getElementById('inflationRate').value = formData.inflationRate || '';
 
                 if (this.form.checkValidity()) {
-                    this.calculate();
+                    setTimeout(() => {
+                        this.calculate();
+                    }, 100);
                 }
             } catch (error) {
                 console.warn('Error loading Goal Calculator saved values:', error);
