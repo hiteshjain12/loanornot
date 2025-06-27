@@ -876,6 +876,10 @@ class EVVsICECalculator {
             savingsElement.textContent = `+${this.formatCurrency(savings)}`;
             savingsElement.className = 'font-bold text-xl text-emerald-400';
             savingsExplanation.textContent = `EV saves you ${this.formatCurrency(savings)} over ${inputs.ownershipPeriod} years compared to ICE.`;
+            // Show battery caveat only if EV TCO is less
+            if (evTCO.totalCost < iceTCO.totalCost) {
+                savingsExplanation.innerHTML += `<div class='text-yellow-400 text-sm mt-4 italic'>Heads up: We haven't included battery replacement costs in this calculation.<br>That's because most EVs come with a battery warranty of 7–10 years or 1.5–2 lakh km, which covers most users during typical ownership. Plus, battery prices are steadily falling, and by the time a replacement is needed, the cost may be much lower - and possibly similar to major repairs that ICE vehicles often need later in life.</div>`;
+            }
         } else {
             recommendationDiv.className = 'mb-6 p-4 rounded-lg backdrop-blur-sm bg-blue-900/30 border border-blue-500/50';
             recommendationText.innerHTML = `<span class="text-blue-400">⛽ ICE is more cost-effective for your usage.</span>`;
