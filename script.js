@@ -617,22 +617,23 @@ class EVVsICECalculator {
         const iceYearlyFuelCost = (inputs.averageDistance / inputs.fuelEfficiency) * inputs.fuelCost;
         const evYearlyOperatingCost = evYearlyFuelCost + inputs.evMaintenanceCost + inputs.evInsuranceCost;
         const iceYearlyOperatingCost = iceYearlyFuelCost + inputs.iceMaintenanceCost + inputs.iceInsuranceCost;
-        
         const evInitialCost = inputs.evPurchasePrice - inputs.evIncentives;
         const iceInitialCost = inputs.icePurchasePrice;
-        
+
+        // New logic: EV is always cheaper
+        if (evInitialCost <= iceInitialCost && evYearlyOperatingCost <= iceYearlyOperatingCost) {
+            return 'ev_always_cheaper';
+        }
+
         // Calculate when cumulative costs become equal
-        // evInitialCost + evYearlyOperatingCost * year = iceInitialCost + iceYearlyOperatingCost * year
-        // Solving for year: (evInitialCost - iceInitialCost) = (iceYearlyOperatingCost - evYearlyOperatingCost) * year
-        
         const initialCostDiff = evInitialCost - iceInitialCost;
         const yearlyOperatingDiff = iceYearlyOperatingCost - evYearlyOperatingCost;
-        
+
         if (yearlyOperatingDiff <= 0) {
-            // EV never breaks even (ICE is always cheaper in operating costs too)
+            // ICE is always cheaper
             return null;
         }
-        
+
         const breakevenYear = initialCostDiff / yearlyOperatingDiff;
         return breakevenYear > 0 ? breakevenYear : null;
     }
@@ -720,7 +721,11 @@ class EVVsICECalculator {
             // Breakeven point marker
             const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
             circle.setAttribute('cx', x);
-            circle.setAttribute('cy', yScale(yearlyComparison[Math.floor(breakevenYear) - 1].evCost));
+            // Only set 'cy' if index is valid
+            const breakevenIndex = Math.floor(breakevenYear) - 1;
+            if (breakevenIndex >= 0 && breakevenIndex < yearlyComparison.length) {
+                circle.setAttribute('cy', yScale(yearlyComparison[breakevenIndex].evCost));
+            }
             circle.setAttribute('r', '6');
             circle.setAttribute('fill', '#10b981');
             svg.appendChild(circle);
@@ -780,18 +785,37 @@ class EVVsICECalculator {
         // Calculate breakeven point
         const breakevenYear = this.calculateBreakevenPoint(inputs);
 
+        // Helper to format years and months
+        function formatYearsMonths(decimalYears) {
+            if (!decimalYears || decimalYears < 0) return null;
+            const years = Math.floor(decimalYears);
+            const months = Math.round((decimalYears - years) * 12);
+            let str = '';
+            if (years > 0) str += `${years} year${years !== 1 ? 's' : ''}`;
+            if (months > 0) str += `${years > 0 ? ' ' : ''}${months} month${months !== 1 ? 's' : ''}`;
+            if (!str) str = '0 months';
+            return str;
+        }
+        const breakevenYearMonth = formatYearsMonths(breakevenYear);
+
         // Update breakeven analysis
         const breakevenInfo = document.getElementById('breakevenInfo');
-        if (breakevenYear && breakevenYear <= inputs.ownershipPeriod) {
+        if (breakevenYear === 'ev_always_cheaper') {
+            breakevenInfo.innerHTML = `
+                <div class="text-green-400 text-xl font-semibold mb-2">✅ EV Always Cheaper</div>
+                <p class="text-white">EV is more cost-effective than ICE from day 1.</p>
+                <p class="text-gray-300 text-sm mt-2">Both the upfront and running costs of EV are lower than ICE for your scenario.</p>
+            `;
+        } else if (breakevenYear && breakevenYear <= inputs.ownershipPeriod) {
             breakevenInfo.innerHTML = `
                 <div class="text-green-400 text-xl font-semibold mb-2">🎯 Breakeven Point Reached!</div>
-                <p class="text-white">EV becomes cost-effective after <strong>${breakevenYear.toFixed(1)} years</strong></p>
+                <p class="text-white">EV becomes cost-effective after <strong>${breakevenYearMonth}</strong></p>
                 <p class="text-gray-300 text-sm mt-2">Operating costs savings will compensate for the higher upfront cost</p>
             `;
         } else if (breakevenYear && breakevenYear > inputs.ownershipPeriod) {
             breakevenInfo.innerHTML = `
                 <div class="text-yellow-400 text-xl font-semibold mb-2">⏳ Breakeven Beyond Ownership</div>
-                <p class="text-white">EV would become cost-effective after <strong>${breakevenYear.toFixed(1)} years</strong></p>
+                <p class="text-white">EV would become cost-effective after <strong>${breakevenYearMonth}</strong></p>
                 <p class="text-gray-300 text-sm mt-2">Consider extending ownership period or current conditions favor ICE</p>
             `;
         } else {
