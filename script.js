@@ -1355,7 +1355,7 @@ class GoalCalculator {
 document.addEventListener('DOMContentLoaded', () => {
     new LoanCalculator();
     new EVVsICECalculator();
-    new GoalCalculator();
+    window.goalCalculatorInstance = new GoalCalculator();
 
     const tabs = document.querySelectorAll('.tab-btn');
     const calculators = document.querySelectorAll('.calculator-content');
@@ -1373,6 +1373,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 calc.classList.add('hidden');
             }
         });
+        // Trigger Goal Calculator calculation on tab switch if needed
+        if (tabId === 'goalCalculator' && window.goalCalculatorInstance) {
+            const form = document.getElementById('goalCalculatorForm');
+            if (form && form.checkValidity()) {
+                setTimeout(() => {
+                    window.goalCalculatorInstance.calculate();
+                }, 100);
+            }
+        }
     };
 
     tabs.forEach(tab => {
