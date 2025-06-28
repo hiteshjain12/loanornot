@@ -7,4 +7,4 @@ Disallow: /.git/
 Allow: /
 
 # Sitemap
-Sitemap: https://loanornot.com/sitemap.xml 
+Sitemap: https://fin-calculators.vercel.app/sitemap.xml 
