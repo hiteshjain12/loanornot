@@ -1,0 +1,10 @@
+# robots.txt for loanornot
+# Allow all search engines to crawl everything except the .git directory
+User-agent: *
+Disallow: /.git/
+
+# Allow everything else
+Allow: /
+
+# Sitemap (add your sitemap URL if available)
+# Sitemap: https://yourdomain.com/sitemap.xml 
