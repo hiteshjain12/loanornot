@@ -6,5 +6,5 @@ Disallow: /.git/
 # Allow everything else
 Allow: /
 
-# Sitemap (add your sitemap URL if available)
-# Sitemap: https://yourdomain.com/sitemap.xml 
+# Sitemap
+Sitemap: https://loanornot.com/sitemap.xml 

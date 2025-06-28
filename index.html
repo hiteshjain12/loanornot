@@ -3,7 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Calculators</title>
+    
+    <!-- Primary Meta Tags -->
+    <title>Financial Calculators - Loan vs Investment, EV vs ICE, Goal Planning | Smart Financial Decisions</title>
+    <meta name="title" content="Financial Calculators - Loan vs Investment, EV vs ICE, Goal Planning | Smart Financial Decisions">
+    <meta name="description" content="Free online financial calculators for loan vs investment decisions, EV vs ICE vehicle cost comparison, and financial goal planning. Make smart financial choices with our comprehensive tools.">
+    <meta name="keywords" content="financial calculator, loan calculator, investment calculator, EV calculator, ICE calculator, vehicle cost comparison, financial planning, loan vs investment, electric vehicle cost, financial goals, EMI calculator, TCO calculator">
+    <meta name="author" content="Financial Calculators">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://loanornot.com/">
+    <meta property="og:title" content="Financial Calculators - Loan vs Investment, EV vs ICE, Goal Planning">
+    <meta property="og:description" content="Free online financial calculators for loan vs investment decisions, EV vs ICE vehicle cost comparison, and financial goal planning. Make smart financial choices.">
+    <meta property="og:image" content="https://loanornot.com/og-image.jpg">
+    <meta property="og:site_name" content="Financial Calculators">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://loanornot.com/">
+    <meta property="twitter:title" content="Financial Calculators - Loan vs Investment, EV vs ICE, Goal Planning">
+    <meta property="twitter:description" content="Free online financial calculators for loan vs investment decisions, EV vs ICE vehicle cost comparison, and financial goal planning.">
+    <meta property="twitter:image" content="https://loanornot.com/twitter-image.jpg">
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="theme-color" content="#3B82F6">
+    <meta name="msapplication-TileColor" content="#3B82F6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Financial Calculators">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://loanornot.com/">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Financial Calculators",
+        "description": "Free online financial calculators for loan vs investment decisions, EV vs ICE vehicle cost comparison, and financial goal planning.",
+        "url": "https://loanornot.com/",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Organization",
+            "name": "Financial Calculators"
+        },
+        "featureList": [
+            "Loan vs Investment Calculator",
+            "EV vs ICE Cost Comparison",
+            "Financial Goal Planning",
+            "Total Cost of Ownership Analysis",
+            "Breakeven Point Calculation"
+        ],
+        "screenshot": "https://loanornot.com/screenshot.jpg",
+        "softwareVersion": "1.0"
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Should I take a loan or use my savings for a purchase?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Use our Loan vs Investment calculator to compare the cost of taking a loan versus investing your money. It considers interest rates, investment returns, and tax implications to help you make the best financial decision."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is an electric vehicle cheaper than a traditional car?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Our EV vs ICE calculator compares the total cost of ownership including purchase price, fuel costs, maintenance, insurance, and resale value to determine which option is more cost-effective for your specific situation."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How much do I need to save to reach my financial goal?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The Goal Calculator helps you determine how much you need to save regularly to reach your financial target, considering your current savings, expected returns, and time horizon."
+                }
+            }
+        ]
+    }
+    </script>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -69,12 +175,23 @@
             background-color: #3B82F6;
             color: white;
         }
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
     </style>
 </head>
 <body class="bg-black text-white">
     <!-- Background Effects -->
-    <div class="fixed inset-0 bg-grid opacity-20"></div>
-    <div class="meteors-container">
+    <div class="fixed inset-0 bg-grid opacity-20" aria-hidden="true"></div>
+    <div class="meteors-container" aria-hidden="true">
         <div class="meteor" style="top: 10%; left: 55%; animation-delay: 0s;"></div>
         <div class="meteor" style="top: 20%; left: 45%; animation-delay: 1s;"></div>
         <div class="meteor" style="top: 30%; left: 65%; animation-delay: 2s;"></div>
@@ -85,91 +202,168 @@
     <div class="relative min-h-screen w-full overflow-y-auto">
         <div class="container mx-auto px-4 py-8 relative z-20">
             <!-- Header -->
-            <div class="text-center mb-12">
+            <header class="text-center mb-12">
                 <div class="inline-block">
                     <h1 class="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400 mb-4">
                         💰 Financial Calculators
                     </h1>
                 </div>
                 <p class="text-lg text-gray-300 max-w-2xl mx-auto">
-                    Your suite of tools for smart financial decisions.
+                    Your suite of tools for smart financial decisions. Compare loan vs investment strategies, EV vs ICE vehicle costs, and plan your financial goals.
                 </p>
-            </div>
+            </header>
 
-            <!-- Tabs -->
-            <div class="mb-8 flex justify-center">
+            <!-- Navigation Tabs -->
+            <nav class="mb-8 flex justify-center" role="tablist" aria-label="Financial calculator tools">
                 <div class="flex space-x-4">
-                    <button class="tab-btn px-4 py-2 rounded-md text-lg font-medium transition-colors duration-300" data-tab="loanOrNot">Loan or Not</button>
-                    <button class="tab-btn px-4 py-2 rounded-md text-lg font-medium transition-colors duration-300" data-tab="evVsIceCalculator">EV vs ICE Calculator</button>
-                    <button class="tab-btn px-4 py-2 rounded-md text-lg font-medium transition-colors duration-300" data-tab="goalCalculator">Goal Calculator</button>
+                    <button class="tab-btn px-4 py-2 rounded-md text-lg font-medium transition-colors duration-300" 
+                            data-tab="loanOrNot" 
+                            role="tab" 
+                            aria-selected="true" 
+                            aria-controls="loanOrNot">
+                        Loan or Not
+                    </button>
+                    <button class="tab-btn px-4 py-2 rounded-md text-lg font-medium transition-colors duration-300" 
+                            data-tab="evVsIceCalculator" 
+                            role="tab" 
+                            aria-selected="false" 
+                            aria-controls="evVsIceCalculator">
+                        EV vs ICE Calculator
+                    </button>
+                    <button class="tab-btn px-4 py-2 rounded-md text-lg font-medium transition-colors duration-300" 
+                            data-tab="goalCalculator" 
+                            role="tab" 
+                            aria-selected="false" 
+                            aria-controls="goalCalculator">
+                        Goal Calculator
+                    </button>
                 </div>
-            </div>
+            </nav>
 
-            <div id="calculators">
+            <main id="calculators" role="main">
                 <!-- LoanOrNot Calculator -->
-                <div id="loanOrNot" class="calculator-content">
+                <section id="loanOrNot" class="calculator-content" role="tabpanel" aria-labelledby="loanOrNot-tab">
                     <div class="max-w-4xl mx-auto">
                         <div class="grid md:grid-cols-2 gap-8">
                             <!-- Input Form -->
-                            <div class="backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500">
+                            <article class="backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500">
                                 <h2 class="text-2xl font-semibold text-white mb-6">📊 Enter Your Details</h2>
                                 
-                                <form id="calculatorForm" class="space-y-4">
+                                <form id="calculatorForm" class="space-y-4" role="form" aria-label="Loan vs Investment Calculator">
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-300 mb-2">Purchase Amount (₹)</label>
-                                        <input type="number" id="purchaseAmount" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="50000" required>
+                                        <label for="purchaseAmount" class="block text-sm font-medium text-gray-300 mb-2">Purchase Amount (₹)</label>
+                                        <input type="number" 
+                                               id="purchaseAmount" 
+                                               name="purchaseAmount"
+                                               class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" 
+                                               placeholder="50000" 
+                                               required
+                                               aria-describedby="purchaseAmount-help">
+                                        <div id="purchaseAmount-help" class="sr-only">Enter the total amount you want to purchase</div>
                                     </div>
         
                                     <div>
                                         <div class="flex items-center mb-2">
-                                            <label class="block text-sm font-medium text-gray-300">Available Cash (₹)</label>
+                                            <label for="availableCash" class="block text-sm font-medium text-gray-300">Available Cash (₹)</label>
                                             <div class="ml-auto flex items-center">
-                                                <input type="checkbox" id="matchPurchaseAmount" class="w-4 h-4 bg-gray-900/50 border-gray-700 rounded focus:ring-blue-500 text-blue-500" checked>
-                                                <label class="ml-2 text-sm text-gray-400">Match purchase amount</label>
+                                                <input type="checkbox" 
+                                                       id="matchPurchaseAmount" 
+                                                       name="matchPurchaseAmount"
+                                                       class="w-4 h-4 bg-gray-900/50 border-gray-700 rounded focus:ring-blue-500 text-blue-500" 
+                                                       checked
+                                                       aria-describedby="matchPurchaseAmount-help">
+                                                <label for="matchPurchaseAmount" class="ml-2 text-sm text-gray-400">Match purchase amount</label>
                                             </div>
                                         </div>
-                                        <input type="number" id="availableCash" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="50000" required disabled>
-                                        <p id="cashWarning" class="text-xs text-yellow-500 mt-1 hidden">Note: With less cash available, you'll need a larger loan to cover the purchase.</p>
+                                        <input type="number" 
+                                               id="availableCash" 
+                                               name="availableCash"
+                                               class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" 
+                                               placeholder="50000" 
+                                               required 
+                                               disabled
+                                               aria-describedby="availableCash-help">
+                                        <div id="availableCash-help" class="sr-only">Amount of cash you have available for the purchase</div>
+                                        <p id="cashWarning" class="text-xs text-yellow-500 mt-1 hidden" role="alert">Note: With less cash available, you'll need a larger loan to cover the purchase.</p>
                                     </div>
         
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-300 mb-2">Loan Interest Rate (% annually)</label>
-                                        <input type="number" id="loanRate" step="0.01" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="5.5" required>
+                                        <label for="loanRate" class="block text-sm font-medium text-gray-300 mb-2">Loan Interest Rate (% annually)</label>
+                                        <input type="number" 
+                                               id="loanRate" 
+                                               name="loanRate"
+                                               step="0.01" 
+                                               class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" 
+                                               placeholder="5.5" 
+                                               required
+                                               aria-describedby="loanRate-help">
+                                        <div id="loanRate-help" class="sr-only">Annual interest rate for the loan</div>
                                     </div>
         
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-300 mb-2">Expected Investment Return (% annually)</label>
-                                        <input type="number" id="investmentReturn" step="0.01" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="8.0" required>
+                                        <label for="investmentReturn" class="block text-sm font-medium text-gray-300 mb-2">Expected Investment Return (% annually)</label>
+                                        <input type="number" 
+                                               id="investmentReturn" 
+                                               name="investmentReturn"
+                                               step="0.01" 
+                                               class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" 
+                                               placeholder="8.0" 
+                                               required
+                                               aria-describedby="investmentReturn-help">
+                                        <div id="investmentReturn-help" class="sr-only">Expected annual return if you invest the money instead</div>
                                     </div>
         
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-300 mb-2">Tax Rate on Investment Gains (% annually)</label>
-                                        <input type="number" id="taxRate" step="0.01" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="20.0" min="0" max="100">
-                                        <p class="text-xs text-gray-500 mt-1">Capital gains tax rate (leave 0 for tax-deferred accounts)</p>
+                                        <label for="taxRate" class="block text-sm font-medium text-gray-300 mb-2">Tax Rate on Investment Gains (% annually)</label>
+                                        <input type="number" 
+                                               id="taxRate" 
+                                               name="taxRate"
+                                               step="0.01" 
+                                               class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" 
+                                               placeholder="20.0" 
+                                               min="0" 
+                                               max="100"
+                                               aria-describedby="taxRate-help">
+                                        <p class="text-xs text-gray-500 mt-1" id="taxRate-help">Capital gains tax rate (leave 0 for tax-deferred accounts)</p>
                                     </div>
         
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-300 mb-2">Investment Compounding Frequency</label>
-                                        <select id="compoundingFrequency" class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white">
+                                        <label for="compoundingFrequency" class="block text-sm font-medium text-gray-300 mb-2">Investment Compounding Frequency</label>
+                                        <select id="compoundingFrequency" 
+                                                name="compoundingFrequency"
+                                                class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                                                aria-describedby="compoundingFrequency-help">
                                             <option value="12">Monthly</option>
                                             <option value="4">Quarterly</option>
                                             <option value="2">Semi-annually</option>
                                             <option value="1" selected>Annually</option>
                                         </select>
+                                        <div id="compoundingFrequency-help" class="sr-only">How often your investment returns are compounded</div>
                                     </div>
         
                                     <div>
-                                        <label class="block text-sm font-medium text-gray-300 mb-2">Time Period</label>
+                                        <label for="timePeriod" class="block text-sm font-medium text-gray-300 mb-2">Time Period</label>
                                         <div class="flex gap-2">
-                                            <input type="number" id="timePeriod" class="flex-1 px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" placeholder="5" required>
-                                            <select id="timeUnit" class="px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white">
+                                            <input type="number" 
+                                                   id="timePeriod" 
+                                                   name="timePeriod"
+                                                   class="flex-1 px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white" 
+                                                   placeholder="5" 
+                                                   required
+                                                   aria-describedby="timePeriod-help">
+                                            <select id="timeUnit" 
+                                                    name="timeUnit"
+                                                    class="px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                                                    aria-describedby="timeUnit-help">
                                                 <option value="years">Years</option>
                                                 <option value="months">Months</option>
                                             </select>
                                         </div>
+                                        <div id="timePeriod-help" class="sr-only">Duration for the calculation</div>
+                                        <div id="timeUnit-help" class="sr-only">Unit of time (years or months)</div>
                                     </div>
                                 </form>
-                            </div>
+                            </article>
         
                             <!-- Results -->
                             <div class="backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500">
@@ -261,10 +455,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </section>
 
             <!-- Goal Calculator -->
-            <div id="goalCalculator" class="calculator-content hidden">
+            <section id="goalCalculator" class="calculator-content hidden">
                 <div class="max-w-4xl mx-auto">
                     <!-- Input Form -->
                     <div class="backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500">
@@ -358,10 +552,10 @@
                         </p>
                     </div>
                 </div>
-            </div>
+            </section>
 
             <!-- EV vs ICE Calculator -->
-            <div id="evVsIceCalculator" class="calculator-content hidden">
+            <section id="evVsIceCalculator" class="calculator-content hidden">
                 <div class="max-w-4xl mx-auto">
                     <div class="space-y-8">
                         <!-- Input Form -->
@@ -590,8 +784,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </section>
+        </main>
     </div>
     <script src="script.js"></script>
 </body>
