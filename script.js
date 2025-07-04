@@ -1382,6 +1382,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, 100);
             }
         }
+        // Initialize Personal Finance Rules calculators on tab switch
+        if (tabId === 'personalFinanceRules') {
+            setTimeout(initPersonalFinanceRulesCalculators, 0);
+        }
     };
 
     tabs.forEach(tab => {
@@ -1413,4 +1417,189 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // You could add buttons to load these scenarios if desired
     console.log('Example scenarios available:', scenarios);
+
+    // --- Personal Finance Rules Calculators ---
+    function formatYearsMonthsDays(decimalYears) {
+        if (!decimalYears || decimalYears < 0) return '';
+        const years = Math.floor(decimalYears);
+        const monthsFloat = (decimalYears - years) * 12;
+        const months = Math.floor(monthsFloat);
+        const days = Math.round((monthsFloat - months) * 30.4375); // average days in a month
+        let str = '';
+        if (years > 0) str += `${years} year${years !== 1 ? 's' : ''}`;
+        if (months > 0) str += `${years > 0 ? ' ' : ''}${months} month${months !== 1 ? 's' : ''}`;
+        if (days > 0) str += `${(years > 0 || months > 0) ? ' ' : ''}${days} day${days !== 1 ? 's' : ''}`;
+        if (!str) str = '0 days';
+        return str;
+    }
+    function initPersonalFinanceRulesCalculators() {
+        // Rule 1: Rule of 72
+        const rule72Input = document.getElementById('rule72Rate');
+        if (rule72Input && !rule72Input._listenerAttached) {
+            rule72Input.addEventListener('input', function () {
+                const rate = parseFloat(rule72Input.value);
+                const resultDiv = document.getElementById('rule72Result');
+                if (rate > 0) {
+                    const years = 72 / rate;
+                    const formatted = formatYearsMonthsDays(years);
+                    resultDiv.innerHTML = `<span class='text-gray-400'>Result:</span> It will take approximately ${formatted} to double your money.`;
+                } else {
+                    resultDiv.innerHTML = '';
+                }
+            });
+            rule72Input._listenerAttached = true;
+            rule72Input.dispatchEvent(new Event('input'));
+        }
+        // Rule 2: Rule of 70
+        const rule70Input = document.getElementById('rule70Rate');
+        if (rule70Input && !rule70Input._listenerAttached) {
+            rule70Input.addEventListener('input', function () {
+                const rate = parseFloat(rule70Input.value);
+                const resultDiv = document.getElementById('rule70Result');
+                if (rate > 0) {
+                    const years = 70 / rate;
+                    const formatted = formatYearsMonthsDays(years);
+                    resultDiv.innerHTML = `<span class='text-gray-400'>Result:</span> Your money's value will halve in approximately ${formatted} due to inflation.`;
+                } else {
+                    resultDiv.innerHTML = '';
+                }
+            });
+            rule70Input._listenerAttached = true;
+            rule70Input.dispatchEvent(new Event('input'));
+        }
+        // Rule 3: 4% Withdrawal Rule
+        const rule4pctInput = document.getElementById('rule4pctExpense');
+        if (rule4pctInput && !rule4pctInput._listenerAttached) {
+            rule4pctInput.addEventListener('input', function () {
+                const expense = parseFloat(rule4pctInput.value);
+                const resultDiv = document.getElementById('rule4pctResult');
+                if (expense > 0) {
+                    const corpus = expense * 25;
+                    resultDiv.innerHTML = `<span class='text-gray-400'>Result:</span> You need a retirement corpus of ₹${corpus.toLocaleString()} to safely withdraw 4% per year.`;
+                } else {
+                    resultDiv.innerHTML = '';
+                }
+            });
+            rule4pctInput._listenerAttached = true;
+            rule4pctInput.dispatchEvent(new Event('input'));
+        }
+        // Rule 4: 100 Minus Age Rule
+        const rule100AgeInput = document.getElementById('rule100Age');
+        if (rule100AgeInput && !rule100AgeInput._listenerAttached) {
+            rule100AgeInput.addEventListener('input', function () {
+                const age = parseInt(rule100AgeInput.value, 10);
+                const resultDiv = document.getElementById('rule100AgeResult');
+                if (age > 0 && age < 100) {
+                    const equity = 100 - age;
+                    const debt = age;
+                    resultDiv.innerHTML = `<span class='text-gray-400'>Result:</span> Equity: ${equity}%, Debt: ${debt}%`;
+                } else {
+                    resultDiv.innerHTML = '';
+                }
+            });
+            rule100AgeInput._listenerAttached = true;
+            rule100AgeInput.dispatchEvent(new Event('input'));
+        }
+        // Rule 5: 50-30-20 Rule
+        const rule502030Input = document.getElementById('rule502030Income');
+        if (rule502030Input && !rule502030Input._listenerAttached) {
+            rule502030Input.addEventListener('input', function () {
+                const income = parseFloat(rule502030Input.value);
+                const resultDiv = document.getElementById('rule502030Result');
+                if (income > 0) {
+                    const needs = income * 0.5;
+                    const wants = income * 0.3;
+                    const savings = income * 0.2;
+                    resultDiv.innerHTML = `<span class='text-gray-400'>Result:</span> Needs: ₹${needs.toLocaleString()}, Wants: ₹${wants.toLocaleString()}, Savings: ₹${savings.toLocaleString()}`;
+                } else {
+                    resultDiv.innerHTML = '';
+                }
+            });
+            rule502030Input._listenerAttached = true;
+            rule502030Input.dispatchEvent(new Event('input'));
+        }
+        // Rule 6: 3X Emergency Rule
+        const rule3xEmergencyInput = document.getElementById('rule3xEmergencyIncome');
+        if (rule3xEmergencyInput && !rule3xEmergencyInput._listenerAttached) {
+            rule3xEmergencyInput.addEventListener('input', function () {
+                const income = parseFloat(rule3xEmergencyInput.value);
+                const resultDiv = document.getElementById('rule3xEmergencyResult');
+                if (income > 0) {
+                    const minFund = income * 3;
+                    const safeFund = income * 6;
+                    resultDiv.innerHTML = `<span class='text-gray-400'>Result:</span> Minimum Emergency Fund: ₹${minFund.toLocaleString()} (Safer: ₹${safeFund.toLocaleString()})`;
+                } else {
+                    resultDiv.innerHTML = '';
+                }
+            });
+            rule3xEmergencyInput._listenerAttached = true;
+            rule3xEmergencyInput.dispatchEvent(new Event('input'));
+        }
+        // Rule 7: 40% EMI Rule
+        const rule40emiInput = document.getElementById('rule40emiIncome');
+        if (rule40emiInput && !rule40emiInput._listenerAttached) {
+            rule40emiInput.addEventListener('input', function () {
+                const income = parseFloat(rule40emiInput.value);
+                const resultDiv = document.getElementById('rule40emiResult');
+                if (income > 0) {
+                    const maxEmi = income * 0.4;
+                    resultDiv.innerHTML = `<span class='text-gray-400'>Result:</span> Maximum EMI should be ₹${maxEmi.toLocaleString()}`;
+                } else {
+                    resultDiv.innerHTML = '';
+                }
+            });
+            rule40emiInput._listenerAttached = true;
+            rule40emiInput.dispatchEvent(new Event('input'));
+        }
+        // Rule 8: Life Insurance Rule
+        const ruleInsuranceInput = document.getElementById('ruleInsuranceIncome');
+        if (ruleInsuranceInput && !ruleInsuranceInput._listenerAttached) {
+            ruleInsuranceInput.addEventListener('input', function () {
+                const income = parseFloat(ruleInsuranceInput.value);
+                const resultDiv = document.getElementById('ruleInsuranceResult');
+                if (income > 0) {
+                    const sumAssured = income * 20;
+                    resultDiv.innerHTML = `<span class='text-gray-400'>Result:</span> Recommended sum assured: ₹${sumAssured.toLocaleString()}`;
+                } else {
+                    resultDiv.innerHTML = '';
+                }
+            });
+            ruleInsuranceInput._listenerAttached = true;
+            ruleInsuranceInput.dispatchEvent(new Event('input'));
+        }
+        // Rule 9: Rule of 144
+        const rule144Input = document.getElementById('rule144Rate');
+        if (rule144Input && !rule144Input._listenerAttached) {
+            rule144Input.addEventListener('input', function () {
+                const rate = parseFloat(rule144Input.value);
+                const resultDiv = document.getElementById('rule144Result');
+                if (rate > 0) {
+                    const years = 144 / rate;
+                    const formatted = formatYearsMonthsDays(years);
+                    resultDiv.innerHTML = `<span class='text-gray-400'>Result:</span> Your SIP corpus will double in approximately ${formatted}.`;
+                } else {
+                    resultDiv.innerHTML = '';
+                }
+            });
+            rule144Input._listenerAttached = true;
+            rule144Input.dispatchEvent(new Event('input'));
+        }
+        // Rule 10: Revolving Credit Formula
+        const ruleRevolvingInput = document.getElementById('ruleRevolvingRate');
+        if (ruleRevolvingInput && !ruleRevolvingInput._listenerAttached) {
+            ruleRevolvingInput.addEventListener('input', function () {
+                const rate = parseFloat(ruleRevolvingInput.value);
+                const resultDiv = document.getElementById('ruleRevolvingResult');
+                if (rate > 0) {
+                    const i = rate / 100;
+                    const annual = (Math.pow(1 + i, 12) - 1) * 100;
+                    resultDiv.innerHTML = `<span class='text-gray-400'>Result:</span> Compound annual cost: ${annual.toFixed(2)}%`;
+                } else {
+                    resultDiv.innerHTML = '';
+                }
+            });
+            ruleRevolvingInput._listenerAttached = true;
+            ruleRevolvingInput.dispatchEvent(new Event('input'));
+        }
+    }
 });
