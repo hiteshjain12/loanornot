@@ -1,0 +1,2536 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Primary Meta Tags -->
+    <title>
+      Financial Calculators - Loan vs Investment, EV vs ICE, Goal Planning |
+      Smart Financial Decisions
+    </title>
+    <meta
+      name="title"
+      content="Financial Calculators - Loan vs Investment, EV vs ICE, Goal Planning | Smart Financial Decisions"
+    />
+    <meta
+      name="description"
+      content="Free online financial calculators for loan vs investment decisions, EV vs ICE vehicle cost comparison, and financial goal planning. Make smart financial choices with our comprehensive tools."
+    />
+    <meta
+      name="keywords"
+      content="financial calculator, loan calculator, investment calculator, EV calculator, ICE calculator, vehicle cost comparison, financial planning, loan vs investment, electric vehicle cost, financial goals, EMI calculator, TCO calculator"
+    />
+    <meta name="author" content="Financial Calculators" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    <meta name="revisit-after" content="7 days" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://fin-calculators.vercel.app/" />
+    <meta
+      property="og:title"
+      content="Financial Calculators - Loan vs Investment, EV vs ICE, Goal Planning"
+    />
+    <meta
+      property="og:description"
+      content="Free online financial calculators for loan vs investment decisions, EV vs ICE vehicle cost comparison, and financial goal planning. Make smart financial choices."
+    />
+    <meta
+      property="og:image"
+      content="https://fin-calculators.vercel.app/og-image.jpg"
+    />
+    <meta property="og:site_name" content="Financial Calculators" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://fin-calculators.vercel.app/"
+    />
+    <meta
+      property="twitter:title"
+      content="Financial Calculators - Loan vs Investment, EV vs ICE, Goal Planning"
+    />
+    <meta
+      property="twitter:description"
+      content="Free online financial calculators for loan vs investment decisions, EV vs ICE vehicle cost comparison, and financial goal planning."
+    />
+    <meta
+      property="twitter:image"
+      content="https://fin-calculators.vercel.app/twitter-image.jpg"
+    />
+
+    <!-- Additional SEO Meta Tags -->
+    <meta name="theme-color" content="#3B82F6" />
+    <meta name="msapplication-TileColor" content="#3B82F6" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="Financial Calculators" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://fin-calculators.vercel.app/" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Financial Calculators",
+        "description": "Free online financial calculators for loan vs investment decisions, EV vs ICE vehicle cost comparison, and financial goal planning.",
+        "url": "https://fin-calculators.vercel.app/",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "Financial Calculators"
+        },
+        "featureList": [
+          "Loan vs Investment Calculator",
+          "EV vs ICE Cost Comparison",
+          "Financial Goal Planning",
+          "Total Cost of Ownership Analysis",
+          "Breakeven Point Calculation"
+        ],
+        "screenshot": "https://fin-calculators.vercel.app/screenshot.jpg",
+        "softwareVersion": "2.0"
+      }
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Should I take a loan or use my savings for a purchase?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use our Loan vs Investment calculator to compare the cost of taking a loan versus investing your money. It considers interest rates, investment returns, and tax implications to help you make the best financial decision."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is an electric vehicle cheaper than a traditional car?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Our EV vs ICE calculator compares the total cost of ownership including purchase price, fuel costs, maintenance, insurance, and resale value to determine which option is more cost-effective for your specific situation."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much do I need to save to reach my financial goal?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The Goal Calculator helps you determine how much you need to save regularly to reach your financial target, considering your current savings, expected returns, and time horizon."
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body class="bg-black text-white">
+    <!-- Background Effects -->
+    <div class="fixed inset-0 bg-grid opacity-20" aria-hidden="true"></div>
+    <div class="meteors-container" aria-hidden="true">
+      <div
+        class="meteor"
+        style="top: 10%; left: 55%; animation-delay: 0s"
+      ></div>
+      <div
+        class="meteor"
+        style="top: 20%; left: 45%; animation-delay: 1s"
+      ></div>
+      <div
+        class="meteor"
+        style="top: 30%; left: 65%; animation-delay: 2s"
+      ></div>
+      <div
+        class="meteor"
+        style="top: 40%; left: 35%; animation-delay: 3s"
+      ></div>
+      <div
+        class="meteor"
+        style="top: 50%; left: 75%; animation-delay: 4s"
+      ></div>
+    </div>
+
+    <div class="relative min-h-screen w-full overflow-y-auto">
+      <div class="container mx-auto px-4 py-8 relative z-20">
+        <!-- Header -->
+        <header class="text-center mb-12">
+          <div class="inline-block">
+            <h1
+              class="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400 mb-4"
+            >
+              Financial Calculators
+            </h1>
+          </div>
+          <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+            Your suite of tools for smart financial decisions. Compare loan vs
+            pay upfront strategies, EV vs ICE vehicle costs, and plan your
+            financial goals.
+          </p>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav
+          class="mb-8 flex justify-center"
+          role="tablist"
+          aria-label="Financial calculator tools"
+        >
+          <div class="flex flex-wrap justify-center gap-4">
+            <button
+              class="tab-btn px-4 py-2 rounded-md text-lg font-medium transition-colors duration-300"
+              data-tab="loanOrNot"
+              role="tab"
+              aria-selected="true"
+              aria-controls="loanOrNot"
+            >
+              Loan vs Cash
+            </button>
+            <button
+              class="tab-btn px-4 py-2 rounded-md text-lg font-medium transition-colors duration-300"
+              data-tab="homeLoanCalculator"
+              role="tab"
+              aria-selected="false"
+              aria-controls="homeLoanCalculator"
+            >
+              Home Loan
+            </button>
+            <button
+              class="tab-btn px-4 py-2 rounded-md text-lg font-medium transition-colors duration-300"
+              data-tab="evVsIceCalculator"
+              role="tab"
+              aria-selected="false"
+              aria-controls="evVsIceCalculator"
+            >
+              EV vs ICE
+            </button>
+            <button
+              class="tab-btn px-4 py-2 rounded-md text-lg font-medium transition-colors duration-300"
+              data-tab="goalCalculator"
+              role="tab"
+              aria-selected="false"
+              aria-controls="goalCalculator"
+            >
+              Goal Calculator
+            </button>
+            <button
+              class="tab-btn px-4 py-2 rounded-md text-lg font-medium transition-colors duration-300"
+              data-tab="personalFinanceRules"
+              role="tab"
+              aria-selected="false"
+              aria-controls="personalFinanceRules"
+            >
+              Personal Finance Rules
+            </button>
+          </div>
+        </nav>
+
+        <main id="calculators" role="main">
+          <!-- LoanOrNot Calculator -->
+          <section
+            id="loanOrNot"
+            class="calculator-content"
+            role="tabpanel"
+            aria-labelledby="loanOrNot-tab"
+          >
+            <div class="max-w-4xl mx-auto">
+              <div class="grid md:grid-cols-2 gap-8">
+                <!-- Input Form -->
+                <article
+                  class="backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500"
+                >
+                  <form
+                    id="calculatorForm"
+                    class="space-y-4"
+                    aria-label="Loan vs Investment Calculator"
+                  >
+                    <div>
+                      <label
+                        for="purchaseAmount"
+                        class="block text-sm font-medium text-gray-300 mb-2"
+                        >Purchase Amount (₹)</label
+                      >
+                      <input
+                        type="number"
+                        id="purchaseAmount"
+                        name="purchaseAmount"
+                        class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                        placeholder="50000"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <div class="flex items-center mb-2">
+                        <label
+                          for="availableCash"
+                          class="block text-sm font-medium text-gray-300"
+                          >Available Cash (₹)</label
+                        >
+                        <div class="ml-auto flex items-center">
+                          <input
+                            type="checkbox"
+                            id="matchPurchaseAmount"
+                            name="matchPurchaseAmount"
+                            class="w-4 h-4 bg-gray-900/50 border-gray-700 rounded focus:ring-blue-500 text-blue-500"
+                            checked
+                          />
+                          <label
+                            for="matchPurchaseAmount"
+                            class="ml-2 text-sm text-gray-400"
+                            >Match purchase amount</label
+                          >
+                        </div>
+                      </div>
+                      <input
+                        type="number"
+                        id="availableCash"
+                        name="availableCash"
+                        class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                        placeholder="50000"
+                        required
+                        disabled
+                      />
+                      <p
+                        id="cashWarning"
+                        class="text-xs text-yellow-500 mt-1 hidden"
+                        role="alert"
+                      >
+                        Note: With less cash available, you'll need a larger
+                        loan to cover the purchase.
+                      </p>
+                    </div>
+
+                    <div>
+                      <label
+                        for="loanRate"
+                        class="block text-sm font-medium text-gray-300 mb-2"
+                        >Loan Interest Rate (% annually)</label
+                      >
+                      <input
+                        type="number"
+                        id="loanRate"
+                        name="loanRate"
+                        step="0.01"
+                        class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                        placeholder="5.5"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        for="investmentReturn"
+                        class="block text-sm font-medium text-gray-300 mb-2"
+                        >Expected Investment Return (% annually)</label
+                      >
+                      <input
+                        type="number"
+                        id="investmentReturn"
+                        name="investmentReturn"
+                        step="0.01"
+                        class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                        placeholder="8.0"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        for="taxRate"
+                        class="block text-sm font-medium text-gray-300 mb-2"
+                        >Tax Rate on Investment Gains (% annually)</label
+                      >
+                      <input
+                        type="number"
+                        id="taxRate"
+                        name="taxRate"
+                        step="0.01"
+                        class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                        placeholder="20.0"
+                        min="0"
+                        max="100"
+                      />
+                      <p class="text-xs text-gray-500 mt-1">
+                        Capital gains tax rate (leave 0 for tax-deferred
+                        accounts)
+                      </p>
+                    </div>
+
+                    <div>
+                      <label
+                        for="compoundingFrequency"
+                        class="block text-sm font-medium text-gray-300 mb-2"
+                        >Investment Compounding Frequency</label
+                      >
+                      <select
+                        id="compoundingFrequency"
+                        name="compoundingFrequency"
+                        class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                      >
+                        <option value="12">Monthly</option>
+                        <option value="4">Quarterly</option>
+                        <option value="2">Semi-annually</option>
+                        <option value="1" selected>Annually</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label
+                        for="timePeriod"
+                        class="block text-sm font-medium text-gray-300 mb-2"
+                        >Time Period</label
+                      >
+                      <div class="flex gap-2">
+                        <input
+                          type="number"
+                          id="timePeriod"
+                          name="timePeriod"
+                          class="flex-1 px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                          placeholder="5"
+                          required
+                        />
+                        <select
+                          id="timeUnit"
+                          name="timeUnit"
+                          class="px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                        >
+                          <option value="years">Years</option>
+                          <option value="months">Months</option>
+                        </select>
+                      </div>
+                    </div>
+                  </form>
+                </article>
+
+                <!-- Results -->
+                <div
+                  class="backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500"
+                >
+                  <h2 class="text-2xl font-semibold text-white mb-6">
+                    Financial Analysis
+                  </h2>
+
+                  <div id="results" class="hidden">
+                    <div
+                      id="recommendation"
+                      class="mb-6 p-4 rounded-lg backdrop-blur-sm"
+                    >
+                      <h3 class="text-lg font-semibold mb-2 text-white">
+                        Recommendation
+                      </h3>
+                      <p id="recommendationText" class="text-lg"></p>
+                    </div>
+
+                    <div
+                      class="mb-6 p-4 bg-gray-900/50 rounded-lg border border-gray-800"
+                    >
+                      <h4 class="font-semibold text-white mb-3">
+                        Option 1: Use Available Cash
+                      </h4>
+                      <div class="space-y-2 text-sm">
+                        <div class="flex justify-between text-gray-300">
+                          <span>Cash Payment:</span>
+                          <span id="cashPayment" class="font-medium"></span>
+                        </div>
+                        <div
+                          id="partialLoanDetails"
+                          class="space-y-2 border-t border-gray-700 pt-2 mt-2 hidden"
+                        >
+                          <div class="flex justify-between text-gray-300">
+                            <span>Loan Required:</span>
+                            <span
+                              id="partialLoanAmount"
+                              class="font-medium"
+                            ></span>
+                          </div>
+                          <div class="flex justify-between">
+                            <span class="text-gray-300"
+                              >Interest on Partial Loan:</span
+                            >
+                            <span
+                              id="partialLoanInterest"
+                              class="font-medium text-red-400"
+                            ></span>
+                          </div>
+                        </div>
+                        <div id="remainingCashSection" class="space-y-2">
+                          <div class="flex justify-between text-gray-300">
+                            <span>Remaining Cash to Invest:</span>
+                            <span id="remainingCash" class="font-medium"></span>
+                          </div>
+                          <div class="flex justify-between">
+                            <span class="text-gray-300"
+                              >Investment Returns (after tax):</span
+                            >
+                            <span
+                              id="cashInvestmentReturns"
+                              class="font-medium text-emerald-400"
+                            ></span>
+                          </div>
+                        </div>
+                        <div
+                          class="flex justify-between border-t border-gray-700 pt-2"
+                        >
+                          <span class="font-semibold text-white"
+                            >Total Net Position:</span
+                          >
+                          <span
+                            id="cashNetPosition"
+                            class="font-semibold text-white"
+                          ></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      class="mb-6 p-4 bg-gray-900/50 rounded-lg border border-gray-800"
+                    >
+                      <h4 class="font-semibold text-white mb-3">
+                        Option 2: Take Full Loan & Invest
+                      </h4>
+                      <div class="space-y-2 text-sm">
+                        <div class="flex justify-between text-gray-300">
+                          <span>Full Loan Amount:</span>
+                          <span id="loanAmount" class="font-medium"></span>
+                        </div>
+                        <div class="flex justify-between">
+                          <span class="text-gray-300">Total Interest:</span>
+                          <span
+                            id="totalInterest"
+                            class="font-medium text-red-400"
+                          ></span>
+                        </div>
+                        <div class="flex justify-between text-gray-300">
+                          <span>Cash Available to Invest:</span>
+                          <span
+                            id="fullLoanCashToInvest"
+                            class="font-medium"
+                          ></span>
+                        </div>
+                        <div class="flex justify-between">
+                          <span class="text-gray-300"
+                            >Investment Returns (after tax):</span
+                          >
+                          <span
+                            id="loanInvestmentReturns"
+                            class="font-medium text-emerald-400"
+                          ></span>
+                        </div>
+                        <div
+                          class="flex justify-between border-t border-gray-700 pt-2"
+                        >
+                          <span class="font-semibold text-white"
+                            >Total Net Position:</span
+                          >
+                          <span
+                            id="loanNetPosition"
+                            class="font-semibold text-white"
+                          ></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      class="p-4 rounded-lg border border-gray-800 bg-gray-900/50"
+                    >
+                      <div class="flex justify-between items-center">
+                        <span class="font-semibold text-lg text-white"
+                          >Net Benefit:</span
+                        >
+                        <span id="netBenefit" class="font-bold text-xl"></span>
+                      </div>
+                      <p
+                        id="benefitExplanation"
+                        class="text-sm text-gray-400 mt-2"
+                      ></p>
+                    </div>
+                  </div>
+
+                  <div id="noResults" class="text-center text-gray-400 py-8">
+                    <div class="text-6xl mb-4">📊</div>
+                    <p>Enter your details to see the financial analysis</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Home Loan Calculator -->
+          <section
+            id="homeLoanCalculator"
+            class="calculator-content hidden"
+            role="tabpanel"
+          >
+            <div class="max-w-6xl mx-auto">
+              <div class="space-y-8">
+                <div
+                  class="backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500"
+                >
+                  <h2 class="text-2xl font-semibold text-white mb-6">
+                    Home Loan Details
+                  </h2>
+                  <form id="homeLoanCalculatorForm" class="space-y-6">
+                    <div>
+                      <h3 class="text-lg font-semibold text-blue-400 mb-4">
+                        Loan Details
+                      </h3>
+                      <div class="grid md:grid-cols-3 gap-4">
+                        <div>
+                          <label
+                            class="block text-sm font-medium text-gray-300 mb-2"
+                            >Loan Amount (₹)</label
+                          >
+                          <input
+                            type="number"
+                            id="homeLoanAmount"
+                            class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                            placeholder="5000000"
+                            min="1"
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label
+                            class="block text-sm font-medium text-gray-300 mb-2"
+                            >Interest Rate (% annually)</label
+                          >
+                          <input
+                            type="number"
+                            id="homeLoanInterestRate"
+                            step="0.01"
+                            class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                            placeholder="8.5"
+                            min="0"
+                            max="30"
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label
+                            class="block text-sm font-medium text-gray-300 mb-2"
+                            >Processing Fees (₹)</label
+                          >
+                          <input
+                            type="number"
+                            id="homeLoanProcessingFees"
+                            class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                            placeholder="0"
+                            min="0"
+                            value="0"
+                          />
+                          <p class="text-xs text-gray-500 mt-1">
+                            One-time upfront cost
+                          </p>
+                        </div>
+                      </div>
+                      <div class="grid md:grid-cols-3 gap-4 mt-4">
+                        <div>
+                          <label
+                            class="block text-sm font-medium text-gray-300 mb-2"
+                            >Loan Tenure (Years)</label
+                          >
+                          <input
+                            type="number"
+                            id="homeLoanTenureYears"
+                            class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                            placeholder="20"
+                            min="1"
+                            max="30"
+                            required
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h3 class="text-lg font-semibold text-blue-400 mb-4">
+                        Prepayment Options
+                      </h3>
+                      <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <label
+                            class="block text-sm font-medium text-gray-300 mb-2"
+                            >Annual EMI Step-up (%)</label
+                          >
+                          <input
+                            type="number"
+                            id="homeLoanStepUp"
+                            step="0.1"
+                            class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                            placeholder="0"
+                            min="0"
+                            max="50"
+                            value="0"
+                          />
+                          <p class="text-xs text-gray-500 mt-1">
+                            Increase EMI by this % each year
+                          </p>
+                        </div>
+                        <div>
+                          <label
+                            class="block text-sm font-medium text-gray-300 mb-2"
+                            >Regular Monthly Prepayment (₹)</label
+                          >
+                          <input
+                            type="number"
+                            id="homeLoanMonthlyPrepayment"
+                            class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                            placeholder="0"
+                            min="0"
+                            value="0"
+                          />
+                          <p class="text-xs text-gray-500 mt-1">
+                            Extra amount paid every month
+                          </p>
+                        </div>
+                      </div>
+                      <div class="grid md:grid-cols-2 gap-4 mt-4">
+                        <div>
+                          <label
+                            class="block text-sm font-medium text-gray-300 mb-2"
+                            >Regular Annual Prepayment (₹)</label
+                          >
+                          <input
+                            type="number"
+                            id="homeLoanAnnualPrepayment"
+                            class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                            placeholder="0"
+                            min="0"
+                            value="0"
+                          />
+                          <p class="text-xs text-gray-500 mt-1">
+                            Extra amount paid every year
+                          </p>
+                        </div>
+                        <div>
+                          <label
+                            class="block text-sm font-medium text-gray-300 mb-2"
+                            >One-time Prepayment (₹)</label
+                          >
+                          <input
+                            type="number"
+                            id="homeLoanOneTimePrepayment"
+                            class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                            placeholder="0"
+                            min="0"
+                            value="0"
+                          />
+                        </div>
+                      </div>
+                      <div class="grid md:grid-cols-2 gap-4 mt-4">
+                        <div>
+                          <label
+                            class="block text-sm font-medium text-gray-300 mb-2"
+                            >One-time Prepayment Year</label
+                          >
+                          <input
+                            type="number"
+                            id="homeLoanOneTimePrepaymentYear"
+                            class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                            placeholder="1"
+                            min="1"
+                            max="30"
+                            value="1"
+                          />
+                        </div>
+                      </div>
+                      <div class="mt-4">
+                        <label
+                          class="block text-sm font-medium text-gray-300 mb-2"
+                          >Prepayment Strategy</label
+                        >
+                        <div class="flex gap-4">
+                          <label class="flex items-center cursor-pointer">
+                            <input
+                              type="radio"
+                              name="homeLoanPrepaymentStrategy"
+                              value="reduceTenure"
+                              class="mr-2"
+                              checked
+                            />
+                            <span class="text-gray-300">Reduce Tenure</span>
+                          </label>
+                          <label class="flex items-center cursor-pointer">
+                            <input
+                              type="radio"
+                              name="homeLoanPrepaymentStrategy"
+                              value="reduceEMI"
+                              class="mr-2"
+                            />
+                            <span class="text-gray-300">Reduce EMI</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h3 class="text-lg font-semibold text-blue-400 mb-4">
+                        Investment Comparison
+                      </h3>
+                      <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <label
+                            class="block text-sm font-medium text-gray-300 mb-2"
+                            >Expected Investment Return (% annually)</label
+                          >
+                          <input
+                            type="number"
+                            id="homeLoanInvestmentReturn"
+                            step="0.1"
+                            class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                            placeholder="12"
+                            min="0"
+                            max="50"
+                            value="12"
+                          />
+                          <p class="text-xs text-gray-500 mt-1">
+                            Returns if you invest instead of prepaying
+                          </p>
+                        </div>
+                        <div>
+                          <label
+                            class="block text-sm font-medium text-gray-300 mb-2"
+                            >Tax Rate on Investment Gains (%)</label
+                          >
+                          <input
+                            type="number"
+                            id="homeLoanTaxRate"
+                            step="0.1"
+                            class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                            placeholder="10"
+                            min="0"
+                            max="50"
+                            value="10"
+                          />
+                          <p class="text-xs text-gray-500 mt-1">
+                            Tax on long-term capital gains
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                <!-- Results Section -->
+                <div id="homeLoanResults" class="hidden space-y-6">
+                  <div
+                    class="backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500"
+                  >
+                    <h2 class="text-2xl font-semibold text-white mb-6">
+                      Loan Summary
+                    </h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-4">
+                      <div
+                        class="p-4 bg-blue-900/30 rounded-lg border border-blue-500/50"
+                      >
+                        <h3 class="text-sm font-medium text-gray-400 mb-1">
+                          Monthly EMI
+                        </h3>
+                        <p
+                          id="homeLoanEMI"
+                          class="text-xl font-bold text-blue-400"
+                        ></p>
+                      </div>
+                      <div
+                        class="p-4 bg-emerald-900/30 rounded-lg border border-emerald-500/50"
+                      >
+                        <h3 class="text-sm font-medium text-gray-400 mb-1">
+                          Total Principal
+                        </h3>
+                        <p
+                          id="homeLoanTotalPrincipal"
+                          class="text-xl font-bold text-emerald-400"
+                        ></p>
+                      </div>
+                      <div
+                        class="p-4 bg-red-900/30 rounded-lg border border-red-500/50"
+                      >
+                        <h3 class="text-sm font-medium text-gray-400 mb-1">
+                          Total Interest
+                        </h3>
+                        <p
+                          id="homeLoanTotalInterest"
+                          class="text-xl font-bold text-red-400"
+                        ></p>
+                      </div>
+                      <div
+                        class="p-4 bg-yellow-900/30 rounded-lg border border-yellow-500/50"
+                      >
+                        <h3 class="text-sm font-medium text-gray-400 mb-1">
+                          Total Amount
+                        </h3>
+                        <p
+                          id="homeLoanTotalAmount"
+                          class="text-xl font-bold text-yellow-400"
+                        ></p>
+                      </div>
+                      <div
+                        class="p-4 bg-purple-900/30 rounded-lg border border-purple-500/50"
+                      >
+                        <h3 class="text-sm font-medium text-gray-400 mb-1">
+                          Actual Tenure
+                        </h3>
+                        <p
+                          id="homeLoanActualTenure"
+                          class="text-xl font-bold text-purple-400"
+                        ></p>
+                      </div>
+                    </div>
+
+                    <div
+                      id="homeLoanSavingsSection"
+                      class="mt-6 p-4 bg-emerald-900/30 rounded-lg border border-emerald-500/50 hidden"
+                    >
+                      <h3 class="text-lg font-semibold text-emerald-400 mb-2">
+                        Savings from Prepayment
+                      </h3>
+                      <div class="grid md:grid-cols-3 gap-4">
+                        <div>
+                          <p class="text-sm text-gray-400">Interest Saved</p>
+                          <p
+                            id="homeLoanInterestSaved"
+                            class="text-lg font-bold text-emerald-400"
+                          ></p>
+                        </div>
+                        <div>
+                          <p class="text-sm text-gray-400">Time Saved</p>
+                          <p
+                            id="homeLoanTimeSaved"
+                            class="text-lg font-bold text-emerald-400"
+                          ></p>
+                        </div>
+                        <div>
+                          <p class="text-sm text-gray-400">Total Prepaid</p>
+                          <p
+                            id="homeLoanTotalPrepaid"
+                            class="text-lg font-bold text-emerald-400"
+                          ></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Prepayment vs Investment Analysis -->
+                  <div
+                    id="homeLoanInvestmentAnalysis"
+                    class="backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500 hidden"
+                  >
+                    <h2 class="text-2xl font-semibold text-white mb-6">
+                      Prepayment vs Investment Analysis
+                    </h2>
+                    <div
+                      id="homeLoanRecommendation"
+                      class="mb-6 p-4 rounded-lg backdrop-blur-sm"
+                    >
+                      <p
+                        id="homeLoanRecommendationText"
+                        class="text-lg font-semibold"
+                      ></p>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                      <div
+                        class="p-4 bg-gray-900/50 rounded-lg border border-gray-800"
+                      >
+                        <h3 class="text-lg font-semibold text-white mb-3">
+                          Prepayment Option
+                        </h3>
+                        <div class="space-y-2">
+                          <div class="flex justify-between">
+                            <span class="text-gray-400">Interest Saved:</span
+                            ><span
+                              id="homeLoanPrepayInterestSaved"
+                              class="text-emerald-400 font-semibold"
+                            ></span>
+                          </div>
+                          <div class="flex justify-between">
+                            <span class="text-gray-400">Total Prepaid:</span
+                            ><span
+                              id="homeLoanPrepayTotalPrepaid"
+                              class="text-gray-300 font-semibold"
+                            ></span>
+                          </div>
+                          <div
+                            class="flex justify-between border-t border-gray-700 pt-2 mt-2"
+                          >
+                            <span class="text-white font-semibold"
+                              >Net Benefit:</span
+                            ><span
+                              id="homeLoanPrepayNetBenefit"
+                              class="text-emerald-400 font-bold"
+                            ></span>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="p-4 bg-gray-900/50 rounded-lg border border-gray-800"
+                      >
+                        <h3 class="text-lg font-semibold text-white mb-3">
+                          Investment Option
+                        </h3>
+                        <div class="space-y-2">
+                          <div class="flex justify-between">
+                            <span class="text-gray-400"
+                              >Investment Returns:</span
+                            ><span
+                              id="homeLoanInvestReturns"
+                              class="text-blue-400 font-semibold"
+                            ></span>
+                          </div>
+                          <div class="flex justify-between">
+                            <span class="text-gray-400">Tax on Returns:</span
+                            ><span
+                              id="homeLoanInvestTax"
+                              class="text-red-400 font-semibold"
+                            ></span>
+                          </div>
+                          <div
+                            class="flex justify-between border-t border-gray-700 pt-2 mt-2"
+                          >
+                            <span class="text-white font-semibold"
+                              >Net Benefit:</span
+                            ><span
+                              id="homeLoanInvestNetBenefit"
+                              class="text-blue-400 font-bold"
+                            ></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="mt-4 p-4 bg-gray-900/50 rounded-lg border border-gray-800"
+                    >
+                      <div class="flex justify-between items-center">
+                        <span class="text-white text-lg font-semibold"
+                          >Better Option:</span
+                        >
+                        <span
+                          id="homeLoanBetterOption"
+                          class="text-2xl font-bold"
+                        ></span>
+                      </div>
+                      <p
+                        id="homeLoanDifference"
+                        class="text-sm text-gray-400 mt-2"
+                      ></p>
+                    </div>
+
+                    <!-- Collapsible Detailed Calculation -->
+                    <div
+                      class="mt-4 border border-gray-700 rounded-lg overflow-hidden"
+                    >
+                      <button
+                        id="homeLoanToggleDetails"
+                        class="w-full px-4 py-3 bg-gray-800/50 hover:bg-gray-800 transition-colors flex justify-between items-center"
+                      >
+                        <span class="text-white font-semibold"
+                          >View Detailed Calculations</span
+                        >
+                        <svg
+                          id="homeLoanDetailsChevron"
+                          class="w-5 h-5 text-gray-400 transform transition-transform"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M19 9l-7 7-7-7"
+                          ></path>
+                        </svg>
+                      </button>
+                      <div
+                        id="homeLoanDetailedCalculations"
+                        class="hidden bg-gray-900/30 p-4"
+                      >
+                        <div class="grid md:grid-cols-2 gap-6">
+                          <div class="space-y-3">
+                            <h4
+                              class="text-emerald-400 font-semibold mb-3 border-b border-emerald-500/30 pb-2"
+                            >
+                              Prepayment Option Breakdown
+                            </h4>
+                            <div class="space-y-2 text-sm">
+                              <div class="flex justify-between">
+                                <span class="text-gray-400"
+                                  >Total Amount Prepaid:</span
+                                ><span
+                                  id="detailPrepayTotalPrepaid"
+                                  class="text-white font-medium"
+                                ></span>
+                              </div>
+                              <div class="flex justify-between">
+                                <span class="text-gray-400"
+                                  >Interest without Prepayment:</span
+                                ><span
+                                  id="detailInterestWithoutPrepay"
+                                  class="text-red-400 font-medium"
+                                ></span>
+                              </div>
+                              <div class="flex justify-between">
+                                <span class="text-gray-400"
+                                  >Interest with Prepayment:</span
+                                ><span
+                                  id="detailInterestWithPrepay"
+                                  class="text-red-400 font-medium"
+                                ></span>
+                              </div>
+                              <div
+                                class="flex justify-between border-t border-gray-700 pt-2"
+                              >
+                                <span class="text-white font-semibold"
+                                  >Interest Saved:</span
+                                ><span
+                                  id="detailInterestSaved"
+                                  class="text-emerald-400 font-bold"
+                                ></span>
+                              </div>
+                              <div
+                                class="mt-3 p-3 bg-emerald-900/20 rounded border border-emerald-500/30"
+                              >
+                                <div class="flex justify-between">
+                                  <span class="text-white font-semibold"
+                                    >Net Benefit (Prepayment):</span
+                                  ><span
+                                    id="detailPrepayNetBenefit"
+                                    class="text-emerald-400 font-bold text-lg"
+                                  ></span>
+                                </div>
+                                <p class="text-xs text-gray-400 mt-1">
+                                  Interest Saved - Total Prepaid Amount
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="space-y-3">
+                            <h4
+                              class="text-blue-400 font-semibold mb-3 border-b border-blue-500/30 pb-2"
+                            >
+                              Investment Option Breakdown
+                            </h4>
+                            <div class="space-y-2 text-sm">
+                              <div class="flex justify-between">
+                                <span class="text-gray-400"
+                                  >Amount Invested:</span
+                                ><span
+                                  id="detailInvestAmount"
+                                  class="text-white font-medium"
+                                ></span>
+                              </div>
+                              <div class="flex justify-between">
+                                <span class="text-gray-400"
+                                  >Investment Returns (Gross):</span
+                                ><span
+                                  id="detailInvestGrossReturns"
+                                  class="text-blue-400 font-medium"
+                                ></span>
+                              </div>
+                              <div class="flex justify-between">
+                                <span class="text-gray-400">Future Value:</span
+                                ><span
+                                  id="detailInvestFutureValue"
+                                  class="text-blue-400 font-medium"
+                                ></span>
+                              </div>
+                              <div class="flex justify-between">
+                                <span class="text-gray-400">Tax on Gains:</span
+                                ><span
+                                  id="detailInvestTaxAmount"
+                                  class="text-red-400 font-medium"
+                                ></span>
+                              </div>
+                              <div class="flex justify-between">
+                                <span class="text-gray-400"
+                                  >Net Returns (After Tax):</span
+                                ><span
+                                  id="detailInvestNetReturns"
+                                  class="text-blue-400 font-medium"
+                                ></span>
+                              </div>
+                              <div class="flex justify-between">
+                                <span class="text-gray-400"
+                                  >Extra Interest Paid:</span
+                                ><span
+                                  id="detailExtraInterest"
+                                  class="text-red-400 font-medium"
+                                ></span>
+                              </div>
+                              <div
+                                class="mt-3 p-3 bg-blue-900/20 rounded border border-blue-500/30"
+                              >
+                                <div class="flex justify-between">
+                                  <span class="text-white font-semibold"
+                                    >Net Benefit (Investment):</span
+                                  ><span
+                                    id="detailInvestNetBenefit"
+                                    class="text-blue-400 font-bold text-lg"
+                                  ></span>
+                                </div>
+                                <p class="text-xs text-gray-400 mt-1">
+                                  Net Returns - Extra Interest Paid
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="mt-6 p-4 bg-gray-800/50 rounded-lg border border-gray-700"
+                        >
+                          <h4 class="text-white font-semibold mb-3">Summary</h4>
+                          <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                              <span class="text-gray-400"
+                                >Net Benefit (Prepayment):</span
+                              ><span
+                                id="detailSummaryPrepay"
+                                class="text-emerald-400 font-semibold"
+                              ></span>
+                            </div>
+                            <div class="flex justify-between">
+                              <span class="text-gray-400"
+                                >Net Benefit (Investment):</span
+                              ><span
+                                id="detailSummaryInvest"
+                                class="text-blue-400 font-semibold"
+                              ></span>
+                            </div>
+                            <div
+                              class="flex justify-between border-t border-gray-700 pt-2 mt-2"
+                            >
+                              <span class="text-white font-bold"
+                                >Difference:</span
+                              ><span
+                                id="detailSummaryDifference"
+                                class="font-bold text-lg"
+                              ></span>
+                            </div>
+                            <p
+                              id="detailSummaryExplanation"
+                              class="text-gray-400 text-xs mt-2 italic"
+                            ></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Amortization Table -->
+                  <div
+                    class="backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500"
+                  >
+                    <div class="flex justify-between items-center mb-6">
+                      <h2 class="text-2xl font-semibold text-white">
+                        Amortization Schedule
+                      </h2>
+                      <div class="flex gap-4">
+                        <button
+                          id="homeLoanToggleView"
+                          class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md text-white text-sm font-medium transition-colors"
+                        >
+                          Switch to Monthly View
+                        </button>
+                        <button
+                          id="homeLoanDownloadCSV"
+                          class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 rounded-md text-white text-sm font-medium transition-colors"
+                        >
+                          Download CSV
+                        </button>
+                      </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                      <table class="w-full text-sm">
+                        <thead class="bg-gray-800/50">
+                          <tr>
+                            <th class="py-3 px-4 text-left text-gray-300">
+                              Period
+                            </th>
+                            <th class="py-3 px-4 text-right text-gray-300">
+                              Opening Balance
+                            </th>
+                            <th class="py-3 px-4 text-right text-gray-300">
+                              EMI
+                            </th>
+                            <th class="py-3 px-4 text-right text-gray-300">
+                              Principal
+                            </th>
+                            <th class="py-3 px-4 text-right text-gray-300">
+                              Interest
+                            </th>
+                            <th class="py-3 px-4 text-right text-gray-300">
+                              Prepayment
+                            </th>
+                            <th class="py-3 px-4 text-right text-gray-300">
+                              Closing Balance
+                            </th>
+                            <th class="py-3 px-4 text-right text-gray-300">
+                              Cumulative Interest
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody
+                          id="homeLoanAmortizationTable"
+                          class="divide-y divide-gray-800"
+                        ></tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <!-- Charts -->
+                  <div
+                    class="backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500"
+                  >
+                    <h2 class="text-2xl font-semibold text-white mb-6">
+                      Visual Analysis
+                    </h2>
+                    <div class="mb-8">
+                      <h3 class="text-lg font-semibold text-white mb-4">
+                        Principal vs Interest Payment Over Time
+                      </h3>
+                      <div
+                        id="homeLoanPrincipalInterestChart"
+                        class="relative h-80 bg-gray-800/50 rounded-lg overflow-hidden"
+                      ></div>
+                    </div>
+                    <div class="mb-8">
+                      <h3 class="text-lg font-semibold text-white mb-4">
+                        Outstanding Loan Balance
+                      </h3>
+                      <div
+                        id="homeLoanBalanceChart"
+                        class="relative h-80 bg-gray-800/50 rounded-lg overflow-hidden"
+                      ></div>
+                    </div>
+                    <div id="homeLoanComparisonChartSection" class="hidden">
+                      <h3 class="text-lg font-semibold text-white mb-4">
+                        With vs Without Prepayment
+                      </h3>
+                      <div
+                        id="homeLoanComparisonChart"
+                        class="relative h-80 bg-gray-800/50 rounded-lg overflow-hidden"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  id="noHomeLoanResults"
+                  class="backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500"
+                >
+                  <div class="text-center text-gray-400 py-8">
+                    <div class="text-6xl mb-4">🏠</div>
+                    <p>Enter your home loan details to see the analysis</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Goal Calculator -->
+          <section
+            id="goalCalculator"
+            class="calculator-content hidden"
+            role="tabpanel"
+          >
+            <div class="max-w-4xl mx-auto">
+              <div
+                class="backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500"
+              >
+                <form id="goalCalculatorForm" class="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2"
+                      >Goal Name</label
+                    >
+                    <input
+                      type="text"
+                      id="goalName"
+                      class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                      placeholder="e.g., Dream House, Child's Education, Retirement"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2"
+                      >Existing Investment for this Goal (₹)</label
+                    >
+                    <input
+                      type="number"
+                      id="existingInvestment"
+                      class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                      placeholder="0"
+                      min="0"
+                      required
+                    />
+                    <p class="text-xs text-gray-500 mt-1">
+                      Amount already invested towards this goal
+                    </p>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2"
+                      >Cost Today (₹)</label
+                    >
+                    <input
+                      type="number"
+                      id="costToday"
+                      class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                      placeholder="1000000"
+                      min="1"
+                      required
+                    />
+                    <p class="text-xs text-gray-500 mt-1">
+                      Current cost of your goal
+                    </p>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2"
+                      >Years to Achieve</label
+                    >
+                    <input
+                      type="number"
+                      id="yearsToAchieve"
+                      class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                      placeholder="10"
+                      min="1"
+                      max="50"
+                      required
+                    />
+                    <p class="text-xs text-gray-500 mt-1">
+                      Time horizon for achieving your goal
+                    </p>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2"
+                      >Expected Investment Return (% annually)</label
+                    >
+                    <input
+                      type="number"
+                      id="expectedReturn"
+                      step="0.01"
+                      class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                      placeholder="12.0"
+                      min="0"
+                      max="50"
+                      required
+                    />
+                    <p class="text-xs text-gray-500 mt-1">
+                      Expected annual return from your investments
+                    </p>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2"
+                      >Inflation Rate (% annually)</label
+                    >
+                    <input
+                      type="number"
+                      id="inflationRate"
+                      step="0.01"
+                      class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                      value="6.0"
+                      min="0"
+                      max="20"
+                      required
+                    />
+                    <p class="text-xs text-gray-500 mt-1">
+                      Expected annual inflation rate
+                    </p>
+                  </div>
+                </form>
+              </div>
+
+              <div
+                id="goalResults"
+                class="mt-8 backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500 hidden"
+              >
+                <h2 class="text-2xl font-semibold text-white mb-6">
+                  Goal Analysis
+                </h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div
+                    class="p-4 bg-yellow-900/30 rounded-lg border border-yellow-500/50"
+                  >
+                    <h3 class="text-lg font-semibold mb-2 text-white">
+                      Future Cost of Your Goal
+                    </h3>
+                    <div id="futureCost" class="text-lg"></div>
+                  </div>
+                  <div
+                    class="p-4 bg-emerald-900/30 rounded-lg border border-emerald-500/50"
+                  >
+                    <h3 class="text-lg font-semibold mb-2 text-white">
+                      Required Monthly Investment
+                    </h3>
+                    <div id="monthlyInvestment" class="text-lg"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                id="noGoalResults"
+                class="mt-8 text-center text-gray-400 py-8"
+              >
+                <div class="text-6xl mb-4">🎯</div>
+                <p>Enter your goal details to see the analysis</p>
+              </div>
+
+              <div
+                id="goalResults2"
+                class="mt-8 backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500 hidden"
+              >
+                <h3 class="text-xl font-semibold mb-4 text-white">
+                  Year-by-Year Investment Breakdown
+                </h3>
+                <div class="overflow-x-auto">
+                  <table class="w-full text-sm">
+                    <thead>
+                      <tr class="border-b border-gray-700">
+                        <th class="text-left py-3 text-gray-300 font-medium">
+                          Year
+                        </th>
+                        <th class="text-right py-3 text-gray-300 font-medium">
+                          Amount Invested
+                        </th>
+                        <th class="text-right py-3 text-gray-300 font-medium">
+                          Returns Earned
+                        </th>
+                        <th class="text-right py-3 text-gray-300 font-medium">
+                          Total Investment Value
+                        </th>
+                        <th class="text-right py-3 text-gray-300 font-medium">
+                          Goal Progress
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody id="goalYearlyBreakdown"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div
+                id="goalResults3"
+                class="mt-8 backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500 hidden"
+              >
+                <h3 class="text-xl font-semibold mb-4 text-white">
+                  Investment Progress Chart
+                </h3>
+                <div
+                  id="progressChart"
+                  class="relative h-80 bg-gray-800/50 rounded-lg overflow-hidden"
+                ></div>
+                <p class="text-sm text-gray-400 mt-4 text-center">
+                  Track your investment growth towards your goal over time
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- EV vs ICE Calculator -->
+          <section
+            id="evVsIceCalculator"
+            class="calculator-content hidden"
+            role="tabpanel"
+          >
+            <div class="max-w-4xl mx-auto">
+              <div class="space-y-8">
+                <div
+                  class="backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500"
+                >
+                  <h2 class="text-2xl font-semibold text-white mb-6">
+                    Enter Vehicle Details
+                  </h2>
+                  <form id="evVsIceCalculatorForm" class="space-y-4">
+                    <h3 class="text-xl font-semibold text-white">EV Details</h3>
+                    <div class="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <label
+                          class="block text-sm font-medium text-gray-300 mb-2"
+                          >Purchase Price (₹)</label
+                        >
+                        <input
+                          type="number"
+                          id="evPurchasePrice"
+                          class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                          placeholder="1500000"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label
+                          class="block text-sm font-medium text-gray-300 mb-2"
+                          >Expected Resale Value (% of purchase price)</label
+                        >
+                        <input
+                          type="number"
+                          id="evResaleValue"
+                          class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                          placeholder="40"
+                        />
+                        <p class="text-xs text-gray-500 mt-1">
+                          Leave blank if you are not going to sell or not sure
+                          about it
+                        </p>
+                      </div>
+                      <div>
+                        <label
+                          class="block text-sm font-medium text-gray-300 mb-2"
+                          >Efficiency (km/kWh)</label
+                        >
+                        <input
+                          type="number"
+                          step="0.01"
+                          id="evEfficiency"
+                          class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                          value="5"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label
+                          class="block text-sm font-medium text-gray-300 mb-2"
+                          >Electricity Cost (₹/kWh)</label
+                        >
+                        <input
+                          type="number"
+                          step="0.01"
+                          id="electricityCost"
+                          class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                          value="8"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label
+                          class="block text-sm font-medium text-gray-300 mb-2"
+                          >Annual Maintenance (₹)</label
+                        >
+                        <input
+                          type="number"
+                          id="evMaintenanceCost"
+                          class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                          placeholder="15000"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label
+                          class="block text-sm font-medium text-gray-300 mb-2"
+                          >Insurance per Year (₹)</label
+                        >
+                        <input
+                          type="number"
+                          id="evInsuranceCost"
+                          class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                          placeholder="35000"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label
+                          class="block text-sm font-medium text-gray-300 mb-2"
+                          >Govt Incentives (₹)</label
+                        >
+                        <input
+                          type="number"
+                          id="evIncentives"
+                          class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                          placeholder="50000"
+                        />
+                      </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-white mt-6">
+                      ICE Details
+                    </h3>
+                    <div class="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <label
+                          class="block text-sm font-medium text-gray-300 mb-2"
+                          >Purchase Price (₹)</label
+                        >
+                        <input
+                          type="number"
+                          id="icePurchasePrice"
+                          class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                          placeholder="1200000"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label
+                          class="block text-sm font-medium text-gray-300 mb-2"
+                          >Expected Resale Value (% of purchase price)</label
+                        >
+                        <input
+                          type="number"
+                          id="iceResaleValue"
+                          class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                          placeholder="45"
+                        />
+                        <p class="text-xs text-gray-500 mt-1">
+                          Leave blank if you are not going to sell or not sure
+                          about it
+                        </p>
+                      </div>
+                      <div>
+                        <label
+                          class="block text-sm font-medium text-gray-300 mb-2"
+                          >Fuel Efficiency (km/l)</label
+                        >
+                        <input
+                          type="number"
+                          step="0.01"
+                          id="fuelEfficiency"
+                          class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                          value="15"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label
+                          class="block text-sm font-medium text-gray-300 mb-2"
+                          >Fuel Cost (₹/l)</label
+                        >
+                        <input
+                          type="number"
+                          step="0.01"
+                          id="fuelCost"
+                          class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                          value="100"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label
+                          class="block text-sm font-medium text-gray-300 mb-2"
+                          >Annual Maintenance (₹)</label
+                        >
+                        <input
+                          type="number"
+                          id="iceMaintenanceCost"
+                          class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                          placeholder="25000"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label
+                          class="block text-sm font-medium text-gray-300 mb-2"
+                          >Insurance per Year (₹)</label
+                        >
+                        <input
+                          type="number"
+                          id="iceInsuranceCost"
+                          class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                          placeholder="30000"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-white mt-6">Usage</h3>
+                    <div class="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <label
+                          class="block text-sm font-medium text-gray-300 mb-2"
+                          >Average Distance per Year (km)</label
+                        >
+                        <input
+                          type="number"
+                          id="averageDistance"
+                          class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                          placeholder="12000"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label
+                          class="block text-sm font-medium text-gray-300 mb-2"
+                          >Ownership Period (years)</label
+                        >
+                        <input
+                          type="number"
+                          id="ownershipPeriod"
+                          class="w-full px-3 py-2 bg-gray-900/50 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                          placeholder="8"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                <div
+                  class="backdrop-blur-xl bg-black/50 rounded-xl border border-gray-800 shadow-xl p-6 hover:border-gray-700 transition-all duration-500"
+                >
+                  <h2 class="text-2xl font-semibold text-white mb-6">
+                    Total Cost of Ownership (TCO)
+                  </h2>
+                  <div id="evIceResults" class="hidden">
+                    <div
+                      id="evIceRecommendation"
+                      class="mb-6 p-4 rounded-lg backdrop-blur-sm"
+                    >
+                      <h3 class="text-lg font-semibold mb-2 text-white">
+                        Recommendation
+                      </h3>
+                      <p id="evIceRecommendationText" class="text-lg"></p>
+                    </div>
+
+                    <div
+                      class="mb-6 p-4 bg-gray-900/50 rounded-lg border border-gray-800"
+                    >
+                      <h4 class="font-semibold text-white mb-3">
+                        EV Breakdown
+                      </h4>
+                      <div class="space-y-2 text-sm">
+                        <div class="flex justify-between text-gray-300">
+                          <span>Purchase Price:</span
+                          ><span
+                            id="evPurchasePriceDisplay"
+                            class="font-medium"
+                          ></span>
+                        </div>
+                        <div class="flex justify-between text-gray-300">
+                          <span>Govt Incentives:</span
+                          ><span
+                            id="evIncentivesDisplay"
+                            class="font-medium text-green-400"
+                          ></span>
+                        </div>
+                        <div class="flex justify-between text-gray-300">
+                          <span>Total Fuel/Energy Cost:</span
+                          ><span
+                            id="evFuelCostDisplay"
+                            class="font-medium"
+                          ></span>
+                        </div>
+                        <div class="flex justify-between text-gray-300">
+                          <span>Total Maintenance:</span
+                          ><span
+                            id="evMaintenanceDisplay"
+                            class="font-medium"
+                          ></span>
+                        </div>
+                        <div class="flex justify-between text-gray-300">
+                          <span>Total Insurance:</span
+                          ><span
+                            id="evInsuranceDisplay"
+                            class="font-medium"
+                          ></span>
+                        </div>
+                        <div class="flex justify-between text-gray-300">
+                          <span>Resale Value:</span
+                          ><span
+                            id="evResaleDisplay"
+                            class="font-medium text-green-400"
+                          ></span>
+                        </div>
+                        <div
+                          class="flex justify-between border-t border-gray-700 pt-2"
+                        >
+                          <span class="font-semibold text-white"
+                            >Total EV TCO:</span
+                          ><span
+                            id="evTotalCost"
+                            class="font-semibold text-white"
+                          ></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      class="mb-6 p-4 bg-gray-900/50 rounded-lg border border-gray-800"
+                    >
+                      <h4 class="font-semibold text-white mb-3">
+                        ICE Breakdown
+                      </h4>
+                      <div class="space-y-2 text-sm">
+                        <div class="flex justify-between text-gray-300">
+                          <span>Purchase Price:</span
+                          ><span
+                            id="icePurchasePriceDisplay"
+                            class="font-medium"
+                          ></span>
+                        </div>
+                        <div class="flex justify-between text-gray-300">
+                          <span>Total Fuel Cost:</span
+                          ><span
+                            id="iceFuelCostDisplay"
+                            class="font-medium"
+                          ></span>
+                        </div>
+                        <div class="flex justify-between text-gray-300">
+                          <span>Total Maintenance:</span
+                          ><span
+                            id="iceMaintenanceDisplay"
+                            class="font-medium"
+                          ></span>
+                        </div>
+                        <div class="flex justify-between text-gray-300">
+                          <span>Total Insurance:</span
+                          ><span
+                            id="iceInsuranceDisplay"
+                            class="font-medium"
+                          ></span>
+                        </div>
+                        <div class="flex justify-between text-gray-300">
+                          <span>Resale Value:</span
+                          ><span
+                            id="iceResaleDisplay"
+                            class="font-medium text-green-400"
+                          ></span>
+                        </div>
+                        <div
+                          class="flex justify-between border-t border-gray-700 pt-2"
+                        >
+                          <span class="font-semibold text-white"
+                            >Total ICE TCO:</span
+                          ><span
+                            id="iceTotalCost"
+                            class="font-semibold text-white"
+                          ></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      class="mb-6 p-4 bg-gray-900/50 rounded-lg border border-gray-800"
+                    >
+                      <h4 class="font-semibold text-white mb-3">
+                        Breakeven Analysis
+                      </h4>
+                      <div id="breakevenInfo" class="text-center p-4"></div>
+                    </div>
+
+                    <div
+                      class="mb-6 p-4 bg-gray-900/50 rounded-lg border border-gray-800"
+                    >
+                      <h4 class="font-semibold text-white mb-3">
+                        Year-by-Year Comparison
+                      </h4>
+                      <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                          <thead>
+                            <tr class="border-b border-gray-700">
+                              <th class="text-left py-2 text-gray-300">Year</th>
+                              <th class="text-right py-2 text-gray-300">
+                                EV Cost
+                              </th>
+                              <th class="text-right py-2 text-gray-300">
+                                ICE Cost
+                              </th>
+                              <th class="text-right py-2 text-gray-300">
+                                Break-even?
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody id="yearlyComparisonTable"></tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div
+                      class="mb-6 p-4 bg-gray-900/50 rounded-lg border border-gray-800"
+                    >
+                      <h4 class="font-semibold text-white mb-3">
+                        Cost Comparison Chart
+                      </h4>
+                      <div
+                        id="costChart"
+                        class="relative h-80 bg-gray-800/50 rounded-lg overflow-hidden"
+                      ></div>
+                      <div class="flex justify-center mt-4 space-x-6">
+                        <div class="flex items-center space-x-2">
+                          <div class="w-4 h-4 bg-blue-500 rounded"></div>
+                          <span class="text-sm text-gray-300">EV Cost</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                          <div class="w-4 h-4 bg-red-500 rounded"></div>
+                          <span class="text-sm text-gray-300">ICE Cost</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                          <div class="w-4 h-4 bg-green-500 rounded"></div>
+                          <span class="text-sm text-gray-300"
+                            >Breakeven Point</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      class="p-4 rounded-lg border border-gray-800 bg-gray-900/50"
+                    >
+                      <div class="flex justify-between items-center">
+                        <span class="font-semibold text-lg text-white"
+                          >Total Savings:</span
+                        >
+                        <span
+                          id="evIceSavings"
+                          class="font-bold text-xl"
+                        ></span>
+                      </div>
+                      <p
+                        id="savingsExplanation"
+                        class="text-sm text-gray-400 mt-2"
+                      ></p>
+                    </div>
+                  </div>
+                  <div
+                    id="noEvIceResults"
+                    class="text-center text-gray-400 py-8"
+                  >
+                    <div class="text-6xl mb-4">🚗</div>
+                    <p>
+                      Enter your vehicle details to see the cost comparison.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Personal Finance Rules -->
+          <section
+            id="personalFinanceRules"
+            class="calculator-content hidden"
+            role="tabpanel"
+          >
+            <div class="max-w-4xl mx-auto">
+              <div class="space-y-8">
+                <div
+                  class="p-6 rounded-xl bg-gray-900/50 border border-gray-800 shadow flex flex-col md:flex-row gap-6"
+                >
+                  <div class="flex-1">
+                    <h3 class="text-xl font-semibold text-blue-400 mb-2">
+                      1. Rule of 72 (Double Your Money)
+                    </h3>
+                    <p class="text-gray-300 mb-4">
+                      Estimate how long it takes to double your money by
+                      dividing 72 by the interest rate.
+                    </p>
+                    <form
+                      id="rule72Form"
+                      class="flex flex-col gap-2 md:flex-row md:items-end"
+                    >
+                      <div>
+                        <label
+                          for="rule72Rate"
+                          class="block text-sm text-gray-400 mb-1"
+                          >Interest Rate (% per year)</label
+                        >
+                        <input
+                          type="number"
+                          id="rule72Rate"
+                          class="px-3 py-2 rounded bg-gray-800 border border-gray-700 text-white w-32"
+                          placeholder="8"
+                          min="0.1"
+                          step="0.01"
+                        />
+                        <div class="mt-2 text-green-400 font-medium">
+                          <span id="rule72Result"></span>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="md:w-64 flex-shrink-0 bg-gray-800/70 rounded-lg p-4"
+                  >
+                    <div class="text-sm text-gray-400 mb-2 font-semibold">
+                      Formula
+                    </div>
+                    <div class="text-white font-mono mb-2">
+                      Years to double = 72 / Interest Rate
+                    </div>
+                    <div class="text-sm text-gray-400">
+                      Example: 72 / 8% =
+                      <span class="text-green-400">9 years</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="p-6 rounded-xl bg-gray-900/50 border border-gray-800 shadow flex flex-col md:flex-row gap-6"
+                >
+                  <div class="flex-1">
+                    <h3 class="text-xl font-semibold text-blue-400 mb-2">
+                      2. Rule of 70 (Inflation Adjustment)
+                    </h3>
+                    <p class="text-gray-300 mb-4">
+                      Estimate how long it takes for your money's value to halve
+                      due to inflation by dividing 70 by the inflation rate.
+                    </p>
+                    <form
+                      id="rule70Form"
+                      class="flex flex-col gap-2 md:flex-row md:items-end"
+                    >
+                      <div>
+                        <label
+                          for="rule70Rate"
+                          class="block text-sm text-gray-400 mb-1"
+                          >Inflation Rate (% per year)</label
+                        >
+                        <input
+                          type="number"
+                          id="rule70Rate"
+                          class="px-3 py-2 rounded bg-gray-800 border border-gray-700 text-white w-32"
+                          placeholder="7"
+                          min="0.1"
+                          step="0.01"
+                        />
+                        <div class="mt-2 text-green-400 font-medium">
+                          <span id="rule70Result"></span>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="md:w-64 flex-shrink-0 bg-gray-800/70 rounded-lg p-4"
+                  >
+                    <div class="text-sm text-gray-400 mb-2 font-semibold">
+                      Formula
+                    </div>
+                    <div class="text-white font-mono mb-2">
+                      Years to halve = 70 / Inflation Rate
+                    </div>
+                    <div class="text-sm text-gray-400">
+                      Example: 70 / 7% =
+                      <span class="text-green-400">10 years</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="p-6 rounded-xl bg-gray-900/50 border border-gray-800 shadow flex flex-col md:flex-row gap-6"
+                >
+                  <div class="flex-1">
+                    <h3 class="text-xl font-semibold text-blue-400 mb-2">
+                      3. 4% Withdrawal Rule
+                    </h3>
+                    <p class="text-gray-300 mb-4">
+                      Estimate the retirement corpus needed: Corpus = 25 x
+                      Annual Expenses. Withdraw 4% per year for a sustainable
+                      retirement.
+                    </p>
+                    <form
+                      id="rule4pctForm"
+                      class="flex flex-col gap-2 md:flex-row md:items-end"
+                    >
+                      <div>
+                        <label
+                          for="rule4pctExpense"
+                          class="block text-sm text-gray-400 mb-1"
+                          >Annual Expenses (₹)</label
+                        >
+                        <input
+                          type="number"
+                          id="rule4pctExpense"
+                          class="px-3 py-2 rounded bg-gray-800 border border-gray-700 text-white w-32"
+                          placeholder="500000"
+                          min="1"
+                          step="1"
+                        />
+                        <div class="mt-2 text-green-400 font-medium">
+                          <span id="rule4pctResult"></span>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="md:w-64 flex-shrink-0 bg-gray-800/70 rounded-lg p-4"
+                  >
+                    <div class="text-sm text-gray-400 mb-2 font-semibold">
+                      Formula
+                    </div>
+                    <div class="text-white font-mono mb-2">
+                      Corpus = 25 x Annual Expenses
+                    </div>
+                    <div class="text-sm text-gray-400">
+                      Example: 25 x ₹500,000 =
+                      <span class="text-green-400">₹12,50,000</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="p-6 rounded-xl bg-gray-900/50 border border-gray-800 shadow flex flex-col md:flex-row gap-6"
+                >
+                  <div class="flex-1">
+                    <h3 class="text-xl font-semibold text-blue-400 mb-2">
+                      4. 100 Minus Age Rule
+                    </h3>
+                    <p class="text-gray-300 mb-4">
+                      For asset allocation: 100 minus your age = % in equities.
+                      The rest in debt.
+                    </p>
+                    <form
+                      id="rule100AgeForm"
+                      class="flex flex-col gap-2 md:flex-row md:items-end"
+                    >
+                      <div>
+                        <label
+                          for="rule100Age"
+                          class="block text-sm text-gray-400 mb-1"
+                          >Your Age</label
+                        >
+                        <input
+                          type="number"
+                          id="rule100Age"
+                          class="px-3 py-2 rounded bg-gray-800 border border-gray-700 text-white w-32"
+                          placeholder="30"
+                          min="1"
+                          max="100"
+                          step="1"
+                        />
+                        <div class="mt-2 text-green-400 font-medium">
+                          <span id="rule100AgeResult"></span>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="md:w-64 flex-shrink-0 bg-gray-800/70 rounded-lg p-4"
+                  >
+                    <div class="text-sm text-gray-400 mb-2 font-semibold">
+                      Formula
+                    </div>
+                    <div class="text-white font-mono mb-2">
+                      Equity % = 100 - Age
+                    </div>
+                    <div class="text-sm text-gray-400">
+                      Example: Age 30 → Equity 70%, Debt 30%
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="p-6 rounded-xl bg-gray-900/50 border border-gray-800 shadow flex flex-col md:flex-row gap-6"
+                >
+                  <div class="flex-1">
+                    <h3 class="text-xl font-semibold text-blue-400 mb-2">
+                      5. 50-30-20 Rule
+                    </h3>
+                    <p class="text-gray-300 mb-4">
+                      Budgeting rule: 50% Needs, 30% Wants, 20% Savings.
+                    </p>
+                    <form
+                      id="rule502030Form"
+                      class="flex flex-col gap-2 md:flex-row md:items-end"
+                    >
+                      <div>
+                        <label
+                          for="rule502030Income"
+                          class="block text-sm text-gray-400 mb-1"
+                          >Monthly Income (₹)</label
+                        >
+                        <input
+                          type="number"
+                          id="rule502030Income"
+                          class="px-3 py-2 rounded bg-gray-800 border border-gray-700 text-white w-32"
+                          placeholder="50000"
+                          min="1"
+                          step="1"
+                        />
+                        <div class="mt-2 text-green-400 font-medium">
+                          <span id="rule502030Result"></span>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="md:w-64 flex-shrink-0 bg-gray-800/70 rounded-lg p-4"
+                  >
+                    <div class="text-sm text-gray-400 mb-2 font-semibold">
+                      Formula
+                    </div>
+                    <div class="text-white font-mono mb-2">
+                      Needs = 50%<br />Wants = 30%<br />Savings = 20%
+                    </div>
+                    <div class="text-sm text-gray-400">
+                      Example: ₹50,000 → Needs ₹25,000, Wants ₹15,000, Savings
+                      ₹10,000
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="p-6 rounded-xl bg-gray-900/50 border border-gray-800 shadow flex flex-col md:flex-row gap-6"
+                >
+                  <div class="flex-1">
+                    <h3 class="text-xl font-semibold text-blue-400 mb-2">
+                      6. 3X Emergency Rule
+                    </h3>
+                    <p class="text-gray-300 mb-4">
+                      Always put at least 3 times your monthly income in
+                      Emergency funds for emergencies such as loss of
+                      employment, medical emergency, etc. Safer: 6X.
+                    </p>
+                    <form
+                      id="rule3xEmergencyForm"
+                      class="flex flex-col gap-2 md:flex-row md:items-end"
+                    >
+                      <div>
+                        <label
+                          for="rule3xEmergencyIncome"
+                          class="block text-sm text-gray-400 mb-1"
+                          >Monthly Income (₹)</label
+                        >
+                        <input
+                          type="number"
+                          id="rule3xEmergencyIncome"
+                          class="px-3 py-2 rounded bg-gray-800 border border-gray-700 text-white w-32"
+                          placeholder="50000"
+                          min="1"
+                          step="1"
+                        />
+                        <div class="mt-2 text-green-400 font-medium">
+                          <span id="rule3xEmergencyResult"></span>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="md:w-64 flex-shrink-0 bg-gray-800/70 rounded-lg p-4"
+                  >
+                    <div class="text-sm text-gray-400 mb-2 font-semibold">
+                      Formula
+                    </div>
+                    <div class="text-white font-mono mb-2">
+                      Emergency Fund = 3 x Monthly Income
+                    </div>
+                    <div class="text-sm text-gray-400">
+                      Safer: 6 x Monthly Income
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="p-6 rounded-xl bg-gray-900/50 border border-gray-800 shadow flex flex-col md:flex-row gap-6"
+                >
+                  <div class="flex-1">
+                    <h3 class="text-xl font-semibold text-blue-400 mb-2">
+                      7. 40% EMI Rule
+                    </h3>
+                    <p class="text-gray-300 mb-4">
+                      Never go beyond 40% of your income into EMIs. This rule is
+                      used by finance companies to provide loans. You can use it
+                      to manage your finances.
+                    </p>
+                    <form
+                      id="rule40emiForm"
+                      class="flex flex-col gap-2 md:flex-row md:items-end"
+                    >
+                      <div>
+                        <label
+                          for="rule40emiIncome"
+                          class="block text-sm text-gray-400 mb-1"
+                          >Monthly Income (₹)</label
+                        >
+                        <input
+                          type="number"
+                          id="rule40emiIncome"
+                          class="px-3 py-2 rounded bg-gray-800 border border-gray-700 text-white w-32"
+                          placeholder="50000"
+                          min="1"
+                          step="1"
+                        />
+                        <div class="mt-2 text-green-400 font-medium">
+                          <span id="rule40emiResult"></span>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="md:w-64 flex-shrink-0 bg-gray-800/70 rounded-lg p-4"
+                  >
+                    <div class="text-sm text-gray-400 mb-2 font-semibold">
+                      Formula
+                    </div>
+                    <div class="text-white font-mono mb-2">
+                      Max EMI = 40% x Monthly Income
+                    </div>
+                    <div class="text-sm text-gray-400">
+                      Example: ₹50,000 → Max EMI ₹20,000
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="p-6 rounded-xl bg-gray-900/50 border border-gray-800 shadow flex flex-col md:flex-row gap-6"
+                >
+                  <div class="flex-1">
+                    <h3 class="text-xl font-semibold text-blue-400 mb-2">
+                      8. Life Insurance Rule
+                    </h3>
+                    <p class="text-gray-300 mb-4">
+                      Always have Sum Assured as 20 times of your Annual Income.
+                    </p>
+                    <form
+                      id="ruleInsuranceForm"
+                      class="flex flex-col gap-2 md:flex-row md:items-end"
+                    >
+                      <div>
+                        <label
+                          for="ruleInsuranceIncome"
+                          class="block text-sm text-gray-400 mb-1"
+                          >Annual Income (₹)</label
+                        >
+                        <input
+                          type="number"
+                          id="ruleInsuranceIncome"
+                          class="px-3 py-2 rounded bg-gray-800 border border-gray-700 text-white w-32"
+                          placeholder="500000"
+                          min="1"
+                          step="1"
+                        />
+                        <div class="mt-2 text-green-400 font-medium">
+                          <span id="ruleInsuranceResult"></span>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="md:w-64 flex-shrink-0 bg-gray-800/70 rounded-lg p-4"
+                  >
+                    <div class="text-sm text-gray-400 mb-2 font-semibold">
+                      Formula
+                    </div>
+                    <div class="text-white font-mono mb-2">
+                      Sum Assured = 20 x Annual Income
+                    </div>
+                    <div class="text-sm text-gray-400">
+                      Example: ₹5,00,000 → ₹1 crore
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="p-6 rounded-xl bg-gray-900/50 border border-gray-800 shadow flex flex-col md:flex-row gap-6"
+                >
+                  <div class="flex-1">
+                    <h3 class="text-xl font-semibold text-blue-400 mb-2">
+                      9. Rule of 144 (SIP Doubling)
+                    </h3>
+                    <p class="text-gray-300 mb-4">
+                      No of years it takes to double your money at a given rate
+                      when investment is done via SIP. E.g. If the rate is 15%
+                      then SIP corpus will double in 144/15 = 9.6 years.
+                    </p>
+                    <form
+                      id="rule144Form"
+                      class="flex flex-col gap-2 md:flex-row md:items-end"
+                    >
+                      <div>
+                        <label
+                          for="rule144Rate"
+                          class="block text-sm text-gray-400 mb-1"
+                          >Annual Rate (% per year)</label
+                        >
+                        <input
+                          type="number"
+                          id="rule144Rate"
+                          class="px-3 py-2 rounded bg-gray-800 border border-gray-700 text-white w-32"
+                          placeholder="15"
+                          min="0.1"
+                          step="0.01"
+                        />
+                        <div class="mt-2 text-green-400 font-medium">
+                          <span id="rule144Result"></span>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="md:w-64 flex-shrink-0 bg-gray-800/70 rounded-lg p-4"
+                  >
+                    <div class="text-sm text-gray-400 mb-2 font-semibold">
+                      Formula
+                    </div>
+                    <div class="text-white font-mono mb-2">
+                      Years to double = 144 / Rate
+                    </div>
+                    <div class="text-sm text-gray-400">
+                      Example: 144 / 15% =
+                      <span class="text-green-400">9.6 years</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="p-6 rounded-xl bg-gray-900/50 border border-gray-800 shadow flex flex-col md:flex-row gap-6"
+                >
+                  <div class="flex-1">
+                    <h3 class="text-xl font-semibold text-blue-400 mb-2">
+                      10. Revolving Credit Formula
+                    </h3>
+                    <p class="text-gray-300 mb-4">
+                      Calculate the compound annual cost of monthly interest
+                      rates (e.g., credit cards): (1 + i%)<sup>12</sup> - 1
+                    </p>
+                    <form
+                      id="ruleRevolvingForm"
+                      class="flex flex-col gap-2 md:flex-row md:items-end"
+                    >
+                      <div>
+                        <label
+                          for="ruleRevolvingRate"
+                          class="block text-sm text-gray-400 mb-1"
+                          >Monthly Interest Rate (% per month)</label
+                        >
+                        <input
+                          type="number"
+                          id="ruleRevolvingRate"
+                          class="px-3 py-2 rounded bg-gray-800 border border-gray-700 text-white w-32"
+                          placeholder="3"
+                          min="0.01"
+                          step="0.01"
+                        />
+                        <div class="mt-2 text-green-400 font-medium">
+                          <span id="ruleRevolvingResult"></span>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div
+                    class="md:w-64 flex-shrink-0 bg-gray-800/70 rounded-lg p-4"
+                  >
+                    <div class="text-sm text-gray-400 mb-2 font-semibold">
+                      Formula
+                    </div>
+                    <div class="text-white font-mono mb-2">
+                      (1 + i%)<sup>12</sup> - 1
+                    </div>
+                    <div class="text-sm text-gray-400">
+                      Example: (1+3%)<sup>12</sup>-1 =
+                      <span class="text-green-400">42.6%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

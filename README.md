@@ -17,6 +17,7 @@ This application helps you make informed financial decisions by answering three 
 ## 🚀 Features
 
 ### Core Features
+
 - **🎛️ Multi-tab Interface**: Seamlessly switch between three specialized calculators
 - **⚡ Real-time Calculations**: Results update instantly as you modify inputs
 - **💾 Data Persistence**: All form values and last visited tab automatically saved to localStorage
@@ -26,6 +27,7 @@ This application helps you make informed financial decisions by answering three 
 - **✅ Input Validation**: Comprehensive error handling with helpful user feedback
 
 ### Advanced Features
+
 - **📈 Year-by-Year Breakdowns**: Detailed annual projections and progress tracking
 - **🎯 Smart Recommendations**: Algorithm-based suggestions for optimal financial decisions
 - **💹 Compound Interest Calculations**: Accurate financial modeling with customizable compounding frequencies
@@ -46,16 +48,19 @@ This application helps you make informed financial decisions by answering three 
 ### LoanOrNot Calculator
 
 **Option 1: Pay Cash**
+
 - Remaining cash after purchase gets invested
 - Returns calculated using compound interest formula
 - Net position = remaining cash + investment returns
 
 **Option 2: Take Loan**
+
 - All available cash gets invested
 - Loan interest calculated using standard loan payment formula
 - Net position = total investment returns - total loan interest
 
 **Recommendation**
+
 - Compares net positions of both options
 - Shows which option provides better financial outcome
 - Displays the monetary difference over the specified time period
@@ -66,6 +71,7 @@ This application helps you make informed financial decisions by answering three 
 Plan your savings strategy to achieve future financial goals while accounting for inflation and existing investments. The calculator provides month-by-month guidance and visual progress tracking.
 
 **Inputs:**
+
 - **Goal Name**: Descriptive name for your financial objective (e.g., "Dream House", "Child's Education")
 - **Existing Investment**: Amount already invested towards this specific goal (₹)
 - **Cost Today**: Current cost of your goal in today's money (₹)
@@ -96,6 +102,7 @@ Plan your savings strategy to achieve future financial goals while accounting fo
    - Color-coded progress indicators
 
 **Mathematical Formulas:**
+
 - **Future Cost with Inflation:** `FV = PV × (1 + i)^n`
 - **Future Value of Existing Investment:** `FV = PV × (1 + r)^n`
 - **Monthly Investment (PMT):** `PMT = FV × r / ((1 + r)^n - 1)`
@@ -105,13 +112,15 @@ Plan your savings strategy to achieve future financial goals while accounting fo
 ### EV vs ICE Calculator
 
 **Purpose:**
+
 - Compare the Total Cost of Ownership (TCO) between Electric Vehicles and Internal Combustion Engine vehicles
 - Calculate breakeven point when EV becomes cost-effective
 - Provide year-by-year cost analysis with visual chart
 
 **Inputs:**
 
-*EV Details:*
+_EV Details:_
+
 - Purchase Price (₹)
 - Expected Resale Value (% of purchase price)
 - Efficiency (km/kWh, default: 5)
@@ -120,7 +129,8 @@ Plan your savings strategy to achieve future financial goals while accounting fo
 - Insurance per Year (₹)
 - Government Incentives (₹)
 
-*ICE Details:*
+_ICE Details:_
+
 - Purchase Price (₹)
 - Expected Resale Value (% of purchase price)
 - Fuel Efficiency (km/l, default: 15)
@@ -128,11 +138,13 @@ Plan your savings strategy to achieve future financial goals while accounting fo
 - Annual Maintenance (₹)
 - Insurance per Year (₹)
 
-*Usage:*
+_Usage:_
+
 - Average Distance per Year (km)
 - Ownership Period (years)
 
 **Outputs:**
+
 - **Smart Recommendation** with color-coded results
 - **Breakeven Analysis** - When EV becomes cost-effective
 - **EV and ICE Breakdowns** - Complete cost analysis for both
@@ -141,6 +153,7 @@ Plan your savings strategy to achieve future financial goals while accounting fo
 - **Total Savings** calculation and explanation
 
 **Key Formula:**
+
 - **TCO = Upfront Cost + Recurring Cost (years 2 to N) + End-of-life Adjustment (resale value)**
 - **Breakeven Year:** Calculated when cumulative EV costs equal cumulative ICE costs
 - **Operating Costs:** Fuel/Energy + Maintenance + Insurance per year
@@ -167,11 +180,13 @@ loanornot/
 ### Code Architecture
 
 **JavaScript Classes:**
+
 - `LoanCalculator` - Handles loan vs cash investment analysis
 - `GoalCalculator` - Manages financial goal planning and tracking
 - `EVVsICECalculator` - Processes vehicle cost comparison
 
 **Key Features in Code:**
+
 - Object-oriented design with separation of concerns
 - LocalStorage integration for data persistence
 - Real-time validation and error handling
@@ -181,6 +196,7 @@ loanornot/
 ## 💡 Example Scenarios
 
 ### LoanOrNot: Conservative Investment
+
 - Purchase: ₹50,000
 - Available Cash: ₹60,000
 - Loan Rate: 6.5%
@@ -189,6 +205,7 @@ loanornot/
 - **Result**: Small benefit to taking loan due to higher investment returns
 
 ### LoanOrNot: Aggressive Investment
+
 - Purchase: ₹100,000
 - Available Cash: ₹120,000
 - Loan Rate: 4.5%
@@ -197,19 +214,21 @@ loanornot/
 - **Result**: Significant benefit to taking loan due to much higher investment returns
 
 ### Goal Calculator: Dream House
+
 - **Goal**: Dream House Purchase
 - **Cost Today**: ₹50,00,000
 - **Existing Investment**: ₹10,00,000
 - **Years to Achieve**: 8 years
 - **Expected Investment Return**: 12%
 - **Inflation Rate**: 6%
-- **Result**: 
+- **Result**:
   - Future cost: ₹79,85,473
   - Existing investment will grow to: ₹24,76,035
   - Required monthly investment: ₹28,394
   - Goal achieved in year 8 with 100% completion
 
 ### Goal Calculator: Child's Education
+
 - **Goal**: Child's Higher Education
 - **Cost Today**: ₹15,00,000
 - **Existing Investment**: ₹2,00,000
@@ -223,6 +242,7 @@ loanornot/
   - Steady progress with compound growth benefits
 
 ### EV vs ICE: Urban Commuter
+
 - EV: ₹15,00,000 purchase, 5 km/kWh efficiency, ₹15,000 maintenance
 - ICE: ₹12,00,000 purchase, 15 km/l efficiency, ₹25,000 maintenance
 - Usage: 12,000 km/year for 8 years
@@ -230,6 +250,7 @@ loanornot/
 - **Result**: EV breaks even after 4.2 years, saves ₹2,50,000 over 8 years
 
 ### EV vs ICE: Highway Driver
+
 - EV: ₹20,00,000 purchase, 4 km/kWh efficiency (highway)
 - ICE: ₹15,00,000 purchase, 18 km/l efficiency (highway)
 - Usage: 25,000 km/year for 5 years
@@ -238,11 +259,13 @@ loanornot/
 ## ⚠️ Important Considerations
 
 ### What This Tool Does
+
 - Provides mathematical comparison of two financial strategies
 - Shows potential outcomes based on your inputs
 - Helps visualize the financial impact of each decision
 
 ### What This Tool Doesn't Account For
+
 - **Risk factors** - Investment returns are not guaranteed
 - **Tax implications** - Loan interest deductions, capital gains taxes
 - **Market volatility** - Investment returns can fluctuate
@@ -254,6 +277,7 @@ loanornot/
 - **Technology changes** - Rapidly evolving EV technology and costs
 
 ### Recommendation
+
 **Always consult with a qualified financial advisor** before making major financial decisions. This tool is for educational and estimation purposes only.
 
 ## 🎨 Customization
@@ -268,6 +292,7 @@ The app uses Tailwind CSS and is easily customizable:
 ## 🔧 Potential Enhancements
 
 ### Financial Features
+
 - **🏛️ Tax Integration** - Include capital gains tax, LTCG, STCG calculations
 - **📊 Risk Assessment** - Factor in investment risk levels and volatility
 - **💼 Multiple Investment Options** - Compare different asset classes (equity, debt, gold, etc.)
@@ -277,6 +302,7 @@ The app uses Tailwind CSS and is easily customizable:
 - **💾 Export Functionality** - PDF reports, Excel exports, email sharing
 
 ### Technical Enhancements
+
 - **🔄 Real-time Data** - Live interest rates, inflation data, fuel prices
 - **🌍 Localization** - Multi-currency support, regional tax rules
 - **📱 Progressive Web App** - Offline functionality, app-like experience
@@ -284,6 +310,7 @@ The app uses Tailwind CSS and is easily customizable:
 - **📊 Advanced Analytics** - Goal tracking over time, achievement metrics
 
 ### Additional Calculators
+
 - **📈 SIP Calculator** - Systematic Investment Plan analysis
 - **🏖️ Retirement Planner** - Comprehensive retirement planning tool
 - **🛡️ Insurance Calculator** - Life, health, term insurance planning
@@ -297,6 +324,7 @@ The app uses Tailwind CSS and is easily customizable:
 **Last Updated**: December 2024
 
 ### Recent Updates
+
 - ✅ Added comprehensive Goal Calculator with visual progress tracking
 - ✅ Enhanced EV vs ICE Calculator with breakeven analysis
 - ✅ Improved data persistence and user experience
@@ -318,6 +346,7 @@ Contributions are welcome! Please feel free to:
 5. **📝 Open** a Pull Request
 
 ### Areas for Contribution
+
 - Additional financial calculators
 - Enhanced data visualization
 - Mobile app development
@@ -328,7 +357,7 @@ Contributions are welcome! Please feel free to:
 
 ## ⚠️ Important Disclaimer
 
-**This tool provides estimates for educational purposes only.** 
+**This tool provides estimates for educational purposes only.**
 
 - 📊 **Calculations are approximations** based on standard financial formulas
 - 💹 **Investment returns are not guaranteed** and past performance doesn't predict future results
@@ -337,4 +366,3 @@ Contributions are welcome! Please feel free to:
 - 🔍 **Verify all calculations** independently before making financial commitments
 
 **The developers are not responsible for financial decisions made based on this tool.**
-

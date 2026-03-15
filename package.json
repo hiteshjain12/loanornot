@@ -1,0 +1,27 @@
+{
+  "name": "loanornot",
+  "version": "1.0.0",
+  "description": "A comprehensive suite of financial decision tools to help you make smarter money choices. This interactive web application provides three powerful calculators:",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hiteshjain12/loanornot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hiteshjain12/loanornot/issues"
+  },
+  "homepage": "https://github.com/hiteshjain12/loanornot#readme",
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.2.1",
+    "tailwindcss": "^4.2.1",
+    "vite": "^8.0.0"
+  }
+}
